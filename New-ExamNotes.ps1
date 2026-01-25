@@ -68,164 +68,230 @@ param(
 	[string]$MergeModel = "deepseek-r1"
 )
 
-# Set strict mode for better error handling
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Determine script root directory
-$ScriptRoot = $PSScriptRoot
-if (-not $ScriptRoot) {
-	$ScriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-}
-
 # -------------------------------------------------------------------------
-# Helper Functions
+# Main
 # -------------------------------------------------------------------------
 
-function Write-Stage {
-	param([string]$Stage, [string]$Message)
-	Write-Host "[$Stage] " -ForegroundColor Cyan -NoNewline
-	Write-Host $Message
-}
+$Main = {
+	# Dot-source the helper functions
+	. $Helpers
 
-function Write-Success {
-	param([string]$Message)
-	Write-Host "✓ " -ForegroundColor Green -NoNewline
-	Write-Host $Message
-}
+	# Display application banner
+	Show-Banner
 
-function Write-StageError {
-	param([string]$Message)
-	Write-Host "✗ " -ForegroundColor Red -NoNewline
-	Write-Host $Message
-}
+	# Resolve and validate input paths
+	$script:IndexPath = Resolve-Path $Index
+	$script:TranscriptPath = Resolve-Path $Transcript
 
-function Test-PythonEnvironment {
-	<#
-    .SYNOPSIS
-        Validates and sets up the Python virtual environment.
-    #>
-	$venvPath = Join-Path $ScriptRoot ".venv"
-	$venvPython = Join-Path $venvPath "Scripts\python.exe"
-	$requirementsPath = Join-Path $ScriptRoot "requirements.txt"
-
-	# Check if venv exists
-	if (-not (Test-Path $venvPython)) {
-		Write-Stage "Setup" "Creating Python virtual environment..."
-		python -m venv $venvPath
-		if ($LASTEXITCODE -ne 0) {
-			throw "Failed to create virtual environment"
-		}
-		Write-Success "Virtual environment created"
-	}
-
-	# Check if requirements need to be installed
-	$pipPath = Join-Path $venvPath "Scripts\pip.exe"
-
-	Write-Stage "Setup" "Checking Python dependencies..."
-	& $pipPath install -q -r $requirementsPath
-	if ($LASTEXITCODE -ne 0) {
-		throw "Failed to install Python dependencies"
-	}
-	Write-Success "Dependencies verified"
-
-	return $venvPython
-}
-
-function Get-VideoTitle {
-	<#
-    .SYNOPSIS
-        Extracts a video title from the index file path.
-    #>
-	param([string]$IndexPath)
-
-	$fileName = [System.IO.Path]::GetFileNameWithoutExtension($IndexPath)
-
-	# Remove common prefixes like "Index - " or "TOC - "
-	$title = $fileName -replace "^(Index|TOC|Contents)\s*[-_]\s*", ""
-
-	# Clean up for use as filename
-	$title = $title -replace "[^\w\s-]", "" -replace "\s+", "_"
-
-	return $title
-}
-
-# -------------------------------------------------------------------------
-# Main Execution
-# -------------------------------------------------------------------------
-
-try {
-	Write-Host ""
-	Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
-	Write-Host "  Exam Notes Generator" -ForegroundColor Magenta
-	Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
-	Write-Host ""
-
-	# Resolve paths to absolute
-	$IndexPath = Resolve-Path $Index
-	$TranscriptPath = Resolve-Path $Transcript
-
-	# Determine output path if not specified
+	# Determine output path from index filename if not specified
 	if (-not $Output) {
-		$videoTitle = Get-VideoTitle -IndexPath $IndexPath
-		$Output = Join-Path $ScriptRoot "output\${videoTitle}_Exam_Notes.md"
+		$videoTitle = Get-VideoTitle -IndexPath $script:IndexPath
+		$script:Output = Join-Path $PSScriptRoot "output\${videoTitle}_Exam_Notes.md"
+	}
+	else {
+		$script:Output = $Output
 	}
 
-	# Ensure output directory exists
-	$outputDir = Split-Path -Parent $Output
+	# Create output directory if it doesn't exist
+	$outputDir = Split-Path -Parent $script:Output
 	if (-not (Test-Path $outputDir)) {
 		New-Item -ItemType Directory -Path $outputDir -Force | Out-Null
 	}
 
-	# Display configuration
-	Write-Host "Configuration:" -ForegroundColor Yellow
-	Write-Host "  Index:         $IndexPath"
-	Write-Host "  Transcript:    $TranscriptPath"
-	Write-Host "  Output:        $Output"
-	Write-Host "  Extract Model: $ExtractModel"
-	Write-Host "  Merge Model:   $MergeModel"
+	# Display current configuration
+	Show-Configuration
+
+	# Validate and setup Python virtual environment
+	$pythonExe = Confirm-PythonEnvironment
 	Write-Host ""
 
-	# Setup Python environment
-	$pythonExe = Test-PythonEnvironment
-	Write-Host ""
+	# Execute the Python notes generation pipeline
+	Invoke-Pipeline -PythonExe $pythonExe
 
-	# Run the Python pipeline
-	Write-Stage "Pipeline" "Starting notes generation..."
-	Write-Host ""
+	# Display success message with output location
+	Show-Success
+}
 
-	$pythonArgs = @(
-		"-m", "notes_generator.main",
-		"--index", $IndexPath,
-		"--transcript", $TranscriptPath,
-		"--output", $Output,
-		"--extract-model", $ExtractModel,
-		"--merge-model", $MergeModel
-	)
+# -------------------------------------------------------------------------
+# Helpers
+# -------------------------------------------------------------------------
 
-	# Set PYTHONPATH to include src/python
-	$env:PYTHONPATH = Join-Path $ScriptRoot "src\python"
+$Helpers = {
+	function Show-Stage {
+		<#
+        .SYNOPSIS
+            Displays a formatted stage progress message.
+        #>
+		param(
+			[string]$Stage,
+			[string]$Message
+		)
 
-	# Execute Python pipeline
-	& $pythonExe @pythonArgs
-
-	if ($LASTEXITCODE -ne 0) {
-		throw "Pipeline failed with exit code $LASTEXITCODE"
+		Write-Host "[$Stage] " -ForegroundColor Cyan -NoNewline
+		Write-Host $Message
 	}
 
-	Write-Host ""
-	Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
-	Write-Success "Notes generated successfully!"
-	Write-Host "  Output: $Output" -ForegroundColor Green
-	Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
-	Write-Host ""
+	function Show-Success {
+		<#
+        .SYNOPSIS
+            Displays success completion banner.
+        #>
+		Write-Host ""
+		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
+		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host "Notes generated successfully!"
+		Write-Host "  Output: $script:Output" -ForegroundColor Green
+		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
+		Write-Host ""
+	}
 
-	exit 0
+	function Show-Error {
+		<#
+        .SYNOPSIS
+            Displays a formatted error message.
+        #>
+		param([string]$Message)
+
+		Write-Host "✗ " -ForegroundColor Red -NoNewline
+		Write-Host $Message
+	}
+
+	function Show-Banner {
+		<#
+        .SYNOPSIS
+            Displays the application banner.
+        #>
+		Write-Host ""
+		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
+		Write-Host "  Exam Notes Generator" -ForegroundColor Magenta
+		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
+		Write-Host ""
+	}
+
+	function Show-Configuration {
+		<#
+        .SYNOPSIS
+            Displays the current configuration settings.
+        #>
+		Write-Host "Configuration:" -ForegroundColor Yellow
+		Write-Host "  Index:         $script:IndexPath"
+		Write-Host "  Transcript:    $script:TranscriptPath"
+		Write-Host "  Output:        $script:Output"
+		Write-Host "  Extract Model: $ExtractModel"
+		Write-Host "  Merge Model:   $MergeModel"
+		Write-Host ""
+	}
+
+	function Confirm-PythonEnvironment {
+		<#
+        .SYNOPSIS
+            Validates and sets up the Python virtual environment.
+        .OUTPUTS
+            Path to the Python executable in the virtual environment.
+        #>
+		$venvPath = Join-Path $PSScriptRoot ".venv"
+		$venvPython = Join-Path $venvPath "Scripts\python.exe"
+		$requirementsPath = Join-Path $PSScriptRoot "requirements.txt"
+
+		# Create virtual environment if it doesn't exist
+		if (-not (Test-Path $venvPython)) {
+			Show-Stage "Setup" "Creating Python virtual environment..."
+			python -m venv $venvPath
+			if ($LASTEXITCODE -ne 0) {
+				throw "Failed to create virtual environment"
+			}
+			Write-Host "✓ " -ForegroundColor Green -NoNewline
+			Write-Host "Virtual environment created"
+		}
+
+		# Install or update Python dependencies
+		$pipPath = Join-Path $venvPath "Scripts\pip.exe"
+		Show-Stage "Setup" "Checking Python dependencies..."
+		& $pipPath install -q -r $requirementsPath
+		if ($LASTEXITCODE -ne 0) {
+			throw "Failed to install Python dependencies"
+		}
+		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host "Dependencies verified"
+
+		return $venvPython
+	}
+
+	function Get-VideoTitle {
+		<#
+        .SYNOPSIS
+            Extracts a video title from the index file path.
+        .PARAMETER IndexPath
+            Path to the index file.
+        .OUTPUTS
+            Cleaned video title suitable for use as a filename.
+        #>
+		param([string]$IndexPath)
+
+		$fileName = [System.IO.Path]::GetFileNameWithoutExtension($IndexPath)
+
+		# Remove common prefixes like "Index - " or "TOC - "
+		$title = $fileName -replace "^(Index|TOC|Contents)\s*[-_]\s*", ""
+
+		# Clean up for use as filename
+		$title = $title -replace "[^\w\s-]", "" -replace "\s+", "_"
+
+		return $title
+	}
+
+	function Invoke-Pipeline {
+		<#
+        .SYNOPSIS
+            Executes the Python notes generation pipeline.
+        .PARAMETER PythonExe
+            Path to the Python executable.
+        #>
+		param([string]$PythonExe)
+
+		Show-Stage "Pipeline" "Starting notes generation..."
+		Write-Host ""
+
+		# Build Python command arguments
+		$pythonArgs = @(
+			"-m", "notes_generator.main",
+			"--index", $script:IndexPath,
+			"--transcript", $script:TranscriptPath,
+			"--output", $script:Output,
+			"--extract-model", $ExtractModel,
+			"--merge-model", $MergeModel
+		)
+
+		# Set PYTHONPATH to include src/python
+		$env:PYTHONPATH = Join-Path $PSScriptRoot "src\python"
+
+		# Execute Python pipeline
+		& $PythonExe @pythonArgs
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Pipeline failed with exit code $LASTEXITCODE"
+		}
+	}
+}
+
+# -------------------------------------------------------------------------
+# Entry Point
+# -------------------------------------------------------------------------
+
+try {
+	Push-Location -Path $PSScriptRoot
+	& $Main
 }
 catch {
 	Write-Host ""
-	Write-StageError "Error: $_"
+	Write-Host "✗ " -ForegroundColor Red -NoNewline
+	Write-Host "Error: $_"
 	Write-Host ""
 	Write-Host $_.ScriptStackTrace -ForegroundColor DarkGray
 	exit 1
+}
+finally {
+	Pop-Location
 }
