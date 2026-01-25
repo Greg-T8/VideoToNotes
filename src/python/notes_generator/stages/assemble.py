@@ -58,51 +58,126 @@ def extract_timestamp(title: str) -> Optional[str]:
     return match.group(1) if match else None
 
 
+def extract_timestamp_from_range(ts_range: str) -> Optional[str]:
+    """
+    Extract start timestamp from a timestamp range string.
+
+    Args:
+        ts_range: Timestamp range like "02:34:56 – 02:38:40"
+
+    Returns:
+        Start timestamp string or None
+    """
+    if not ts_range:
+        return None
+    # Match the first timestamp in the range
+    match = re.search(r'(\d{1,2}:\d{2}(?::\d{2})?)', ts_range)
+    return match.group(1) if match else None
+
+
+def timestamp_to_seconds(ts: str) -> int:
+    """
+    Convert timestamp string to seconds.
+
+    Args:
+        ts: Timestamp in HH:MM:SS or HH:MM format
+
+    Returns:
+        Total seconds
+    """
+    parts = ts.split(':')
+    if len(parts) == 2:
+        return int(parts[0]) * 3600 + int(parts[1]) * 60
+    elif len(parts) == 3:
+        return int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
+    return 0
+
+
+def timestamps_near(ts1: str, ts2: str, tolerance_seconds: int = 300) -> bool:
+    """
+    Check if two timestamps are within tolerance of each other.
+
+    Args:
+        ts1: First timestamp string
+        ts2: Second timestamp string
+        tolerance_seconds: Maximum difference in seconds (default 5 minutes)
+
+    Returns:
+        True if timestamps are within tolerance
+    """
+    sec1 = timestamp_to_seconds(ts1)
+    sec2 = timestamp_to_seconds(ts2)
+    return abs(sec1 - sec2) <= tolerance_seconds
+
+
 def fuzzy_match_section(
     merged_title: str,
     index_sections: List[IndexSection],
-    threshold: float = 0.85
+    threshold: float = 0.80,
+    fallback_timestamp: Optional[str] = None
 ) -> Optional[str]:
     """
     Find the best matching index section title for a merged section.
 
-    Uses a higher threshold (0.85) to avoid matching similar but distinct
-    section names like "Text Analytics" vs "Text Analysis".
+    Prioritizes timestamp matching for sections with similar names
+    that appear at different times in the video.
 
     Args:
         merged_title: The title from the merged section
         index_sections: List of index sections to match against
         threshold: Minimum similarity ratio (0-1) for a match
+        fallback_timestamp: Timestamp to use if not found in title
 
     Returns:
         The exact title from the index, or None if no match found
     """
     normalized_merged = normalize_title(merged_title)
     merged_ts = extract_timestamp(merged_title)
+    # Use fallback timestamp if title doesn't contain one
+    if not merged_ts and fallback_timestamp:
+        merged_ts = fallback_timestamp
 
     best_match = None
     best_ratio = 0.0
+    best_ts_near = False
 
     for section in index_sections:
         normalized_index = normalize_title(section.title)
 
+        # Check if timestamps are near each other (within 5 minutes)
+        ts_near = False
+        if merged_ts and section.timestamp:
+            ts_near = timestamps_near(merged_ts, section.timestamp)
+
         # Exact match after normalization
         if normalized_merged == normalized_index:
-            return section.title
+            if ts_near:
+                return section.title  # Perfect match with nearby timestamp
+            elif not merged_ts:
+                return section.title  # No timestamp to compare
+
+        # Check if one title contains the other (e.g., "OCR Computer Vision" contains "OCR")
+        # If timestamps are near, this is a strong match even if ratio is low
+        contains_match = (normalized_index in normalized_merged or
+                          normalized_merged in normalized_index)
 
         # Fuzzy match
         ratio = SequenceMatcher(None, normalized_merged, normalized_index).ratio()
 
-        # For very similar titles (>0.9), also check timestamps if available
-        if ratio > 0.9 and merged_ts:
-            section_ts = extract_timestamp(section.title)
-            if section_ts and merged_ts[:5] == section_ts[:5]:
-                # Timestamps match (at least HH:MM) - strong match
-                return section.title
-
-        if ratio > best_ratio and ratio >= threshold:
-            best_ratio = ratio
-            best_match = section.title
+        # Accept match if ratio >= threshold OR if contains match with nearby timestamp
+        if ratio >= threshold or (contains_match and ts_near):
+            # Prefer matches where timestamps are nearby
+            # This prevents "Text Analytics" (01:08) matching "Text Analysis" (03:02)
+            if ts_near and not best_ts_near:
+                # This is a better match because timestamps are close
+                best_ratio = ratio
+                best_match = section.title
+                best_ts_near = True
+            elif ts_near == best_ts_near and ratio > best_ratio:
+                # Same timestamp status, higher ratio wins
+                best_ratio = ratio
+                best_match = section.title
+                best_ts_near = ts_near
 
     return best_match
 
@@ -128,18 +203,18 @@ def build_content_map(
 
     # Build normalized index lookup with timestamp disambiguation
     # Key: (normalized_title, timestamp_prefix) -> index_title
-    norm_to_index = {}
+    norm_ts_to_index = {}
     norm_only_to_index = {}  # Fallback without timestamp
 
     for section in index.sections:
         norm = normalize_title(section.title)
-        ts = extract_timestamp(section.title)
-        ts_prefix = ts[:5] if ts else None  # HH:MM prefix
+        # Use the timestamp field from the section, not from the title
+        ts_prefix = section.timestamp[:5] if section.timestamp else None  # HH:MM prefix
 
         # Store with timestamp for disambiguation
         if ts_prefix:
             key = (norm, ts_prefix)
-            norm_to_index[key] = section.title
+            norm_ts_to_index[key] = section.title
 
         # Also store without timestamp as fallback (first one wins)
         if norm not in norm_only_to_index:
@@ -148,6 +223,9 @@ def build_content_map(
     for merged in merged_sections:
         merged_norm = normalize_title(merged.section_title)
         merged_ts = extract_timestamp(merged.section_title)
+        # If title doesn't have a timestamp, try to get it from timestamp_range
+        if not merged_ts and merged.timestamp_range:
+            merged_ts = extract_timestamp_from_range(merged.timestamp_range)
         merged_ts_prefix = merged_ts[:5] if merged_ts else None
 
         matched_title = None
@@ -155,18 +233,50 @@ def build_content_map(
         # Try exact match with timestamp first
         if merged_ts_prefix:
             key = (merged_norm, merged_ts_prefix)
-            if key in norm_to_index:
-                matched_title = norm_to_index[key]
+            if key in norm_ts_to_index:
+                matched_title = norm_ts_to_index[key]
 
-        # Try exact normalized match (without timestamp)
+        # If merged has timestamp but exact match failed, try fuzzy with timestamp awareness
+        # (fuzzy considers timestamps, norm_only doesn't)
+        if not matched_title and merged_ts_prefix:
+            matched_title = fuzzy_match_section(
+                merged.section_title, index.sections,
+                fallback_timestamp=merged_ts
+            )
+
+        # Try exact normalized match only when there's no timestamp
         if not matched_title and merged_norm in norm_only_to_index:
             matched_title = norm_only_to_index[merged_norm]
 
-        # Try fuzzy match as last resort
+        # Try fuzzy match as last resort for non-timestamped titles
         if not matched_title:
-            matched_title = fuzzy_match_section(merged.section_title, index.sections)
+            matched_title = fuzzy_match_section(
+                merged.section_title, index.sections,
+                fallback_timestamp=merged_ts
+            )
 
+        # If matched to a parent section (has children), try to find better child match
+        if matched_title:
+            matched_section = next(
+                (s for s in index.sections if s.title == matched_title), None
+            )
+            if matched_section and matched_section.children and merged_ts:
+                # This content matched a parent but has a timestamp - try to find child
+                child_match = fuzzy_match_section(
+                    merged.section_title,
+                    [s for s in index.sections if s.title in matched_section.children],
+                    fallback_timestamp=merged_ts
+                )
+                if child_match:
+                    matched_title = child_match
+
+        # Skip content that's mostly empty placeholders (parent sections with no real content)
         if matched_title and matched_title not in content_map:
+            # Check if content is meaningful (not just "None in this chunk" placeholders)
+            content_lower = merged.content.lower()
+            none_count = content_lower.count("none in this chunk")
+            if none_count >= 4:  # 4+ "none" entries means it's an empty placeholder
+                continue
             content_map[matched_title] = merged
 
     return content_map
@@ -251,14 +361,15 @@ def build_document_structure(
         indent = "  " * (section.level - 2)
         lines.append(f"{indent}- [{section.title}](#{slugify(section.title)})")
     lines.append("")
-    lines.append("---")
-    lines.append("")
 
     # Track rendered sections to prevent infinite recursion
     rendered_sections = set()
+    sections_with_rules = set()  # Track which sections already have a rule before them
 
     # Render each section recursively
-    def render_section(section: IndexSection, depth: int = 0):
+    def render_section(section: IndexSection, depth: int = 0, parent_has_content: bool = False,
+                       is_first_child: bool = False):
+        nonlocal sections_with_rules
         # Prevent infinite recursion from circular references
         if section.title in rendered_sections:
             return []
@@ -269,11 +380,17 @@ def build_document_structure(
             return []
 
         section_lines = []
+        has_content = section.title in content_map
 
-        # Add horizontal rule before leaf sections (sections with content)
-        if section.title in content_map:
+        # Add horizontal rule before sections with content
+        # Skip if: parent has content (would be consecutive), or this is the first content section
+        should_add_rule = has_content and not parent_has_content and len(sections_with_rules) > 0
+        if should_add_rule:
             section_lines.append("---")
             section_lines.append("")
+
+        if has_content:
+            sections_with_rules.add(section.title)
 
         # Add heading
         heading_prefix = "#" * section.level
@@ -293,6 +410,11 @@ def build_document_structure(
                 # Remove first line (the heading)
                 content = "\n".join(content.split("\n")[1:]).lstrip()
 
+            # Strip trailing horizontal rules (LLM sometimes adds them)
+            content = content.rstrip()
+            while content.endswith("---"):
+                content = content[:-3].rstrip()
+
             section_lines.append(content)
             section_lines.append("")
 
@@ -300,7 +422,7 @@ def build_document_structure(
         for child_title in section.children:
             child = get_section_by_title(index, child_title)
             if child:
-                section_lines.extend(render_section(child, depth + 1))
+                section_lines.extend(render_section(child, depth + 1, has_content))
 
         return section_lines
 

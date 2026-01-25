@@ -1,21 +1,10 @@
-🎤 AutoML
-🎤 Azure Cognitive Services
-🎤 Capabilities of Azure OpenAI Service
-🎤 Cognitive API Key and Endpoint
-🎤 Custom Vision Object Detection
-🎤 DataSets
-🎤 Designer
-🎤 Exam Guide Breakdown
-🎤 Face Service
-🎤 Form Recognizer
-🎤 Introduction to AI-900
-🎤 Key Elements of AI
-🎤 Knowledge Mining
-🎤 Labeling
-🎤 Layers of Machine Learning
-🎤 OCR Computer Vision
-🎤 Speech and Translate Service
-🎤 Text Analytics
+🎤 [00:00:00] Introduction to AI-900
+🎤 [00:08:18] Exam Guide Breakdown
+🎤 [00:08:18] Exam Guide Breakdown (continued)
+🎤 [00:12:51] Layers of Machine Learning
+🎤 [00:13:59] Key Elements of AI
+🎤 [00:14:57] DataSets
+🎤 [00:16:37] Labeling
 🎤 [00:17:43] Supervised and Unsupervised Reinforcement
 🎤 [00:19:09] Netural Networks and Deep Learning
 🎤 [00:21:25] GPU
@@ -40,13 +29,19 @@
 🎤 [00:44:24] Transparency
 🎤 [00:45:00] Accountability
 🎤 [00:45:45] Guidelines for Human AI Interaction
-🎤 [01:14:57] Form Recognizer Custom Models
+🎤 [00:57:33] Azure Cognitive Services
+🎤 [01:00:08] Knowledge Mining
+🎤 [01:04:42] Face Service
+🎤 [01:06:30] Speech and Translate Service
+🎤 [01:08:04] Text Analytics
+🎤 [01:11:02] OCR Computer Vision
+🎤 [01:12:22] Form Recognizer
+🎤 [01:14:48] Form Recognizer Custom Models
 🎤 [01:15:34] Form Recognizer Prebuilt Models
 🎤 [01:17:33] LUIS
 🎤 [01:19:58] QnA Maker
 🎤 [01:24:19] Azure Bot Service
 🎤 [01:26:45] Azure Machine Learning Service
-🎤 [01:30:48] Studio Data Labeling
 🎤 [01:31:45] Data Stores
 🎤 [01:32:34] Datasets
 🎤 [01:33:44] Experiments
@@ -66,19 +61,30 @@
 🎤 [01:48:14] Introduction to Custom Vision
 🎤 [01:54:32] AI vs Generative AI
 🎤 [01:57:17] What is a LLM Large Language Model
-🎤 [01:59:14] Transformer models
+🎤 [01:58:58] Transformer models
 🎤 [02:00:14] Tokenization
 🎤 [02:01:26] Embeddings
 🎤 [02:02:46] Positional encoding
 🎤 [02:04:27] Attention
-🎤 [02:26:35] Studio Compute
-🎤 [02:27:31] Studio Compute
-🎤 [02:32:10] Cognitive API Key and Endpoint
-🎤 [02:35:25] Computer Vision AI
-🎤 [02:38:40] Custom Vision
+🎤 [02:08:01] Introduction to Azure OpenAI Service
+🎤 [02:10:29] Azure OpenAI Studio
+🎤 [02:11:44] Azure OpenAI service pricing
+🎤 [02:13:14] What are Copilots
+🎤 [02:15:43] Prompt engineering
+🎤 [02:18:51] Grounding
+🎤 [02:20:36] Copilot demo
+🎤 [02:27:58] Juypter Notebooks
+🎤 [02:32:10] Azure Cognitive Services
+🎤 [02:35:02] Computer Vision
+🎤 [02:38:44] Custom Vision
+🎤 [02:54:42] Form Recognizer
+🎤 [02:58:01] OCR Computer Vision
+🎤 [03:02:54] Text Analysis
 🎤 [03:06:37] QnA Maker
 🎤 [03:25:11] LUIS
-🎤 [03:31:44] ML Studio
+🎤 [03:30:56] AutoML
 🎤 [03:58:31] MNIST
-🎤 [04:12:49] Follow Along Guidelines for Human AI Interaction
+🎤 [04:06:38] Data Labeling
+🎤 [04:07:09] Azure Machine Learning Service
 🎤 [04:18:10] Data Labeling
+🎤 [04:22:38] Clean up

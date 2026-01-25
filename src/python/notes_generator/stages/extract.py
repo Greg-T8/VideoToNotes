@@ -50,15 +50,15 @@ Analyze this transcript and create INDIVIDUAL note blocks for EACH LEAF SECTION 
 
 ## ⚠️ CRITICAL RULES - READ CAREFULLY
 
-### Rule 1: NEVER PUT CONTENT IN PARENT SECTIONS
-- Parent sections are marked with ☁️
-- Parent sections should have ZERO or minimal content
-- If you see a parent like "☁️ Features of generative AI solutions" with children like:
-  - 🎤 Transformer models
-  - 🎤 Tokenization
-  - 🎤 Embeddings
-- Then ALL content about Transformers goes to "🎤 Transformer models", NOT to the parent
-- ALL content about tokens/tokenization goes to "🎤 Tokenization", NOT to the parent
+### Rule 1: NEVER CREATE NOTE BLOCKS FOR PARENT SECTIONS (☁️)
+- Parent sections are marked with ☁️ - DO NOT create any note blocks for them
+- ONLY create note blocks for 🎤 sections
+- If you see content that seems like it belongs to a ☁️ parent, put it in the most relevant 🎤 child instead
+- Examples of parent sections you must SKIP:
+  - ☁️ ML Studio → put content in its children like 🎤 Azure Machine Learning Service
+  - ☁️ Follow Alongs → put content in its children like 🎤 Setup, 🎤 AutoML
+  - ☁️ Congitive Services → put content in its children
+- If you create ANY note block for a ☁️ section, that is WRONG
 
 ### Rule 2: CREATE SEPARATE BLOCKS FOR EACH CHILD
 - If the transcript discusses Transformers, Tokenization, AND Embeddings:
@@ -70,6 +70,26 @@ Analyze this transcript and create INDIVIDUAL note blocks for EACH LEAF SECTION 
 - "Tokens are split into subwords" → goes to 🎤 Tokenization (not parent)
 - "Attention mechanism allows focus" → goes to 🎤 Attention (not parent)
 - "Embeddings represent words as vectors" → goes to 🎤 Embeddings (not parent)
+
+### Rule 4: SPLIT RELATED SIBLING SECTIONS
+- When you see multiple 🎤 sections with similar names, they are SEPARATE topics
+- Example: "Form Recognizer", "Form Recognizer Custom Models", "Form Recognizer Prebuilt Models"
+  - These are THREE separate 🎤 sections, not one
+  - Content about custom models goes to "Form Recognizer Custom Models"
+  - Content about prebuilt/pre-built models goes to "Form Recognizer Prebuilt Models"
+  - Only general Form Recognizer overview goes to "Form Recognizer"
+- Example: "Computer Vision", "Computer Vision AI", "Custom Vision"
+  - These are separate sections - split content appropriately
+
+### Rule 5: USE EXACT SECTION TITLES FROM TOC (WITH TIMESTAMPS)
+- Copy the ENTIRE section title from the TOC exactly as written
+- Section titles include the marker (🎤), timestamp in brackets, AND the name
+- CORRECT: `### 🎤 [02:35:02] Computer Vision`
+- WRONG: `### 🎤 Computer Vision AI` (missing timestamp, wrong name)
+- WRONG: `### Computer Vision` (missing marker and timestamp)
+- The TOC above shows the ONLY valid titles - use them exactly
+- If content matches timestamp 02:35:02, use title `🎤 [02:35:02] Computer Vision`
+- Do NOT make up titles or omit any parts
 
 ## Output Format
 
@@ -96,13 +116,15 @@ For EACH applicable 🎤 section, use this EXACT format:
 ## Additional Rules
 
 1. **ONE TOPIC PER BLOCK**: Each note block covers ONE specific section from the TOC
-2. **EXACT TITLES**: Copy section titles EXACTLY from the TOC - no modifications
+2. **EXACT TITLES**: Copy section titles EXACTLY from the TOC including marker and timestamp - no modifications
 3. **PREFER 🎤 OVER ☁️**: Always match content to 🎤 sections, almost never ☁️ sections
 4. Use `###` for section titles ONLY
 5. Use bold (`**text**`) for subsection headers within each note block
 6. Be technically precise — preserve exact values
-7. If a subsection has no content, write "- None in this chunk"
+7. If a subsection (like Key Facts) has no content, write "- None in this chunk"
 8. If content doesn't match any TOC section, skip it
+9. **ONLY OUTPUT SECTIONS WITH CONTENT**: Do NOT create note blocks for sections whose content is not in this chunk. If the section timestamp is outside this chunk's time range, do NOT output anything for it.
+10. **MATCH BY TIMESTAMP**: Use the chunk's timestamp range ({start_ts} – {end_ts}) to identify which TOC sections are covered. Only create notes for sections whose timestamps fall within or near this range.
 '''
 
 

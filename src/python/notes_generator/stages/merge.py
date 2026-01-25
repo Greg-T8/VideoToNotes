@@ -88,6 +88,7 @@ def normalize_section_title(title: str) -> str:
     Normalize a section title for grouping.
 
     Removes timestamps, emojis, and other prefixes to match related partials.
+    Returns the normalized title in lowercase for comparison.
     """
     # Remove emoji markers
     title = re.sub(r'[☁️🎤]+\s*', '', title)
@@ -97,33 +98,145 @@ def normalize_section_title(title: str) -> str:
     title = re.sub(r'^\[|\]$', '', title)
     # Remove "(continued)" suffix
     title = re.sub(r'\s*\(continued[^)]*\)\s*$', '', title, flags=re.IGNORECASE)
-    return title.strip()
+    # Normalize whitespace
+    title = re.sub(r'\s+', ' ', title)
+    # Return lowercase for grouping
+    return title.strip().lower()
+
+
+def extract_timestamp_seconds(timestamp_range: str) -> Optional[int]:
+    """
+    Extract the start timestamp in seconds from a timestamp range.
+
+    Args:
+        timestamp_range: String like "01:08:04 – 01:11:02"
+
+    Returns:
+        Start timestamp in seconds, or None if parsing fails
+    """
+    if not timestamp_range:
+        return None
+
+    match = re.match(r'(\d{1,2}):(\d{2}):?(\d{2})?', timestamp_range)
+    if match:
+        hours = int(match.group(1))
+        minutes = int(match.group(2))
+        seconds = int(match.group(3)) if match.group(3) else 0
+        return hours * 3600 + minutes * 60 + seconds
+    return None
+
+
+def is_empty_placeholder(partial: SectionPartial) -> bool:
+    """
+    Check if a partial is just an empty placeholder with no real content.
+
+    Args:
+        partial: The partial to check
+
+    Returns:
+        True if the partial contains only placeholder text
+    """
+    content = partial.raw_markdown.lower()
+    # Check if the only substantive content is "none in this chunk"
+    # Remove the header and check what's left
+    lines = [line.strip() for line in content.split('\n') if line.strip()]
+    # Filter out header lines (### ...), section headers (**Key Concepts**, etc.)
+    content_lines = [
+        line for line in lines
+        if not line.startswith('#') and not line.startswith('**')
+    ]
+    # If all content lines are just "- none in this chunk" or similar, it's empty
+    non_empty_lines = [
+        line for line in content_lines
+        if line not in ('- none in this chunk', '- none', 'none in this chunk')
+    ]
+    return len(non_empty_lines) == 0
 
 
 def group_partials_by_section(
-    partials: List[SectionPartial]
+    partials: List[SectionPartial],
+    max_time_gap_minutes: int = 30
 ) -> Dict[str, List[SectionPartial]]:
     """
     Group partials by their normalized section title.
 
+    Uses timestamp proximity to avoid grouping partials that are too far apart,
+    which would indicate they're actually different sections with similar names.
+
     Args:
         partials: List of all partials from extraction
+        max_time_gap_minutes: Maximum time gap between partials to group them
 
     Returns:
-        Dictionary mapping normalized section title to list of partials
+        Dictionary mapping section title to list of partials.
+        Uses the original title (with timestamp) for sections that have time gaps.
     """
-    grouped = defaultdict(list)
+    max_gap_seconds = max_time_gap_minutes * 60
 
+    # First pass: group by normalized title
+    temp_grouped = defaultdict(list)
     for partial in partials:
-        # Normalize the title for grouping
         normalized = normalize_section_title(partial.section_title)
-        grouped[normalized].append(partial)
+        temp_grouped[normalized].append(partial)
+
+    # Second pass: split groups with large time gaps
+    final_grouped = {}
+
+    for normalized, section_partials in temp_grouped.items():
+        # Sort by timestamp
+        section_partials.sort(
+            key=lambda p: extract_timestamp_seconds(p.timestamp_range) or 0
+        )
+
+        # Check for time gaps and split if needed
+        current_group = []
+        current_group_key = normalized
+
+        for partial in section_partials:
+            partial_ts = extract_timestamp_seconds(partial.timestamp_range)
+
+            if not current_group:
+                # First partial in group
+                current_group.append(partial)
+                # Use original title (preserves timestamp context)
+                current_group_key = normalize_section_title(partial.section_title)
+            else:
+                # Check time gap from last partial
+                last_ts = extract_timestamp_seconds(current_group[-1].timestamp_range)
+
+                if partial_ts and last_ts and (partial_ts - last_ts) > max_gap_seconds:
+                    # Time gap too large - this is a different section
+                    # Save current group
+                    if current_group:
+                        # Add index to key if duplicate
+                        key = current_group_key
+                        suffix = 1
+                        while key in final_grouped:
+                            suffix += 1
+                            key = f"{current_group_key}_{suffix}"
+                        final_grouped[key] = current_group
+
+                    # Start new group with this partial's title
+                    current_group = [partial]
+                    current_group_key = normalize_section_title(partial.section_title)
+                else:
+                    # Within time gap - add to current group
+                    current_group.append(partial)
+
+        # Save final group
+        if current_group:
+            key = current_group_key
+            suffix = 1
+            while key in final_grouped:
+                suffix += 1
+                key = f"{current_group_key}_{suffix}"
+            final_grouped[key] = current_group
 
     # Sort partials within each group by chunk_id
-    for section in grouped:
-        grouped[section].sort(key=lambda p: p.chunk_id)
+    for section in final_grouped:
+        final_grouped[section].sort(key=lambda p: p.chunk_id)
 
-    return dict(grouped)
+    return final_grouped
 
 
 def format_partials_for_prompt(partials: List[SectionPartial]) -> str:
@@ -157,7 +270,7 @@ async def merge_section(
     Merge partials for a single section.
 
     Args:
-        section_title: The section title
+        section_title: The section title (may be normalized key)
         partials: List of partials for this section
         section_info: Section metadata from index (level, order)
         model: The model to use for merging
@@ -168,10 +281,14 @@ async def merge_section(
     Returns:
         MergedSection with combined content
     """
+    # Use the original title from the first partial (preserves timestamp info)
+    # This helps the assemble stage match to the correct index section
+    original_title = partials[0].section_title if partials else section_title
+
     # If only one partial, no merge needed
     if len(partials) == 1:
         return MergedSection(
-            section_title=section_title,
+            section_title=original_title,
             timestamp_range=partials[0].timestamp_range,
             level=section_info.get("level", 3),
             order=section_info.get("order", 0),
@@ -181,7 +298,7 @@ async def merge_section(
     # Build the prompt
     partials_text = format_partials_for_prompt(partials)
     prompt = MERGE_PROMPT.format(
-        section_title=section_title,
+        section_title=original_title,
         partials=partials_text
     )
 
@@ -209,7 +326,7 @@ async def merge_section(
     timestamp_range = timestamp_match.group(1).strip() if timestamp_match else ""
 
     return MergedSection(
-        section_title=section_title,
+        section_title=original_title,
         timestamp_range=timestamp_range,
         level=section_info.get("level", 3),
         order=section_info.get("order", 0),
@@ -260,8 +377,15 @@ async def merge_all_sections(
     Returns:
         List of MergedSection objects
     """
+    # Filter out empty placeholder partials before grouping
+    original_count = len(partials)
+    filtered_partials = [p for p in partials if not is_empty_placeholder(p)]
+    filtered_count = original_count - len(filtered_partials)
+    if filtered_count > 0:
+        print(f"  Filtered {filtered_count} empty placeholder partials")
+
     # Group partials by section
-    grouped = group_partials_by_section(partials)
+    grouped = group_partials_by_section(filtered_partials)
 
     # Build section info lookup
     section_info = {
