@@ -1,0 +1,31 @@
+{
+  // -------------------------------------------------------------------------
+  // Configuration: settings.json
+  // Description: VS Code workspace settings for Exam Notes Generator
+  // Context: PowerShell and Python development environment
+  // Author: Greg Tate
+  // -------------------------------------------------------------------------
+  // PowerShell settings
+  "powershell.codeFormatting.preset": "OTBS",
+  "powershell.scriptAnalysis.enable": true,
+  "powershell.integratedConsole.showOnStartup": false,
+  // Python settings
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  // Editor settings
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.ps1": "powershell",
+    "*.psm1": "powershell",
+    "*.psd1": "powershell"
+  },
+  // File exclusions
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true
+  }
+}

@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+
+# Output files
+output/*.md
+output/*.zip
+
+# Temporary files
+*.tmp
+*.log
+
+# Chunk output directories
+transcript_chunks_*/
+
+# OS files
+.DS_Store
+Thumbs.db

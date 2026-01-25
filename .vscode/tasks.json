@@ -1,0 +1,67 @@
+{
+  // -------------------------------------------------------------------------
+  // Configuration: tasks.json
+  // Description: VS Code tasks for build, test, and run operations
+  // Context: Exam Notes Generator automation
+  // Author: Greg Tate
+  // -------------------------------------------------------------------------
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup: Create Virtual Environment",
+      "type": "shell",
+      "command": "python -m venv .venv",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup: Install Dependencies",
+      "type": "shell",
+      "command": ".venv/Scripts/pip install -r requirements.txt",
+      "group": "build",
+      "problemMatcher": [],
+      "dependsOn": "Setup: Create Virtual Environment"
+    },
+    {
+      "label": "PowerShell: Run Chunker",
+      "type": "shell",
+      "command": "pwsh -File src/powershell/transcript_chunker.ps1 -InputFile '${input:transcriptFile}'",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Run Full Pipeline",
+      "type": "shell",
+      "command": ".venv/Scripts/python -m notes_generator.main --contents data/samples/contents.md --chunks data/samples/transcript.zip",
+      "group": "build",
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/src/python"
+        }
+      }
+    },
+    {
+      "label": "Python: Run Tests",
+      "type": "shell",
+      "command": ".venv/Scripts/pytest tests/ -v",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Python: Lint",
+      "type": "shell",
+      "command": ".venv/Scripts/ruff check src/python",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "transcriptFile",
+      "type": "promptString",
+      "description": "Path to the transcript file to process",
+      "default": "data/samples/Transcript - FreeCodeCamp.txt"
+    }
+  ]
+}

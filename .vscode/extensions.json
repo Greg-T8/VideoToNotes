@@ -1,0 +1,16 @@
+{
+  // -------------------------------------------------------------------------
+  // Configuration: extensions.json
+  // Description: Recommended VS Code extensions
+  // Context: Exam Notes Generator development environment
+  // Author: Greg Tate
+  // -------------------------------------------------------------------------
+  "recommendations": [
+    "ms-vscode.powershell",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff",
+    "github.copilot"
+  ]
+}

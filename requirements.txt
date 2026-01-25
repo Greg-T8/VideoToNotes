@@ -1,0 +1,17 @@
+# -------------------------------------------------------------------------
+# File: requirements.txt
+# Description: Python dependencies for Exam Notes Generator
+# Context: Three-stage pipeline (extract, merge, assemble)
+# Author: Greg Tate
+# -------------------------------------------------------------------------
+
+# Core dependencies
+openai>=1.0.0
+httpx>=0.25.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Development
+ruff>=0.1.0

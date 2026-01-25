@@ -1,0 +1,106 @@
+{
+  // -------------------------------------------------------------------------
+  // Configuration: launch.json
+  // Description: VS Code debug configurations for PowerShell and Python
+  // Context: Exam Notes Generator - three-stage pipeline debugging
+  // Author: Greg Tate
+  // -------------------------------------------------------------------------
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PowerShell: Transcript Chunker",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": "${workspaceFolder}/src/powershell/transcript_chunker.ps1",
+      "args": [
+        "-InputFile",
+        "${workspaceFolder}/data/samples/Transcript - FreeCodeCamp.txt"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "PowerShell: Interactive Session",
+      "type": "PowerShell",
+      "request": "launch",
+      "script": "",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Python: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      }
+    },
+    {
+      "name": "Python: Notes Generator (Full Pipeline)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notes_generator.main",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      },
+      "args": [
+        "--contents",
+        "${workspaceFolder}/data/samples/contents.md",
+        "--chunks",
+        "${workspaceFolder}/data/samples/transcript.zip"
+      ]
+    },
+    {
+      "name": "Python: Extract Stage Only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notes_generator.stages.extract",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      }
+    },
+    {
+      "name": "Python: Merge Stage Only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notes_generator.stages.merge",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      }
+    },
+    {
+      "name": "Python: Assemble Stage Only",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "notes_generator.stages.assemble",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      }
+    },
+    {
+      "name": "Python: Run Tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "tests/",
+        "-v",
+        "--tb=short"
+      ],
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/src/python"
+      }
+    }
+  ]
+}
