@@ -82,6 +82,9 @@ $Main = {
 	# Display application banner
 	Show-Banner
 
+	# Verify GitHub CLI authentication for API access
+	Confirm-GitHubAuth
+
 	# Resolve and validate input paths
 	$script:IndexPath = Resolve-Path $Index
 	$script:TranscriptPath = Resolve-Path $Transcript
@@ -120,6 +123,45 @@ $Main = {
 # -------------------------------------------------------------------------
 
 $Helpers = {
+	function Confirm-GitHubAuth {
+		<#
+        .SYNOPSIS
+            Verifies GitHub CLI is authenticated for API access.
+        .DESCRIPTION
+            Checks that the user has run 'gh auth login' and has a valid token.
+            Displays the authenticated account before proceeding.
+        #>
+		Show-Stage "Auth" "Checking GitHub CLI status..."
+
+		# Check if gh CLI is installed
+		$ghPath = Get-Command gh -ErrorAction SilentlyContinue
+		if (-not $ghPath) {
+			throw "GitHub CLI (gh) not found. Install from https://cli.github.com/"
+		}
+
+		# Get authentication status with account info
+		$statusOutput = gh auth status 2>&1
+		if ($LASTEXITCODE -ne 0) {
+			Write-Host ""
+			Write-Host $statusOutput -ForegroundColor DarkGray
+			Write-Host ""
+			throw "GitHub CLI not authenticated. Run 'gh auth login' first."
+		}
+
+		# Extract the logged-in account from status output
+		$accountLine = $statusOutput | Select-String -Pattern "Logged in to .+ account (.+)" | Select-Object -First 1
+		if ($accountLine) {
+			$account = $accountLine.Matches.Groups[1].Value.Trim()
+			Write-Host "✓ " -ForegroundColor Green -NoNewline
+			Write-Host "Authenticated as: $account"
+		}
+		else {
+			# Fallback: just show authenticated
+			Write-Host "✓ " -ForegroundColor Green -NoNewline
+			Write-Host "GitHub CLI authenticated"
+		}
+	}
+
 	function Show-Stage {
 		<#
         .SYNOPSIS

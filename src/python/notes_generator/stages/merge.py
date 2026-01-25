@@ -177,10 +177,10 @@ async def merge_section(
         partials=partials_text
     )
 
-    # Call LLM
+    # Initialize LLM client if not provided
     if llm_client is None:
-        # TODO: Initialize default LLM client
-        raise NotImplementedError("LLM client initialization not yet implemented")
+        from notes_generator.llm_client import GitHubModelsClient
+        llm_client = GitHubModelsClient()
 
     response = await llm_client.generate(
         prompt=prompt,

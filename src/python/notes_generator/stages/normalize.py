@@ -114,10 +114,10 @@ async def normalize_index(
     # Build the prompt
     prompt = NORMALIZE_PROMPT.format(raw_index=raw_content)
 
-    # Call LLM
+    # Initialize LLM client if not provided
     if llm_client is None:
-        # TODO: Initialize default LLM client
-        raise NotImplementedError("LLM client initialization not yet implemented")
+        from notes_generator.llm_client import GitHubModelsClient
+        llm_client = GitHubModelsClient()
 
     response = await llm_client.generate(
         prompt=prompt,
