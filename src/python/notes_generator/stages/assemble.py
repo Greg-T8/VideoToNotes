@@ -365,6 +365,7 @@ def build_document_structure(
     # Track rendered sections to prevent infinite recursion
     rendered_sections = set()
     sections_with_rules = set()  # Track which sections already have a rule before them
+    last_content_section = [None]  # Track last section that had content (mutable for closure)
 
     # Render each section recursively
     def render_section(section: IndexSection, depth: int = 0, parent_has_content: bool = False,
@@ -383,14 +384,15 @@ def build_document_structure(
         has_content = section.title in content_map
 
         # Add horizontal rule before sections with content
-        # Skip if: parent has content (would be consecutive), or this is the first content section
-        should_add_rule = has_content and not parent_has_content and len(sections_with_rules) > 0
+        # Skip only if this is the very first content section in the document
+        should_add_rule = has_content and len(sections_with_rules) > 0
         if should_add_rule:
             section_lines.append("---")
             section_lines.append("")
 
         if has_content:
             sections_with_rules.add(section.title)
+            last_content_section[0] = section.title
 
         # Add heading
         heading_prefix = "#" * section.level

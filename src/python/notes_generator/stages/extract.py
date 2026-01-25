@@ -65,6 +65,10 @@ Analyze this transcript and create INDIVIDUAL note blocks for EACH LEAF SECTION 
   - Create THREE separate note blocks
   - One for each 🎤 leaf section
   - Do NOT create one big block for the ☁️ parent
+- IMPORTANT: Even short sections (30 seconds to 1 minute) deserve their own note block
+- Example: If "Responsible AI" has children "Fairness", "Reliability", "Privacy", etc.
+  - Create SEPARATE note blocks for EACH: 🎤 Fairness, 🎤 Reliability, 🎤 Privacy
+  - Do NOT bundle them all into one "Responsible AI" block
 
 ### Rule 3: MATCH CONTENT TO MOST SPECIFIC SECTION
 - "Tokens are split into subwords" → goes to 🎤 Tokenization (not parent)
