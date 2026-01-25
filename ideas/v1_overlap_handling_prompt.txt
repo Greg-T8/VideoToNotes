@@ -1,0 +1,25 @@
+## Special Handling: High Overlap Detected
+
+These partials have ~{overlap_percentage}% content overlap due to chunk boundary placement.
+
+### Partial 1 (Chunk 4)
+**Timestamps**: 12:00 – 15:30
+{partial_1}
+
+### Partial 2 (Chunk 5)
+**Timestamps**: 14:45 – 18:20
+{partial_2}
+
+## Overlap Resolution Rules
+
+1. For overlapping timestamp ranges (14:45–15:30 in this case):
+   - Content in this range may appear in both partials
+   - Deduplicate aggressively—keep ONE version of each point
+
+2. If the same bullet appears twice with minor wording differences:
+   - Choose the more precise/complete version
+   - Do NOT create two similar bullets
+
+3. Timestamp output should be: 12:00 – 18:20 (full span, no gap notation)
+
+Merge with aggressive deduplication.

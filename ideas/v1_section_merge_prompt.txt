@@ -1,0 +1,105 @@
+You are an expert exam study guide editor. Your task is to merge multiple partial notes for the same exam topic into ONE coherent, comprehensive section.
+
+## Section Title
+{section_title}
+
+## Source Partial Notes
+The following notes were extracted from different portions of a video transcript. They cover the same topic but may have:
+- Overlapping content (duplicates)
+- Complementary details (unique to each partial)
+- Slightly different phrasing of the same concept
+- Timestamp gaps or overlaps
+
+---
+### Partial 1 of {total_partials}
+**Source Chunk**: {chunk_id_1}
+{partial_notes_1}
+
+---
+### Partial 2 of {total_partials}
+**Source Chunk**: {chunk_id_2}
+{partial_notes_2}
+
+---
+{additional_partials_if_any}
+
+## Merge Instructions
+
+### 1. Timestamp Handling
+- Extract all timestamps from partials
+- Final timestamp range: [earliest start] – [latest end]
+- If timestamps overlap, this is normal (chunk boundaries don't align with topic boundaries)
+- If there's a gap > 5 minutes between partials, note it as "(continued at [timestamp])" in the content
+
+### 2. Key Concepts
+- Combine all bullet points across partials
+- REMOVE exact duplicates (identical phrasing)
+- KEEP near-duplicates if they add nuance (merge into one refined bullet)
+- Preserve technical accuracy—do not simplify or generalize
+- Order logically: foundational concepts first, advanced concepts later
+
+### 3. Definitions
+- If the same term is defined multiple times:
+  - Keep the MOST COMPLETE definition
+  - If definitions conflict, include both with clarification: "(also described as: ...)"
+- If a definition in one partial is incomplete, supplement with details from another
+
+### 4. Key Facts
+- Remove redundant facts (same information, different words)
+- Keep all UNIQUE facts
+- If facts appear to contradict:
+  - Check if they apply to different contexts (e.g., "default is X" vs "when configured, default is Y")
+  - If true contradiction, flag with: "⚠️ Note: Source mentions both X and Y—verify current behavior"
+- Order chronologically or by dependency (prerequisite facts first)
+
+### 5. Examples
+- Keep ALL unique examples (examples are high-value for exams)
+- Remove only exact duplicate examples
+- If the same scenario is explained differently, keep the clearer version
+- Preserve code snippets, CLI commands, and configuration samples exactly
+
+### 6. Exam Tips 🎯
+- Combine all tips, remove duplicates
+- Prioritize actionable tips ("Remember to..." > "This is important")
+- If tips conflict, keep both with context
+- Consolidate similar tips into stronger combined tips
+
+### 7. Content NOT in Partials
+- Do NOT add information not present in the source partials
+- Do NOT infer or expand beyond what's provided
+- Do NOT add generic study advice not specific to this section
+
+## Output Format
+
+Produce exactly this structure:
+
+### {section_title}
+**Timestamp**: [earliest] – [latest]
+
+**Key Concepts**
+- [merged bullets]
+
+**Definitions**
+- **[Term]**: [merged definition]
+
+**Key Facts**
+- [merged facts]
+
+**Examples**
+- [all unique examples]
+
+**Exam Tips 🎯**
+- [merged tips]
+
+## Edge Case Handling
+
+| Situation | Action |
+|-----------|--------|
+| Only 1 partial provided | Return it unchanged (no merge needed) |
+| Empty section in a partial | Omit that section, use content from other partials |
+| All partials empty for a subsection | Omit that subsection entirely |
+| Conflicting technical details | Include both with ⚠️ flag |
+| Same example, different detail level | Keep the more detailed version |
+| Timestamps out of order | Sort chronologically, note if non-linear |
+
+Now merge the partials above into a single cohesive section.

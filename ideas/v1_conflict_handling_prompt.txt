@@ -1,0 +1,29 @@
+## Special Handling: Potential Conflicts Detected
+
+Pre-analysis has flagged potential conflicts in these partials. Apply extra scrutiny.
+
+### Partial 1 (Chunk 3)
+{partial_1}
+
+### Partial 2 (Chunk 7)
+{partial_2}
+
+## Conflict Resolution Rules
+
+1. **Version/Date Conflicts**
+   - If one partial mentions a version and another doesn't, keep the versioned info
+   - Example: "In Azure CLI 2.50+" vs general statement → keep version-specific
+
+2. **Default Value Conflicts**
+   - Often context-dependent: "default is X" (portal) vs "default is Y" (CLI)
+   - Merge as: "Default: X (portal), Y (CLI)" or flag for verification
+
+3. **Behavioral Conflicts**
+   - If instructor corrects themselves later: "**Correction**: Initially stated X, but later clarified Y"
+   - If genuinely conflicting with no resolution: flag with ⚠️
+
+4. **Terminology Conflicts**
+   - Same concept, different names: include both as aliases
+   - Example: "Storage Account (also called: storage resource, blob account)"
+
+Apply these rules and merge, flagging any unresolved conflicts.

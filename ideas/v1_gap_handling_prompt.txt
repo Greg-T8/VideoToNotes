@@ -1,0 +1,18 @@
+## Special Handling: Non-Contiguous Content
+
+The partials below have a significant timestamp gap, indicating the instructor returned to this topic later in the video.
+
+### Partial 1
+**Timestamps**: 05:30 – 08:45
+{partial_1}
+
+### Partial 2
+**Timestamps**: 45:20 – 48:10
+{partial_2}
+
+## Additional Instructions
+- Merge as normal, but add a note at the start:
+  "📝 This topic is covered in two parts: [05:30–08:45] and [45:20–48:10]"
+- If Partial 2 adds corrections or updates to Partial 1, clearly indicate:
+  "**Update**: Later in the video, the instructor clarified that..."
+- Do not artificially blend content that was intentionally separated
