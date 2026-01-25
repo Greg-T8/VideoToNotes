@@ -8,10 +8,14 @@
 """
 Exam Notes Generator
 
-A three-stage pipeline for generating structured notes from video transcripts:
-1. Extract: Process transcript chunks into structured notes (parallel, fast model)
-2. Merge: Combine partials by section, deduplicate (reasoning model)
-3. Assemble: Build final document from TOC (deterministic)
+Generate structured, exam-focused study notes from video transcripts using AI.
+
+Pipeline stages:
+0. Normalize: Convert varied index formats to consistent JSON (LLM)
+1. Chunk: Split transcript into ~20KB pieces (PowerShell)
+2. Extract: Generate section notes from chunks in parallel (LLM)
+3. Merge: Combine and deduplicate partials by section (LLM)
+4. Assemble: Build final markdown document (deterministic)
 """
 
 __version__ = "0.1.0"
