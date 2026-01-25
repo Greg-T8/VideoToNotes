@@ -11,14 +11,165 @@ Assemble Stage
 Builds the final document from merged sections.
 - Deterministic (no LLM)
 - Reconstructs heading hierarchy from index
+- Uses fuzzy matching to handle LLM section title variations
 - Outputs formatted Markdown
 """
 
+import re
 from datetime import datetime
+from difflib import SequenceMatcher
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 
 from notes_generator.models import NormalizedIndex, MergedSection, IndexSection
+
+
+def normalize_title(title: str) -> str:
+    """
+    Normalize a title for fuzzy matching.
+
+    Removes timestamps, brackets, emojis, extra whitespace, and lowercases.
+    """
+    # Remove emoji markers (☁️, 🎤)
+    title = re.sub(r'[☁️🎤]+\s*', '', title)
+    # Remove timestamp prefixes like [00:22:31] or (00:22:31)
+    title = re.sub(r'[\[(]\d{1,2}:\d{2}(?::\d{2})?[\])]\s*', '', title)
+    # Remove leading/trailing brackets
+    title = re.sub(r'^\[|\]$', '', title)
+    # Remove parenthetical notes like "(continued)"
+    title = re.sub(r'\s*\([^)]+\)\s*$', '', title)
+    # Normalize whitespace (collapse multiple spaces, remove around hyphens)
+    title = re.sub(r'\s+', ' ', title)
+    # Lowercase and strip
+    return title.lower().strip()
+
+
+def extract_timestamp(title: str) -> Optional[str]:
+    """
+    Extract timestamp from a title if present.
+
+    Args:
+        title: Section title that may contain a timestamp
+
+    Returns:
+        Timestamp string (HH:MM:SS) or None
+    """
+    match = re.search(r'[\[(]?(\d{1,2}:\d{2}(?::\d{2})?)[\])]?', title)
+    return match.group(1) if match else None
+
+
+def fuzzy_match_section(
+    merged_title: str,
+    index_sections: List[IndexSection],
+    threshold: float = 0.85
+) -> Optional[str]:
+    """
+    Find the best matching index section title for a merged section.
+
+    Uses a higher threshold (0.85) to avoid matching similar but distinct
+    section names like "Text Analytics" vs "Text Analysis".
+
+    Args:
+        merged_title: The title from the merged section
+        index_sections: List of index sections to match against
+        threshold: Minimum similarity ratio (0-1) for a match
+
+    Returns:
+        The exact title from the index, or None if no match found
+    """
+    normalized_merged = normalize_title(merged_title)
+    merged_ts = extract_timestamp(merged_title)
+
+    best_match = None
+    best_ratio = 0.0
+
+    for section in index_sections:
+        normalized_index = normalize_title(section.title)
+
+        # Exact match after normalization
+        if normalized_merged == normalized_index:
+            return section.title
+
+        # Fuzzy match
+        ratio = SequenceMatcher(None, normalized_merged, normalized_index).ratio()
+
+        # For very similar titles (>0.9), also check timestamps if available
+        if ratio > 0.9 and merged_ts:
+            section_ts = extract_timestamp(section.title)
+            if section_ts and merged_ts[:5] == section_ts[:5]:
+                # Timestamps match (at least HH:MM) - strong match
+                return section.title
+
+        if ratio > best_ratio and ratio >= threshold:
+            best_ratio = ratio
+            best_match = section.title
+
+    return best_match
+
+
+def build_content_map(
+    merged_sections: List[MergedSection],
+    index: NormalizedIndex
+) -> Dict[str, MergedSection]:
+    """
+    Build a content map with fuzzy matching of section titles.
+
+    Uses timestamps to disambiguate similar section titles like
+    "Text Analytics" vs "Text Analysis".
+
+    Args:
+        merged_sections: List of merged section content
+        index: The normalized index for title matching
+
+    Returns:
+        Dictionary mapping index section titles to merged content
+    """
+    content_map = {}
+
+    # Build normalized index lookup with timestamp disambiguation
+    # Key: (normalized_title, timestamp_prefix) -> index_title
+    norm_to_index = {}
+    norm_only_to_index = {}  # Fallback without timestamp
+
+    for section in index.sections:
+        norm = normalize_title(section.title)
+        ts = extract_timestamp(section.title)
+        ts_prefix = ts[:5] if ts else None  # HH:MM prefix
+
+        # Store with timestamp for disambiguation
+        if ts_prefix:
+            key = (norm, ts_prefix)
+            norm_to_index[key] = section.title
+
+        # Also store without timestamp as fallback (first one wins)
+        if norm not in norm_only_to_index:
+            norm_only_to_index[norm] = section.title
+
+    for merged in merged_sections:
+        merged_norm = normalize_title(merged.section_title)
+        merged_ts = extract_timestamp(merged.section_title)
+        merged_ts_prefix = merged_ts[:5] if merged_ts else None
+
+        matched_title = None
+
+        # Try exact match with timestamp first
+        if merged_ts_prefix:
+            key = (merged_norm, merged_ts_prefix)
+            if key in norm_to_index:
+                matched_title = norm_to_index[key]
+
+        # Try exact normalized match (without timestamp)
+        if not matched_title and merged_norm in norm_only_to_index:
+            matched_title = norm_only_to_index[merged_norm]
+
+        # Try fuzzy match as last resort
+        if not matched_title:
+            matched_title = fuzzy_match_section(merged.section_title, index.sections)
+
+        if matched_title and matched_title not in content_map:
+            content_map[matched_title] = merged
+
+    return content_map
 
 
 def build_hierarchy_map(index: NormalizedIndex) -> Dict[str, List[str]]:
@@ -76,8 +227,8 @@ def build_document_structure(
     Returns:
         Complete markdown document
     """
-    # Create lookup for merged content
-    content_map = {s.section_title: s for s in merged_sections}
+    # Create lookup for merged content with fuzzy matching
+    content_map = build_content_map(merged_sections, index)
 
     # Get all top-level sections (level 2)
     top_level = [s for s in index.sections if s.level == 2]
@@ -103,9 +254,26 @@ def build_document_structure(
     lines.append("---")
     lines.append("")
 
+    # Track rendered sections to prevent infinite recursion
+    rendered_sections = set()
+
     # Render each section recursively
     def render_section(section: IndexSection, depth: int = 0):
+        # Prevent infinite recursion from circular references
+        if section.title in rendered_sections:
+            return []
+        rendered_sections.add(section.title)
+
+        # Limit recursion depth as safety measure
+        if depth > 10:
+            return []
+
         section_lines = []
+
+        # Add horizontal rule before leaf sections (sections with content)
+        if section.title in content_map:
+            section_lines.append("---")
+            section_lines.append("")
 
         # Add heading
         heading_prefix = "#" * section.level

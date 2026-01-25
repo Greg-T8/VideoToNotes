@@ -63,8 +63,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--merge-model",
         type=str,
-        default="deepseek-r1",
-        help="Model for merge stage (default: deepseek-r1)"
+        default="gpt-4.1-mini",
+        help="Model for merge stage (default: gpt-4.1-mini)"
     )
 
     parser.add_argument(
@@ -87,6 +87,12 @@ def parse_args() -> argparse.Namespace:
         help="Enable verbose output"
     )
 
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Save intermediate outputs for debugging"
+    )
+
     return parser.parse_args()
 
 
@@ -105,19 +111,28 @@ def print_error(message: str) -> None:
     print(f"✗ {message}", file=sys.stderr)
 
 
-def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
+def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = False) -> int:
     """
     Run the notes generation pipeline.
 
     Args:
         config: Pipeline configuration
         verbose: Enable verbose output
+        debug: Save intermediate outputs for debugging
 
     Returns:
         Exit code (0 for success)
     """
+    import json
+    from dataclasses import asdict
+
     # Initialize pipeline state
     state = PipelineState(config=config)
+
+    # Debug output directory
+    debug_dir = Path(config.output_path).parent / "debug"
+    if debug:
+        debug_dir.mkdir(parents=True, exist_ok=True)
 
     try:
         # Stage 0: Normalize
@@ -126,16 +141,21 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
 
         from notes_generator.stages.normalize import normalize_index_sync
 
-        # TODO: Initialize LLM client
-        # For now, show what would happen
-        print_stage("Normalize", f"Would process: {config.index_path}")
-        print_stage("Normalize", "LLM client not yet implemented - skipping")
+        state.normalized_index = normalize_index_sync(
+            Path(config.index_path),
+            model=config.extract_model
+        )
+        print_success(f"Index normalized: {len(state.normalized_index.sections)} sections")
 
-        # state.normalized_index = normalize_index_sync(
-        #     Path(config.index_path),
-        #     model=config.extract_model
-        # )
-        # print_success(f"Index normalized: {len(state.normalized_index.sections)} sections")
+        if debug:
+            # Save normalized index
+            index_data = {
+                "title": state.normalized_index.title,
+                "sections": [asdict(s) for s in state.normalized_index.sections]
+            }
+            (debug_dir / "01_normalized_index.json").write_text(
+                json.dumps(index_data, indent=2), encoding="utf-8"
+            )
 
         # Stage 1: Chunk
         print_stage("Chunk", "Splitting transcript into chunks...")
@@ -143,17 +163,13 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
 
         from notes_generator.stages.chunk import chunk_transcript, load_chunks_from_zip
 
-        # TODO: Actually run chunking
-        print_stage("Chunk", f"Would process: {config.transcript_path}")
-        print_stage("Chunk", "Chunking not yet integrated - skipping")
-
-        # zip_path = chunk_transcript(
-        #     Path(config.transcript_path),
-        #     max_chars=config.chunk_size,
-        #     period_seconds=config.chunk_period
-        # )
-        # state.chunks = load_chunks_from_zip(zip_path)
-        # print_success(f"Transcript chunked: {len(state.chunks)} chunks")
+        zip_path = chunk_transcript(
+            Path(config.transcript_path),
+            max_chars=config.chunk_size,
+            period_seconds=config.chunk_period
+        )
+        state.chunks = load_chunks_from_zip(zip_path)
+        print_success(f"Transcript chunked: {len(state.chunks)} chunks")
 
         # Stage 2: Extract
         print_stage("Extract", "Extracting notes from chunks...")
@@ -161,16 +177,24 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
 
         from notes_generator.stages.extract import extract_all_chunks_sync
 
-        # TODO: Run extraction
-        print_stage("Extract", f"Would use model: {config.extract_model}")
-        print_stage("Extract", "LLM client not yet implemented - skipping")
+        state.partials = extract_all_chunks_sync(
+            state.chunks,
+            state.normalized_index,
+            model=config.extract_model
+        )
+        print_success(f"Extracted: {len(state.partials)} section partials")
 
-        # state.partials = extract_all_chunks_sync(
-        #     state.chunks,
-        #     state.normalized_index,
-        #     model=config.extract_model
-        # )
-        # print_success(f"Extracted: {len(state.partials)} section partials")
+        if debug:
+            # Save extracted partials
+            partials_data = [asdict(p) for p in state.partials]
+            (debug_dir / "02_extracted_partials.json").write_text(
+                json.dumps(partials_data, indent=2), encoding="utf-8"
+            )
+            # Also save section titles for quick analysis
+            titles = sorted(set(p.section_title for p in state.partials))
+            (debug_dir / "02_extracted_titles.txt").write_text(
+                "\n".join(titles), encoding="utf-8"
+            )
 
         # Stage 3: Merge
         print_stage("Merge", "Merging section partials...")
@@ -178,16 +202,24 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
 
         from notes_generator.stages.merge import merge_all_sections_sync
 
-        # TODO: Run merge
-        print_stage("Merge", f"Would use model: {config.merge_model}")
-        print_stage("Merge", "LLM client not yet implemented - skipping")
+        state.merged_sections = merge_all_sections_sync(
+            state.partials,
+            state.normalized_index,
+            model=config.merge_model
+        )
+        print_success(f"Merged: {len(state.merged_sections)} sections")
 
-        # state.merged_sections = merge_all_sections_sync(
-        #     state.partials,
-        #     state.normalized_index,
-        #     model=config.merge_model
-        # )
-        # print_success(f"Merged: {len(state.merged_sections)} sections")
+        if debug:
+            # Save merged sections
+            merged_data = [asdict(m) for m in state.merged_sections]
+            (debug_dir / "03_merged_sections.json").write_text(
+                json.dumps(merged_data, indent=2), encoding="utf-8"
+            )
+            # Also save section titles for quick analysis
+            titles = sorted(set(m.section_title for m in state.merged_sections))
+            (debug_dir / "03_merged_titles.txt").write_text(
+                "\n".join(titles), encoding="utf-8"
+            )
 
         # Stage 4: Assemble
         print_stage("Assemble", "Building final document...")
@@ -195,21 +227,15 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False) -> int:
 
         from notes_generator.stages.assemble import assemble_document
 
-        # TODO: Run assembly
-        print_stage("Assemble", f"Would output to: {config.output_path}")
-        print_stage("Assemble", "No merged sections to assemble - skipping")
+        assemble_document(
+            state.normalized_index,
+            state.merged_sections,
+            Path(config.output_path)
+        )
+        print_success(f"Document created: {config.output_path}")
 
-        # assemble_document(
-        #     state.normalized_index,
-        #     state.merged_sections,
-        #     Path(config.output_path)
-        # )
-        # print_success(f"Document created: {config.output_path}")
-
-        print()
-        print("=" * 60)
-        print("Pipeline structure validated. LLM integration pending.")
-        print("=" * 60)
+        if debug:
+            print_success(f"Debug output saved to: {debug_dir}")
 
         return 0
 
@@ -267,7 +293,7 @@ def main() -> int:
     print()
 
     # Run the pipeline
-    return run_pipeline(config, verbose=args.verbose)
+    return run_pipeline(config, verbose=args.verbose, debug=args.debug)
 
 
 if __name__ == "__main__":

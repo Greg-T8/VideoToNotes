@@ -34,7 +34,7 @@
     LLM model for extraction stage. Default: gpt-4.1-mini
 
 .PARAMETER MergeModel
-    LLM model for merge stage. Default: deepseek-r1
+    LLM model for merge stage. Default: gpt-4.1-mini
 
 .PARAMETER SkipChunk
     Skip chunking if transcript is already chunked (provide ZIP path instead).
@@ -65,7 +65,7 @@ param(
 	[string]$ExtractModel = "gpt-4.1-mini",
 
 	[Parameter(HelpMessage = "Model for merge stage")]
-	[string]$MergeModel = "deepseek-r1"
+	[string]$MergeModel = "gpt-4.1-mini"
 )
 
 Set-StrictMode -Version Latest

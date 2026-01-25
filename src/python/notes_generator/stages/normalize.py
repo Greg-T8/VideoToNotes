@@ -123,7 +123,7 @@ async def normalize_index(
         prompt=prompt,
         model=model,
         temperature=0.1,  # Low temperature for consistent parsing
-        max_tokens=4000
+        max_tokens=16000  # Larger for complex indexes
     )
 
     # Parse JSON response
@@ -132,11 +132,29 @@ async def normalize_index(
     except json.JSONDecodeError as e:
         # Try to extract JSON from response if wrapped in markdown
         import re
-        json_match = re.search(r'\{[\s\S]*\}', response)
+
+        # Remove markdown code fences if present
+        cleaned = re.sub(r'^```(?:json)?\s*', '', response, flags=re.MULTILINE)
+        cleaned = re.sub(r'\s*```$', '', cleaned, flags=re.MULTILINE)
+
+        # Try to find the JSON object
+        json_match = re.search(r'\{[\s\S]*\}', cleaned)
         if json_match:
-            data = json.loads(json_match.group())
+            try:
+                data = json.loads(json_match.group())
+            except json.JSONDecodeError:
+                # Try to fix common JSON issues
+                fixed = json_match.group()
+                # Fix trailing commas
+                fixed = re.sub(r',(\s*[}\]])', r'\1', fixed)
+                # Fix unquoted keys (simple cases)
+                fixed = re.sub(r'(\{|\,)\s*(\w+)\s*:', r'\1"\2":', fixed)
+                try:
+                    data = json.loads(fixed)
+                except json.JSONDecodeError as e2:
+                    raise ValueError(f"Failed to parse LLM response as JSON after cleanup: {e2}\nResponse preview: {response[:500]}")
         else:
-            raise ValueError(f"Failed to parse LLM response as JSON: {e}")
+            raise ValueError(f"Failed to parse LLM response as JSON: {e}\nResponse preview: {response[:500]}")
 
     # Convert to NormalizedIndex
     return NormalizedIndex.from_dict(data)
@@ -212,6 +230,8 @@ def index_to_toc_string(index: NormalizedIndex) -> str:
     Convert normalized index back to a readable TOC string.
 
     Useful for including in prompts for the extraction stage.
+    Uses ☁️ for parent sections and 🎤 for leaf sections to help
+    the LLM distinguish content targets.
 
     Args:
         index: The normalized index
@@ -223,7 +243,12 @@ def index_to_toc_string(index: NormalizedIndex) -> str:
 
     for section in sorted(index.sections, key=lambda s: s.order):
         prefix = "#" * section.level
-        lines.append(f"{prefix} [{section.timestamp}] {section.title}")
+
+        # Determine if leaf (no children) or parent (has children)
+        is_leaf = len(section.children) == 0
+        marker = "🎤" if is_leaf else "☁️"
+
+        lines.append(f"{prefix} {marker} [{section.timestamp}] {section.title}")
 
     return "\n".join(lines)
 

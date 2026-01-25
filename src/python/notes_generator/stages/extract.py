@@ -34,7 +34,7 @@ EXTRACT_PROMPT = '''# Chunk Processing
 
 Generate exam-focused study notes from this transcript chunk.
 
-## Table of Contents
+## Table of Contents (EXACT section titles to use)
 {toc}
 
 ## Transcript Chunk {chunk_id} of {total_chunks}
@@ -46,11 +46,37 @@ Timestamps: {start_ts} – {end_ts}
 
 ## Instructions
 
-Map each portion of this transcript to the appropriate TOC section based on timestamps.
-For EACH section that has content in this chunk, generate notes in this EXACT format:
+Analyze this transcript and create INDIVIDUAL note blocks for EACH LEAF SECTION (🎤 sections) from the TOC above.
 
-### [Section Title from TOC]
-**Timestamp**: [first timestamp] – [last timestamp in this chunk for this section]
+## ⚠️ CRITICAL RULES - READ CAREFULLY
+
+### Rule 1: NEVER PUT CONTENT IN PARENT SECTIONS
+- Parent sections are marked with ☁️
+- Parent sections should have ZERO or minimal content
+- If you see a parent like "☁️ Features of generative AI solutions" with children like:
+  - 🎤 Transformer models
+  - 🎤 Tokenization
+  - 🎤 Embeddings
+- Then ALL content about Transformers goes to "🎤 Transformer models", NOT to the parent
+- ALL content about tokens/tokenization goes to "🎤 Tokenization", NOT to the parent
+
+### Rule 2: CREATE SEPARATE BLOCKS FOR EACH CHILD
+- If the transcript discusses Transformers, Tokenization, AND Embeddings:
+  - Create THREE separate note blocks
+  - One for each 🎤 leaf section
+  - Do NOT create one big block for the ☁️ parent
+
+### Rule 3: MATCH CONTENT TO MOST SPECIFIC SECTION
+- "Tokens are split into subwords" → goes to 🎤 Tokenization (not parent)
+- "Attention mechanism allows focus" → goes to 🎤 Attention (not parent)
+- "Embeddings represent words as vectors" → goes to 🎤 Embeddings (not parent)
+
+## Output Format
+
+For EACH applicable 🎤 section, use this EXACT format:
+
+### [EXACT Section Title from TOC - copy the 🎤 section title verbatim]
+**Timestamp**: [first timestamp] – [last timestamp]
 
 **Key Concepts**
 - [main concepts as bullet points]
@@ -62,21 +88,21 @@ For EACH section that has content in this chunk, generate notes in this EXACT fo
 - [important facts, numbers, specifications]
 
 **Examples**
-- [concrete examples, commands, configurations mentioned]
+- [concrete examples mentioned]
 
 **Exam Tips 🎯**
-- [what to remember for the exam, common pitfalls]
+- [exam focus points]
 
-## Rules
+## Additional Rules
 
-1. Use `###` for section titles ONLY
-2. Use bold (`**text**`) for subsection headers
-3. Include ALL content from the transcript — no information loss
-4. If content spans multiple sections, create separate note blocks for each
-5. Be technically precise — preserve exact values, commands, configurations
-6. If a subsection has no content (e.g., no examples), write "- None in this chunk"
-7. Timestamps should reflect the actual time range covered in this chunk for each section
-8. Only generate notes for sections that have content in THIS chunk
+1. **ONE TOPIC PER BLOCK**: Each note block covers ONE specific section from the TOC
+2. **EXACT TITLES**: Copy section titles EXACTLY from the TOC - no modifications
+3. **PREFER 🎤 OVER ☁️**: Always match content to 🎤 sections, almost never ☁️ sections
+4. Use `###` for section titles ONLY
+5. Use bold (`**text**`) for subsection headers within each note block
+6. Be technically precise — preserve exact values
+7. If a subsection has no content, write "- None in this chunk"
+8. If content doesn't match any TOC section, skip it
 '''
 
 
@@ -118,11 +144,15 @@ async def extract_from_chunk(
         from notes_generator.llm_client import GitHubModelsClient
         llm_client = GitHubModelsClient()
 
+    # Build context for logging
+    context = f"extract chunk {chunk.chunk_id}/{total_chunks}"
+
     response = await llm_client.generate(
         prompt=prompt,
         model=model,
         temperature=0.2,
-        max_tokens=8000
+        max_tokens=8000,
+        context=context
     )
 
     # Parse response into SectionPartials
@@ -228,12 +258,26 @@ def extract_definitions(text: str) -> dict:
     return definitions
 
 
+def _get_request_delay(model: str) -> float:
+    """
+    Get inter-request delay based on model type.
+
+    Reasoning models have lower rate limits (500 RPM vs 5000 RPM),
+    so we add longer delays to avoid hitting limits.
+    """
+    if any(f"/{prefix}" in model or model.startswith(prefix)
+           for prefix in ("o1", "o3", "o4")):
+        return 0.5  # 500ms for reasoning models
+    else:
+        return 0.15  # 150ms for standard models
+
+
 async def extract_all_chunks(
     chunks: List[TranscriptChunk],
     index: NormalizedIndex,
     model: str = "gpt-4.1-mini",
     llm_client: Optional[object] = None,
-    max_concurrent: int = 5
+    max_concurrent: int = 4
 ) -> List[SectionPartial]:
     """
     Extract notes from all chunks in parallel.
@@ -243,18 +287,24 @@ async def extract_all_chunks(
         index: Normalized index for context
         model: The model to use for extraction
         llm_client: Optional pre-configured LLM client
-        max_concurrent: Maximum concurrent API calls
+        max_concurrent: Maximum concurrent API calls (default 4 to avoid rate limits)
 
     Returns:
         List of all SectionPartial objects from all chunks
     """
     total_chunks = len(chunks)
 
+    # Get inter-request delay based on model
+    request_delay = _get_request_delay(model)
+
     # Create semaphore for concurrency control
     semaphore = asyncio.Semaphore(max_concurrent)
 
     async def extract_with_semaphore(chunk: TranscriptChunk) -> List[SectionPartial]:
         async with semaphore:
+            # Add delay between requests to avoid rate limits
+            await asyncio.sleep(request_delay)
+
             return await extract_from_chunk(
                 chunk=chunk,
                 index=index,

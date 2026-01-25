@@ -1,0 +1,91 @@
+AI vs Generative AI
+Accountability
+Anomaly Detection AI
+Attention
+AutoML
+Automatic Featurization
+Azure Bot Service
+Azure Cognitive Services
+Azure Machine Learning Service
+Azure OpenAI Studio
+Azure OpenAI service pricing
+CUDA
+Classification
+Clean up
+Clustering
+Cognitive API Key and Endpoint
+Computer Vision
+Computer Vision AI
+Confusion Matrix
+Conversational AI
+Conversational AI (Note: No content in this chunk)
+Copilot demo
+Custom Vision Classification
+Custom Vision Features
+Custom Vision Object Detection
+Data Guard Rails
+Data Labeling
+Data Stores
+DataSets
+Datasets
+Designer
+Embeddings
+Endpoints
+Exam Guide Breakdown
+Experiments
+Explanation
+Face Service
+Fairness
+Features of generative AI solutions
+Forecast vs Prediction
+Form Recognizer
+GPU
+Grounding
+Guidelines for Human AI Interaction
+Inclusiveness
+Introduction to AI-900
+Introduction to AutoML
+Introduction to Azure OpenAI Service
+Introduction to Custom Vision
+Juypter Notebooks
+Key Elements of AI
+Knowledge Mining
+LUIS
+Labeling
+Layers of Machine Learning
+ML Designer
+ML Studio
+MNIST
+Metrics
+Model Registry
+Model Selection
+Natural Language Processing AI
+Netural Networks and Deep Learning
+Notebooks
+OCR
+OCR Computer Vision
+Pipelines
+Positional encoding
+Primary Metrics
+Privacy and security
+Project Types and Domains
+Prompt engineering
+QnA Maker
+QnAMaker
+Regression
+Reliability and safety
+Responsible AI
+Setup
+Simple ML Pipeline
+Speech and Translate Service
+Studio Compute
+Studio Data Labeling
+Supervised and Unsupervised Reinforcement
+Text Analysis
+Text Analytics
+Tokenization
+Transformer models
+Transparency
+Validation Type
+What are Copilots
+What is a LLM Large Language Model

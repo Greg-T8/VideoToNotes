@@ -88,10 +88,11 @@ def chunk_transcript(
             f"STDERR: {result.stderr}"
         )
 
-    # Find the ZIP file in output directory
-    zip_files = list(output_dir.glob("*.zip"))
+    # Find the ZIP file in parent of output directory (where chunker creates it)
+    parent_dir = output_dir.parent
+    zip_files = list(parent_dir.glob("*.zip"))
     if not zip_files:
-        raise FileNotFoundError(f"No ZIP file created in {output_dir}")
+        raise FileNotFoundError(f"No ZIP file created in {parent_dir}")
 
     # Return the most recently created ZIP
     return max(zip_files, key=lambda p: p.stat().st_mtime)

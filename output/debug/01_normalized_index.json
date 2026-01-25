@@ -1,0 +1,959 @@
+{
+  "title": "Introduction to AI-900",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": [
+        "Introduction to AI-900",
+        "Exam Guide Breakdown"
+      ]
+    },
+    {
+      "title": "Introduction to AI-900",
+      "timestamp": "00:00:00",
+      "level": 3,
+      "order": 2,
+      "parent": "Introduction",
+      "children": []
+    },
+    {
+      "title": "Exam Guide Breakdown",
+      "timestamp": "00:08:18",
+      "level": 3,
+      "order": 3,
+      "parent": "Introduction",
+      "children": []
+    },
+    {
+      "title": "ML Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": [
+        "Layers of Machine Learning",
+        "Key Elements of AI",
+        "DataSets",
+        "Labeling",
+        "Supervised and Unsupervised Reinforcement",
+        "Netural Networks and Deep Learning",
+        "GPU",
+        "CUDA",
+        "Simple ML Pipeline",
+        "Forecast vs Prediction",
+        "Metrics",
+        "Juypter Notebooks",
+        "Regression",
+        "Classification",
+        "Clustering",
+        "Confusion Matrix"
+      ]
+    },
+    {
+      "title": "Layers of Machine Learning",
+      "timestamp": "00:12:51",
+      "level": 3,
+      "order": 5,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Key Elements of AI",
+      "timestamp": "00:13:59",
+      "level": 3,
+      "order": 6,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "DataSets",
+      "timestamp": "00:14:57",
+      "level": 3,
+      "order": 7,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Labeling",
+      "timestamp": "00:16:37",
+      "level": 3,
+      "order": 8,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Supervised and Unsupervised Reinforcement",
+      "timestamp": "00:17:43",
+      "level": 3,
+      "order": 9,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Netural Networks and Deep Learning",
+      "timestamp": "00:19:09",
+      "level": 3,
+      "order": 10,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "GPU",
+      "timestamp": "00:21:25",
+      "level": 3,
+      "order": 11,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "CUDA",
+      "timestamp": "00:22:21",
+      "level": 3,
+      "order": 12,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Simple ML Pipeline",
+      "timestamp": "00:23:29",
+      "level": 3,
+      "order": 13,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Forecast vs Prediction",
+      "timestamp": "00:25:39",
+      "level": 3,
+      "order": 14,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Metrics",
+      "timestamp": "00:26:24",
+      "level": 3,
+      "order": 15,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Juypter Notebooks",
+      "timestamp": "00:27:58",
+      "level": 3,
+      "order": 16,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Regression",
+      "timestamp": "00:29:13",
+      "level": 3,
+      "order": 17,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Classification",
+      "timestamp": "00:30:50",
+      "level": 3,
+      "order": 18,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Clustering",
+      "timestamp": "00:31:44",
+      "level": 3,
+      "order": 19,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Confusion Matrix",
+      "timestamp": "00:32:29",
+      "level": 3,
+      "order": 20,
+      "parent": "ML Introduction",
+      "children": []
+    },
+    {
+      "title": "Common AI Workloads",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 21,
+      "parent": null,
+      "children": [
+        "Anomaly Detection AI",
+        "Computer Vision AI",
+        "Natural Language Processing AI",
+        "Conversational AI"
+      ]
+    },
+    {
+      "title": "Anomaly Detection AI",
+      "timestamp": "00:34:06",
+      "level": 3,
+      "order": 22,
+      "parent": "Common AI Workloads",
+      "children": []
+    },
+    {
+      "title": "Computer Vision AI",
+      "timestamp": "00:34:59",
+      "level": 3,
+      "order": 23,
+      "parent": "Common AI Workloads",
+      "children": []
+    },
+    {
+      "title": "Natural Language Processing AI",
+      "timestamp": "00:37:05",
+      "level": 3,
+      "order": 24,
+      "parent": "Common AI Workloads",
+      "children": []
+    },
+    {
+      "title": "Conversational AI",
+      "timestamp": "00:38:42",
+      "level": 3,
+      "order": 25,
+      "parent": "Common AI Workloads",
+      "children": []
+    },
+    {
+      "title": "Responsible AI",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 26,
+      "parent": null,
+      "children": [
+        "Responsible AI",
+        "Fairness",
+        "Reliability and safety",
+        "Privacy and security",
+        "Inclusiveness",
+        "Transparency",
+        "Accountability",
+        "Guidelines for Human AI Interaction",
+        "Follow Along Guidelines for Human AI Interaction"
+      ]
+    },
+    {
+      "title": "Responsible AI",
+      "timestamp": "00:40:16",
+      "level": 3,
+      "order": 27,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Fairness",
+      "timestamp": "00:41:09",
+      "level": 3,
+      "order": 28,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Reliability and safety",
+      "timestamp": "00:42:08",
+      "level": 3,
+      "order": 29,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Privacy and security",
+      "timestamp": "00:43:00",
+      "level": 3,
+      "order": 30,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Inclusiveness",
+      "timestamp": "00:43:45",
+      "level": 3,
+      "order": 31,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Transparency",
+      "timestamp": "00:44:24",
+      "level": 3,
+      "order": 32,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Accountability",
+      "timestamp": "00:45:00",
+      "level": 3,
+      "order": 33,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Guidelines for Human AI Interaction",
+      "timestamp": "00:45:45",
+      "level": 3,
+      "order": 34,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Follow Along Guidelines for Human AI Interaction",
+      "timestamp": "00:46:04",
+      "level": 3,
+      "order": 35,
+      "parent": "Responsible AI",
+      "children": []
+    },
+    {
+      "title": "Congitive Services",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 36,
+      "parent": null,
+      "children": [
+        "Azure Cognitive Services",
+        "Congitive API Key and Endpoint",
+        "Knowledge Mining",
+        "Face Service",
+        "Speech and Translate Service",
+        "Text Analytics",
+        "OCR Computer Vision",
+        "Form Recognizer",
+        "Form Recognizer Custom Models",
+        "Form Recognizer Prebuilt Models",
+        "LUIS",
+        "QnA Maker",
+        "Azure Bot Service"
+      ]
+    },
+    {
+      "title": "Azure Cognitive Services",
+      "timestamp": "00:57:33",
+      "level": 3,
+      "order": 37,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Congitive API Key and Endpoint",
+      "timestamp": "00:59:41",
+      "level": 3,
+      "order": 38,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Knowledge Mining",
+      "timestamp": "01:00:08",
+      "level": 3,
+      "order": 39,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Face Service",
+      "timestamp": "01:04:42",
+      "level": 3,
+      "order": 40,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Speech and Translate Service",
+      "timestamp": "01:06:30",
+      "level": 3,
+      "order": 41,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Text Analytics",
+      "timestamp": "01:08:04",
+      "level": 3,
+      "order": 42,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "OCR Computer Vision",
+      "timestamp": "01:11:02",
+      "level": 3,
+      "order": 43,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Form Recognizer",
+      "timestamp": "01:12:22",
+      "level": 3,
+      "order": 44,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Form Recognizer Custom Models",
+      "timestamp": "01:14:48",
+      "level": 3,
+      "order": 45,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Form Recognizer Prebuilt Models",
+      "timestamp": "01:15:34",
+      "level": 3,
+      "order": 46,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "LUIS",
+      "timestamp": "01:17:33",
+      "level": 3,
+      "order": 47,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "QnA Maker",
+      "timestamp": "01:19:58",
+      "level": 3,
+      "order": 48,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "Azure Bot Service",
+      "timestamp": "01:24:19",
+      "level": 3,
+      "order": 49,
+      "parent": "Congitive Services",
+      "children": []
+    },
+    {
+      "title": "ML Studio",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 50,
+      "parent": null,
+      "children": [
+        "Azure Machine Learning Service",
+        "Studio Overview",
+        "Studio Compute",
+        "Studio Data Labeling",
+        "Data Stores",
+        "Datasets",
+        "Experiments",
+        "Pipelines",
+        "ML Designer",
+        "Model Registry",
+        "Endpoints",
+        "Notebooks"
+      ]
+    },
+    {
+      "title": "Azure Machine Learning Service",
+      "timestamp": "01:26:45",
+      "level": 3,
+      "order": 51,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Studio Overview",
+      "timestamp": "01:28:10",
+      "level": 3,
+      "order": 52,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Studio Compute",
+      "timestamp": "01:29:39",
+      "level": 3,
+      "order": 53,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Studio Data Labeling",
+      "timestamp": "01:30:48",
+      "level": 3,
+      "order": 54,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Data Stores",
+      "timestamp": "01:31:45",
+      "level": 3,
+      "order": 55,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Datasets",
+      "timestamp": "01:32:34",
+      "level": 3,
+      "order": 56,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Experiments",
+      "timestamp": "01:33:44",
+      "level": 3,
+      "order": 57,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Pipelines",
+      "timestamp": "01:34:16",
+      "level": 3,
+      "order": 58,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "ML Designer",
+      "timestamp": "01:35:23",
+      "level": 3,
+      "order": 59,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Model Registry",
+      "timestamp": "01:36:07",
+      "level": 3,
+      "order": 60,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Endpoints",
+      "timestamp": "01:36:34",
+      "level": 3,
+      "order": 61,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "Notebooks",
+      "timestamp": "01:37:50",
+      "level": 3,
+      "order": 62,
+      "parent": "ML Studio",
+      "children": []
+    },
+    {
+      "title": "AutoML",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 63,
+      "parent": null,
+      "children": [
+        "Introduction to AutoML",
+        "Data Guard Rails",
+        "Automatic Featurization",
+        "Model Selection",
+        "Explanation",
+        "Primary Metrics",
+        "Validation Type"
+      ]
+    },
+    {
+      "title": "Introduction to AutoML",
+      "timestamp": "01:38:41",
+      "level": 3,
+      "order": 64,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Data Guard Rails",
+      "timestamp": "01:41:15",
+      "level": 3,
+      "order": 65,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Automatic Featurization",
+      "timestamp": "01:42:01",
+      "level": 3,
+      "order": 66,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Model Selection",
+      "timestamp": "01:43:53",
+      "level": 3,
+      "order": 67,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Explanation",
+      "timestamp": "01:44:57",
+      "level": 3,
+      "order": 68,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Primary Metrics",
+      "timestamp": "01:45:51",
+      "level": 3,
+      "order": 69,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Validation Type",
+      "timestamp": "01:47:43",
+      "level": 3,
+      "order": 70,
+      "parent": "AutoML",
+      "children": []
+    },
+    {
+      "title": "Custom Vision",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 71,
+      "parent": null,
+      "children": [
+        "Introduction to Custom Vision",
+        "Project Types and Domains",
+        "Custom Vision Features"
+      ]
+    },
+    {
+      "title": "Introduction to Custom Vision",
+      "timestamp": "01:48:14",
+      "level": 3,
+      "order": 72,
+      "parent": "Custom Vision",
+      "children": []
+    },
+    {
+      "title": "Project Types and Domains",
+      "timestamp": "01:48:58",
+      "level": 3,
+      "order": 73,
+      "parent": "Custom Vision",
+      "children": []
+    },
+    {
+      "title": "Custom Vision Features",
+      "timestamp": "01:51:54",
+      "level": 3,
+      "order": 74,
+      "parent": "Custom Vision",
+      "children": []
+    },
+    {
+      "title": "Features of generative AI solutions",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 75,
+      "parent": null,
+      "children": [
+        "AI vs Generative AI",
+        "What is a LLM Large Language Model",
+        "Transformer models",
+        "Tokenization",
+        "Embeddings",
+        "Positional encoding",
+        "Attention"
+      ]
+    },
+    {
+      "title": "AI vs Generative AI",
+      "timestamp": "01:54:32",
+      "level": 3,
+      "order": 76,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "What is a LLM Large Language Model",
+      "timestamp": "01:57:17",
+      "level": 3,
+      "order": 77,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Transformer models",
+      "timestamp": "01:58:58",
+      "level": 3,
+      "order": 78,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Tokenization",
+      "timestamp": "02:00:14",
+      "level": 3,
+      "order": 79,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Embeddings",
+      "timestamp": "02:01:26",
+      "level": 3,
+      "order": 80,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Positional encoding",
+      "timestamp": "02:02:46",
+      "level": 3,
+      "order": 81,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Attention",
+      "timestamp": "02:04:27",
+      "level": 3,
+      "order": 82,
+      "parent": "Features of generative AI solutions",
+      "children": []
+    },
+    {
+      "title": "Capabilities of Azure OpenAI Service",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 83,
+      "parent": null,
+      "children": [
+        "Introduction to Azure OpenAI Service",
+        "Azure OpenAI Studio",
+        "Azure OpenAI service pricing",
+        "What are Copilots",
+        "Prompt engineering",
+        "Grounding",
+        "Copilot demo"
+      ]
+    },
+    {
+      "title": "Introduction to Azure OpenAI Service",
+      "timestamp": "02:08:01",
+      "level": 3,
+      "order": 84,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Azure OpenAI Studio",
+      "timestamp": "02:10:29",
+      "level": 3,
+      "order": 85,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Azure OpenAI service pricing",
+      "timestamp": "02:11:44",
+      "level": 3,
+      "order": 86,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "What are Copilots",
+      "timestamp": "02:13:14",
+      "level": 3,
+      "order": 87,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Prompt engineering",
+      "timestamp": "02:15:43",
+      "level": 3,
+      "order": 88,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Grounding",
+      "timestamp": "02:18:51",
+      "level": 3,
+      "order": 89,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Copilot demo",
+      "timestamp": "02:20:36",
+      "level": 3,
+      "order": 90,
+      "parent": "Capabilities of Azure OpenAI Service",
+      "children": []
+    },
+    {
+      "title": "Follow Alongs",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 91,
+      "parent": null,
+      "children": [
+        "Setup",
+        "Computer Vision",
+        "Custom Vision Classification",
+        "Custom Vision Object Detection",
+        "Face Service",
+        "Form Recognizer",
+        "OCR",
+        "Text Analysis",
+        "QnAMaker",
+        "LUIS",
+        "AutoML",
+        "Designer",
+        "MNIST",
+        "Data Labeling",
+        "Clean up"
+      ]
+    },
+    {
+      "title": "Setup",
+      "timestamp": "02:24:04",
+      "level": 3,
+      "order": 92,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Computer Vision",
+      "timestamp": "02:35:02",
+      "level": 3,
+      "order": 93,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Custom Vision Classification",
+      "timestamp": "02:38:44",
+      "level": 3,
+      "order": 94,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Custom Vision Object Detection",
+      "timestamp": "02:45:22",
+      "level": 3,
+      "order": 95,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Face Service",
+      "timestamp": "02:51:18",
+      "level": 3,
+      "order": 96,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Form Recognizer",
+      "timestamp": "02:54:30",
+      "level": 3,
+      "order": 97,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "OCR",
+      "timestamp": "02:58:01",
+      "level": 3,
+      "order": 98,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Text Analysis",
+      "timestamp": "03:02:54",
+      "level": 3,
+      "order": 99,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "QnAMaker",
+      "timestamp": "03:06:37",
+      "level": 3,
+      "order": 100,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "LUIS",
+      "timestamp": "03:25:11",
+      "level": 3,
+      "order": 101,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "AutoML",
+      "timestamp": "03:30:56",
+      "level": 3,
+      "order": 102,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Designer",
+      "timestamp": "03:48:13",
+      "level": 3,
+      "order": 103,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "MNIST",
+      "timestamp": "03:58:31",
+      "level": 3,
+      "order": 104,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Data Labeling",
+      "timestamp": "04:18:10",
+      "level": 3,
+      "order": 105,
+      "parent": "Follow Alongs",
+      "children": []
+    },
+    {
+      "title": "Clean up",
+      "timestamp": "04:22:38",
+      "level": 3,
+      "order": 106,
+      "parent": "Follow Alongs",
+      "children": []
+    }
+  ]
+}

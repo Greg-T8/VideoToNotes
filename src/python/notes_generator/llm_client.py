@@ -19,11 +19,20 @@ Prerequisites:
 """
 
 import asyncio
+import random
 import subprocess
 from dataclasses import dataclass
 from typing import Optional, List, Dict
 
 import httpx
+
+
+# Retry configuration
+MAX_RETRIES = 5
+INITIAL_BACKOFF = 2.0  # seconds
+MAX_BACKOFF = 60.0  # seconds
+BACKOFF_MULTIPLIER = 2.0
+JITTER_FACTOR = 0.25  # 25% random jitter
 
 
 @dataclass
@@ -123,54 +132,118 @@ class GitHubModelsClient:
         messages: List[ChatMessage],
         model: str,
         temperature: float = 0.2,
-        max_tokens: int = 4000
+        max_tokens: int = 4000,
+        context: Optional[str] = None
     ) -> str:
         """
-        Send a chat completion request.
+        Send a chat completion request with automatic retry on rate limits.
 
         Args:
             messages: List of chat messages
             model: Model identifier (e.g., "openai/gpt-4.1-mini")
             temperature: Sampling temperature (0.0-2.0)
             max_tokens: Maximum tokens in response
+            context: Optional context string for logging (e.g., "chunk 3/14")
 
         Returns:
             The assistant's response content.
 
         Raises:
-            GitHubModelsError: If the API request fails.
+            GitHubModelsError: If the API request fails after all retries.
         """
+        # Determine if this is a reasoning model (o1, o3, o4 series)
+        is_reasoning_model = any(
+            x in model.lower() for x in ['/o1', '/o3', '/o4', 'o1-', 'o3-', 'o4-']
+        )
+
+        # Build payload - reasoning models use different parameters
         payload = {
             "model": model,
             "messages": [{"role": m.role, "content": m.content} for m in messages],
-            "temperature": temperature,
-            "max_tokens": max_tokens
         }
 
-        async with httpx.AsyncClient(timeout=self.timeout) as client:
-            try:
-                response = await client.post(
-                    f"{self.BASE_URL}/chat/completions",
-                    headers=self.headers,
-                    json=payload
-                )
-                response.raise_for_status()
-                data = response.json()
+        if is_reasoning_model:
+            # Reasoning models use max_completion_tokens and don't support temperature
+            payload["max_completion_tokens"] = max_tokens
+        else:
+            # Standard models use max_tokens and temperature
+            payload["temperature"] = temperature
+            payload["max_tokens"] = max_tokens
 
-                return data["choices"][0]["message"]["content"]
+        last_error = None
+        backoff = INITIAL_BACKOFF
 
-            except httpx.HTTPStatusError as e:
-                if e.response.status_code == 401:
-                    raise AuthenticationError(
-                        "Authentication failed. Your token may have expired.\n"
-                        "Run 'gh auth login' to re-authenticate."
+        for attempt in range(MAX_RETRIES):
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                try:
+                    response = await client.post(
+                        f"{self.BASE_URL}/chat/completions",
+                        headers=self.headers,
+                        json=payload
                     )
-                raise GitHubModelsError(
-                    f"API request failed ({e.response.status_code}): "
-                    f"{e.response.text}"
-                )
-            except httpx.RequestError as e:
-                raise GitHubModelsError(f"Request failed: {e}")
+                    response.raise_for_status()
+                    data = response.json()
+
+                    return data["choices"][0]["message"]["content"]
+
+                except httpx.HTTPStatusError as e:
+                    status_code = e.response.status_code
+
+                    # Handle authentication errors immediately
+                    if status_code == 401:
+                        raise AuthenticationError(
+                            "Authentication failed. Your token may have expired.\n"
+                            "Run 'gh auth login' to re-authenticate."
+                        )
+
+                    # Handle rate limiting with retry
+                    if status_code == 429:
+                        last_error = e
+
+                        # Check for Retry-After header
+                        retry_after = e.response.headers.get("Retry-After")
+                        if retry_after:
+                            try:
+                                wait_time = float(retry_after)
+                            except ValueError:
+                                wait_time = backoff
+                        else:
+                            # Calculate exponential backoff with jitter
+                            jitter = random.uniform(-JITTER_FACTOR, JITTER_FACTOR) * backoff
+                            wait_time = min(backoff + jitter, MAX_BACKOFF)
+
+                        if attempt < MAX_RETRIES - 1:
+                            ctx = f" [{context}]" if context else ""
+                            print(f"  Rate limited{ctx}. Waiting {wait_time:.1f}s before retry {attempt + 2}/{MAX_RETRIES}...")
+                            await asyncio.sleep(wait_time)
+                            backoff = min(backoff * BACKOFF_MULTIPLIER, MAX_BACKOFF)
+                            continue
+
+                    # Non-retryable error
+                    raise GitHubModelsError(
+                        f"API request failed ({status_code}): "
+                        f"{e.response.text}"
+                    )
+
+                except httpx.RequestError as e:
+                    last_error = e
+
+                    # Network errors are retryable
+                    if attempt < MAX_RETRIES - 1:
+                        jitter = random.uniform(-JITTER_FACTOR, JITTER_FACTOR) * backoff
+                        wait_time = min(backoff + jitter, MAX_BACKOFF)
+                        ctx = f" [{context}]" if context else ""
+                        print(f"  Network error{ctx}. Waiting {wait_time:.1f}s before retry {attempt + 2}/{MAX_RETRIES}...")
+                        await asyncio.sleep(wait_time)
+                        backoff = min(backoff * BACKOFF_MULTIPLIER, MAX_BACKOFF)
+                        continue
+
+                    raise GitHubModelsError(f"Request failed: {e}")
+
+        # All retries exhausted
+        raise GitHubModelsError(
+            f"API request failed after {MAX_RETRIES} retries: {last_error}"
+        )
 
     async def generate(
         self,
@@ -178,7 +251,8 @@ class GitHubModelsClient:
         model: str,
         temperature: float = 0.2,
         max_tokens: int = 4000,
-        system_prompt: Optional[str] = None
+        system_prompt: Optional[str] = None,
+        context: Optional[str] = None
     ) -> str:
         """
         Generate a response from a simple prompt.
@@ -189,6 +263,7 @@ class GitHubModelsClient:
             temperature: Sampling temperature (0.0-2.0)
             max_tokens: Maximum tokens in response
             system_prompt: Optional system prompt for context
+            context: Optional context string for logging (e.g., "chunk 3/14")
 
         Returns:
             The generated response content.
@@ -206,7 +281,8 @@ class GitHubModelsClient:
             messages=messages,
             model=model,
             temperature=temperature,
-            max_tokens=max_tokens
+            max_tokens=max_tokens,
+            context=context
         )
 
     def generate_sync(
