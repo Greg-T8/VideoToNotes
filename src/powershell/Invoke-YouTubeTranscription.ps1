@@ -184,6 +184,10 @@ $Helpers = {
 		<#
         .SYNOPSIS
             Downloads audio from a YouTube video using yt-dlp.
+        .NOTES
+            YouTube's SABR streaming blocks direct audio format downloads.
+            We try audio-only formats first, then fall back to format 18
+            (360p mp4 with audio) which uses progressive streaming.
         #>
 		param(
 			[Parameter(Mandatory)]
@@ -197,12 +201,11 @@ $Helpers = {
 
 		$outputTemplate = Join-Path $OutputFolder "source_audio.%(ext)s"
 
-		# Download best audio quality using specific format selector
-		# Format 140 is m4a medium quality (129k), format 251 is webm opus (123k)
-		# Use bestaudio as fallback; convert to wav for Azure Speech
-		# Pipe to Out-Null to prevent output from polluting function return
+		# Try audio-only formats first, fall back to format 18 (360p with audio)
+		# Format 18 uses progressive streaming which bypasses SABR restrictions
+		# See: https://github.com/yt-dlp/yt-dlp/issues/12482
 		yt-dlp `
-			-f "140/251/bestaudio" `
+			-f "140/251/bestaudio/18" `
 			--extract-audio `
 			--audio-format wav `
 			--output $outputTemplate `
@@ -304,10 +307,11 @@ $Helpers = {
 
 		$srtFile = Join-Path $OutputFolder "transcript.srt"
 
+		# Pipe to Out-Host to display output without capturing in return value
 		spx transcribe `
 			--file $AudioFile `
 			--language $Language `
-			--output-srt-file $srtFile
+			--output-srt-file $srtFile | Out-Host
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "spx transcribe failed."
@@ -542,15 +546,15 @@ $Helpers = {
 		Write-Host "Cleaning up intermediate files..." -ForegroundColor Cyan
 
 		# Remove source audio
-		Get-ChildItem -Path $Folder -Filter "source_audio.*" | Remove-Item -Force
+		Get-ChildItem -Path $Folder -Filter "source_audio.*" | Remove-Item -Force -ErrorAction SilentlyContinue
 
 		# Remove optimized audio
-		Get-ChildItem -Path $Folder -Filter "audio_optimized.*" | Remove-Item -Force
+		Get-ChildItem -Path $Folder -Filter "audio_optimized.*" | Remove-Item -Force -ErrorAction SilentlyContinue
 
 		# Remove chunks folder
 		$chunksFolder = Join-Path $Folder "chunks"
 		if (Test-Path $chunksFolder) {
-			Remove-Item -Path $chunksFolder -Recurse -Force
+			Remove-Item -Path $chunksFolder -Recurse -Force -ErrorAction SilentlyContinue
 		}
 
 		Write-Verbose "Intermediate files removed"

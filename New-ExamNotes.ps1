@@ -193,7 +193,7 @@ $Helpers = {
 		New-Item -ItemType Directory -Path $tempInitFolder -Force | Out-Null
 
 		# Run contents extraction to get video metadata
-		& $contentsScript -YouTubeUrl $Url -OutputPath $tempInitFolder
+		& $contentsScript -YouTubeUrl $Url -OutputPath $tempInitFolder | Out-Null
 
 		if ($LASTEXITCODE -ne 0) {
 			Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
@@ -237,7 +237,8 @@ $Helpers = {
 			$transcribeParams['KeepIntermediateFiles'] = $true
 		}
 
-		& $transcribeScript @transcribeParams
+		# Run transcription script - pipe to Out-Null to prevent output pollution
+		& $transcribeScript @transcribeParams | Out-Null
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "Failed to transcribe video"

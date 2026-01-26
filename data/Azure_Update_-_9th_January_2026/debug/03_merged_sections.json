@@ -1,0 +1,79 @@
+[
+  {
+    "section_title": "\ud83c\udfa4 [00:00:00] Introduction",
+    "timestamp_range": "00:00:00 \u2013 00:00:18",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:00:00] Introduction  \n**Timestamp**: 00:00:00 \u2013 00:00:18  \n\n**Key Concepts**  \n- Weekly Azure update for 9th January 2026  \n- Brief welcome and holiday wishes  \n- Overview of update chapters for easy navigation  \n- Mention of new videos focusing on Azure Managed Postgres and AI capabilities  \n\n**Definitions**  \n- None in this chunk  \n\n**Key Facts**  \n- The update includes only a few updates this week  \n- New videos dive into Azure Managed Postgres and related AI features  \n\n**Examples**  \n- None in this chunk  \n\n**Key Takeaways \ud83c\udfaf**  \n- Understand the scope of the update and new video content focus on Azure Managed Postgres and AI integration  \n- Familiarize with the structure of Azure updates for efficient navigation  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:00:18] New videos",
+    "timestamp_range": "00:00:18 \u2013 00:00:50",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:00:18] New videos  \n**Timestamp**: 00:00:18 \u2013 00:00:50  \n\n**Key Concepts**  \n- New videos explore AI integration with PostgreSQL  \n- Use of VS Code PostgreSQL extension enhanced by AI  \n- Exploration of vector and embedding capabilities within PostgreSQL  \n- Fun experiment using AI to create video thumbnails  \n\n**Definitions**  \n- **Vectors and Embeddings**: Data representations used in AI to capture semantic meaning, enabling advanced search and analysis capabilities within databases  \n\n**Key Facts**  \n- AI capabilities are integrated into PostgreSQL workflows primarily through VS Code extension  \n- AI can assist in working with vectors, embeddings, and other integrations inside PostgreSQL  \n\n**Examples**  \n- AI-generated thumbnail initially included glasses on the presenter  \n- Prompt modification removed glasses from the presenter but accidentally removed glasses from an elephant in the image  \n\n**Key Takeaways \ud83c\udfaf**  \n- Recognize AI\u2019s role in enhancing database management and development tools like VS Code for PostgreSQL  \n- Understand the importance of prompt specificity when working with AI models to get desired outputs  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:00:50] Little lesson on prompting",
+    "timestamp_range": "00:00:50 \u2013 00:01:34",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:00:50] Little lesson on prompting  \n**Timestamp**: 00:00:50 \u2013 00:01:34  \n\n**Key Concepts**  \n- Importance of precise prompt engineering when working with large language models (LLMs)  \n- Context and specificity in prompts are critical to achieving correct AI outputs  \n- Example of unintended AI behavior due to vague prompt (removing glasses from wrong subject)  \n\n**Definitions**  \n- **Prompt Engineering**: The practice of crafting inputs to AI models carefully to guide them to produce desired outputs  \n\n**Key Facts**  \n- AI models can misinterpret ambiguous instructions  \n- Being specific in prompts avoids unintended consequences  \n\n**Examples**  \n- Removing glasses from the presenter\u2019s image resulted in glasses being removed from an elephant instead  \n\n**Key Takeaways \ud83c\udfaf**  \n- Always be explicit and detailed in prompts when interacting with LLMs  \n- Understand that prompt engineering is a key skill for effective AI utilization  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:01:34] AKS cloud-native pricing calculator",
+    "timestamp_range": "00:01:34 \u2013 00:02:54",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:01:34] AKS cloud-native pricing calculator  \n**Timestamp**: 00:01:34 \u2013 00:02:54  \n\n**Key Concepts**  \n- Azure Pricing Calculator now includes a scenario template for cloud-native applications on Azure Kubernetes Service (AKS)  \n- The scenario covers multiple components beyond AKS: Azure Container Registry, Azure Monitoring, Load Balancer, Defender for Cloud  \n- Simplifies cost estimation for full cloud-native app deployments  \n\n**Definitions**  \n- **Azure Kubernetes Service (AKS)**: Managed Kubernetes container orchestration service  \n- **Azure Pricing Calculator**: Tool to estimate costs of Azure services  \n\n**Key Facts**  \n- The new estimate template is found under \"estimate templates\" in the calculator  \n- It shows architecture diagrams of all components involved  \n- Enables more accurate and comprehensive cost projections for cloud-native apps  \n\n**Examples**  \n- User can start an estimate that automatically adds all components needed for a cloud-native Kubernetes app  \n\n**Key Takeaways \ud83c\udfaf**  \n- Use the AKS cloud-native pricing template to get realistic cost estimates including all related Azure services  \n- Understand the components involved in a cloud-native AKS application deployment  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:02:54] Premium SSDv2 in new regions",
+    "timestamp_range": "00:02:54 \u2013 00:03:35",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:02:54] Premium SSDv2 in new regions  \n**Timestamp**: 00:02:54 \u2013 00:03:35  \n\n**Key Concepts**  \n- Premium SSD v2 storage now available in new Azure regions: Austria East and a second Availability Zone in Japan West  \n- Premium SSD v2 allows independent configuration of IOPS and throughput separate from capacity  \n- Supports dynamic scaling of IOPS and throughput based on workload needs  \n- Provides sub-millisecond latency, second only to Ultra Disk  \n\n**Definitions**  \n- **Premium SSD v2**: Azure managed disk offering with scalable performance and low latency  \n\n**Key Facts**  \n- Ideal for IO-intensive workloads such as databases, big data analytics, and gaming  \n- Availability expanded to Austria East and additional AZ in Japan West  \n\n**Examples**  \n- Use cases include database workloads requiring high IOPS and throughput  \n\n**Key Takeaways \ud83c\udfaf**  \n- Recognize Premium SSD v2\u2019s flexibility in performance tuning and low latency  \n- Know the new regional availability for Premium SSD v2  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:03:35] Service Bus Premium geo-replication",
+    "timestamp_range": "00:03:35 \u2013 00:04:54",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:03:35] Service Bus Premium geo-replication  \n**Timestamp**: 00:03:35 \u2013 00:04:54  \n\n**Key Concepts**  \n- Service Bus Premium now supports geo-replication for disaster recovery  \n- Replicates both service configuration metadata and message data from primary to secondary regions  \n- Supports synchronous and asynchronous replication modes with trade-offs in latency and data loss risk  \n- Enables failover to secondary regions if primary region fails  \n- Service Bus facilitates decoupled communication via publish-subscribe messaging  \n\n**Definitions**  \n- **Service Bus Premium**: Azure messaging service tier with enhanced features and performance  \n- **Geo-replication**: Replication of data and configurations across geographic regions for resilience  \n\n**Key Facts**  \n- Synchronous replication ensures no data loss but may increase latency  \n- Asynchronous replication reduces latency but risks potential data loss  \n- Replication can be continuous and multi-secondary  \n- Service Bus is used to decouple applications by passing messages rather than direct API calls  \n\n**Examples**  \n- Publishing a message that subscribers consume asynchronously to avoid tight coupling  \n\n**Key Takeaways \ud83c\udfaf**  \n- Understand geo-replication options and trade-offs in Service Bus Premium  \n- Know how Service Bus supports decoupled, reliable messaging architectures  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:04:54] Osmos acquisition",
+    "timestamp_range": "00:04:54 \u2013 00:06:13",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:04:54] Osmos acquisition  \n**Timestamp**: 00:04:54 \u2013 00:06:13  \n\n**Key Concepts**  \n- Microsoft acquired Osmos, integrating it into Microsoft Fabric  \n- Osmos addresses challenges in data engineering related to understanding and transforming diverse data sources  \n- Uses large language models and fine-tuning to interpret data meaning and maintain transformation states  \n- Facilitates schema mapping and data transformation from source schema A to target schema B  \n- Helps maintain transformations as data evolves over time  \n\n**Definitions**  \n- **Microsoft Fabric**: Integrated data platform for analytics and data management  \n- **Osmos**: Technology for semantic understanding and transformation of heterogeneous data  \n\n**Key Facts**  \n- Osmos uses AI to automate and maintain complex data transformations  \n- Aims to simplify bringing diverse data into OneLake and Fabric for analysis  \n\n**Examples**  \n- Transforming data from schema A to schema B with AI-driven understanding  \n\n**Key Takeaways \ud83c\udfaf**  \n- Recognize Osmos as a solution for semantic data integration and transformation in Microsoft Fabric  \n- Understand the role of AI in automating data engineering tasks  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:06:13] Custom resource provider deprecation",
+    "timestamp_range": "00:06:13 \u2013 00:07:09",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:06:13] Custom resource provider deprecation  \n**Timestamp**: 00:06:13 \u2013 00:07:09  \n\n**Key Concepts**  \n- Azure Custom Resource Providers (CRPs) will be deprecated by end of October 2026  \n- CRPs extend Azure Resource Manager (ARM) by integrating external APIs as ARM resources  \n- Enables create, update, delete operations on custom resources via ARM templates  \n- Useful for integrating legacy systems or third-party APIs into Azure control plane  \n- Alternatives include deployment scripts in ARM templates or Bicep extensions  \n\n**Definitions**  \n- **Custom Resource Provider (CRP)**: Extension to ARM allowing external API integration as Azure resources  \n- **ARM (Azure Resource Manager)**: Azure\u2019s deployment and management service  \n\n**Key Facts**  \n- Deprecation deadline: October 2026  \n- Users must plan migration to alternative methods before then  \n\n**Examples**  \n- Using CRPs to manage legacy system resources through ARM templates  \n\n**Key Takeaways \ud83c\udfaf**  \n- Be aware of CRP deprecation and plan migration strategies  \n- Explore deployment scripts and Bicep extensions as alternatives  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:07:09] Dragon HD Omni new TTS",
+    "timestamp_range": "00:07:09 \u2013 00:07:44",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:07:09] Dragon HD Omni new TTS  \n**Timestamp**: 00:07:09 \u2013 00:07:44  \n\n**Key Concepts**  \n- Dragon HD Omni is a new text-to-speech (TTS) model available in preview  \n- Offers over 700 high-quality voices with expressive and multilingual capabilities  \n- Supports various speaking styles such as curious, angry, embarrassed, chill surfer, etc.  \n- Accessible via the speech playground and APIs after deployment  \n\n**Definitions**  \n- **Text-to-Speech (TTS)**: Technology that converts text into spoken voice  \n\n**Key Facts**  \n- Large voice variety and style options enable rich, natural speech synthesis  \n- Preview availability for early adoption and testing  \n\n**Examples**  \n- Using the \"chill surfer\" style to mimic a relaxed surfer voice  \n\n**Key Takeaways \ud83c\udfaf**  \n- Explore Dragon HD Omni for advanced, expressive TTS applications  \n- Utilize style options to customize voice output for different scenarios  \n\n---\n\n"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:08:39] Close",
+    "timestamp_range": "00:08:39 \u2013 00:08:40",
+    "level": 3,
+    "order": 0,
+    "content": "### \ud83c\udfa4 [00:08:39] Close  \n**Timestamp**: 00:08:39 \u2013 00:08:40  \n\n**Key Concepts**  \n- Closing remarks and thanks for watching  \n\n**Definitions**  \n- None in this chunk  \n\n**Key Facts**  \n- None in this chunk  \n\n**Examples**  \n- None in this chunk  \n\n**Key Takeaways \ud83c\udfaf**  \n- None in this chunk"
+  },
+  {
+    "section_title": "\ud83c\udfa4 [00:07:44] gpt-4o version retirements",
+    "timestamp_range": "00:07:44 \u2013 00:08:39",
+    "level": 3,
+    "order": 10,
+    "content": "### \ud83c\udfa4 [00:07:44] gpt-4o version retirements  \n**Timestamp**: 00:07:44 \u2013 00:08:39  \n\n**Key Concepts**  \n- GPT-4.0 versions 2024-05.13 and 2024-08.06 will be retired end of March 2026  \n- Auto-upgrade enabled users will be migrated automatically to GPT-5.1  \n- Users without auto-upgrade must manually migrate and retest AI applications  \n- Large language models are non-deterministic; same input may yield different outputs  \n- Continuous evaluation is necessary to ensure AI app behavior remains consistent  \n\n**Definitions**  \n- **Non-deterministic**: Behavior where identical inputs do not always produce identical outputs  \n- **Auto-upgrade**: Feature that automatically updates AI models to newer versions  \n\n**Key Facts**  \n- Retirement date: End of March 2026  \n- GPT-5.1 is the target upgrade version  \n- Testing and evaluation are critical after migration  \n\n**Examples**  \n- Retesting AI agents after model upgrade to verify expected behavior  \n\n**Key Takeaways \ud83c\udfaf**  \n- Plan for GPT-4.0 version retirement and upgrade to GPT-5.1  \n- Always perform thorough testing after AI model upgrades due to non-determinism  \n\n---\n\n"
+  }
+]

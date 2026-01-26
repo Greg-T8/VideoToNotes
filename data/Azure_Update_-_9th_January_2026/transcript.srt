@@ -1,0 +1,383 @@
+1
+00:00:00,560 --> 00:00:04,880
+Hi everyone, welcome to this week's Azure update, the 9th of January 2026.
+
+2
+00:00:05,440 --> 00:00:12,000
+I hope you all had a awesome holidays and are recharged and ready for an exciting new year.
+
+3
+00:00:12,680 --> 00:00:18,000
+As always, we have the chapters, so you can jump to any of the very few number of updates we have this week.
+
+4
+00:00:18,880 --> 00:00:28,240
+New videos this week, so I dived into Azure Managed Postgres and related AI capabilities.
+
+5
+00:00:28,640 --> 00:00:46,840
+So this is both using AI to work with PostgreSQL, primarily through the VS Code PostgreSQL extension, but also when I'm in my PostgreSQL database, what capabilities exist to work with vectors, embeddings, and also certain other integrations.
+
+6
+00:00:46,840 --> 00:00:49,840
+There's a ton of capability, so I had a bit of fun diving into that.
+
+7
+00:00:50,120 --> 00:00:55,440
+And because it was about AI, I just messing around thought I would use AI to create the thumbnail,
+
+8
+00:00:56,480 --> 00:00:58,640
+And I kind of learned an interesting lesson.
+
+9
+00:00:58,880 --> 00:01:01,760
+So this was the original thumbnail it created.
+
+10
+00:01:01,760 --> 00:01:03,520
+Notice it gave me glasses.
+
+11
+00:01:04,000 --> 00:01:08,720
+So I just told the model, I'll remove the glasses.
+
+12
+00:01:09,440 --> 00:01:14,640
+And I should have been a lot more specific because it removed the elephant's glasses, not mine.
+
+13
+00:01:15,280 --> 00:01:17,040
+And I actually kind of miss it on the elephant.
+
+14
+00:01:17,680 --> 00:01:22,640
+But it's actually a really good lesson when we think about working with large language models.
+
+15
+00:01:23,400 --> 00:01:29,600
+That prompt engineering, that context engineering, is so important you need to be specific to get the right type of output.
+
+16
+00:01:29,600 --> 00:01:31,840
+So, I thought I would share that as a good lesson.
+
+17
+00:01:32,400 --> 00:01:34,400
+So, on to what's new on the compute side.
+
+18
+00:01:35,600 --> 00:01:45,120
+So, when I'm dealing with Azure Kubernetes Services and developing my cloud-native applications, it now actually has in the Azure Pricing Calculator.
+
+19
+00:01:45,680 --> 00:01:49,680
+a scenario all about creating a cloud native application.
+
+20
+00:01:49,680 --> 00:01:59,040
+If you think about what goes into that, it's not just AKS, it's the Azure Container Registry, it's Azure Monitoring, it's a load balancer, it's Defender for Cloud.
+
+21
+00:01:59,040 --> 00:02:06,800
+And so what this lets me do is it makes it so much simpler as it goes ahead and actually creates that full scenario.
+
+22
+00:02:07,200 --> 00:02:14,880
+So if I just jump over super, super quickly, so once I'm in the calculator, you go to the estimate templates area.
+
+23
+00:02:16,240 --> 00:02:18,640
+And from here, we have these scenarios.
+
+24
+00:02:18,960 --> 00:02:23,360
+And we now have this ability to have a cloud native app on Kubernetes.
+
+25
+00:02:23,720 --> 00:02:29,360
+And it can even show you the architecture of all the components that it's going to leverage.
+
+26
+00:02:29,840 --> 00:02:32,640
+And then I can go ahead and actually start the estimate.
+
+27
+00:02:32,960 --> 00:02:38,080
+And what it's going to do is go ahead and add in all those various pieces.
+
+28
+00:02:39,200 --> 00:02:43,760
+So I can now actually work out a really true cost of
+
+29
+00:02:44,200 --> 00:02:45,320
+what that's going to look like.
+
+30
+00:02:45,320 --> 00:02:48,920
+This is a really nice addition so I'm not surprised by the cost.
+
+31
+00:02:49,200 --> 00:02:51,600
+I can really go ahead and work that out.
+
+32
+00:02:53,520 --> 00:02:54,480
+On the storage side.
+
+33
+00:02:54,960 --> 00:02:57,840
+So premium SSD v2 is available in new regions.
+
+34
+00:02:57,840 --> 00:03:05,440
+Remember, premium SSD v2 gives you that ability to separately define the IOPS and the throughput from the capacity.
+
+35
+00:03:05,840 --> 00:03:11,600
+And also I can dynamically change the IOPS and the throughput based on changing requirements over some period of time.
+
+36
+00:03:12,160 --> 00:03:16,400
+It gives you sub-millisecond latencies, which is second only to Ultra Disk.
+
+37
+00:03:16,960 --> 00:03:22,560
+And the change here is it's now available in Austria East and also a second AZ in Japan West.
+
+38
+00:03:23,000 --> 00:03:27,840
+And we typically see the premium SSD v2 used, where I have those really IO-intensive workloads.
+
+39
+00:03:28,160 --> 00:03:32,560
+So I can think database, big data, analytics, even gaming.
+
+40
+00:03:34,320 --> 00:03:39,600
+On the database side, so Service Bus Premium now has geo-replication.
+
+41
+00:03:39,600 --> 00:03:43,840
+And the whole goal there, obviously, is it's about protecting against disaster in a region.
+
+42
+00:03:44,320 --> 00:03:49,640
+So now I can get replication of both the configurations, so the metadata of the service and its data.
+
+43
+00:03:49,640 --> 00:04:00,560
+And it's going to continually do that replication from the primary region to one or more secondaries, which can all be promoted as an option to primary if needed.
+
+44
+00:04:00,800 --> 00:04:04,040
+And it can run in both a synchronous or asynchronous mode.
+
+45
+00:04:04,040 --> 00:04:07,200
+And obviously there are latency implications.
+
+46
+00:04:07,440 --> 00:04:12,480
+using either one of them and then recovery point implications based on what you pick there.
+
+47
+00:04:12,480 --> 00:04:17,200
+Often we do async cross region, then there's always a risk you lose data.
+
+48
+00:04:17,360 --> 00:04:26,320
+So maybe I'm willing to take the hit on the time of acknowledgement to a transaction and use synchronous to ensure I never lose any of these messages.
+
+49
+00:04:26,640 --> 00:04:34,560
+Because remember what service bus is fantastic for is I want to publish, subscribe those messages related to decoupled applications and services.
+
+50
+00:04:34,960 --> 00:04:40,160
+So data between modules or apps, you transfer it via a message.
+
+51
+00:04:40,400 --> 00:04:44,480
+So I create a message and then something else subscribes to the message, then acts on it.
+
+52
+00:04:44,480 --> 00:04:46,640
+So I remove that really tight coupling.
+
+53
+00:04:47,320 --> 00:04:52,160
+What was more traditional when a function calls a function with very specific API calls.
+
+54
+00:04:53,480 --> 00:04:58,800
+Also on the database side, you may have seen this Osmos acquisition.
+
+55
+00:04:59,520 --> 00:05:02,280
+And it's been talked about being integrated into Microsoft Fabric.
+
+56
+00:05:02,280 --> 00:05:04,240
+And you may wonder, well, what's this really about?
+
+57
+00:05:04,600 --> 00:05:14,400
+And I think very simply, you can think about it as you imagine today, you have lots and lots of different data in lots and lots of different places, in lots and lots of different schemas and formats.
+
+58
+00:05:14,840 --> 00:05:26,880
+And when you want to bring that data into Fabric and your OneLake to be able to do useful, meaningful things with it, there's not a clear idea of doing that in a meaningful way.
+
+59
+00:05:27,360 --> 00:05:33,440
+How do I know from a data engineering perspective what that data actually means?
+
+60
+00:05:34,160 --> 00:05:49,440
+So the whole goal here is Osmos looks to solve the challenges of understanding the data and then maintaining the state of data transformations through a mixture of different large language models and special fine tuning and learning optimizations.
+
+61
+00:05:49,760 --> 00:05:54,400
+So for example, imagine I had a source data with schema A.
+
+62
+00:05:55,440 --> 00:05:58,400
+And then I wanted some output schema B.
+
+63
+00:05:58,960 --> 00:06:11,440
+So the whole goal of this technology is it would look at both of those, understand what the data means, and then work out how to get the data from schema A to schema B, and then maintain that as things evolve over time.
+
+64
+00:06:12,800 --> 00:06:13,680
+Miscellaneous.
+
+65
+00:06:14,320 --> 00:06:19,280
+So custom resource providers are being deprecated end of October 2026.
+
+66
+00:06:19,680 --> 00:06:24,560
+So a custom resource provider enables you to extend the Azure control plane, so ARM,
+
+67
+00:06:24,960 --> 00:06:32,880
+extend its knowledge by plugging in external APIs and then specific calls to the API which relate to this custom resource.
+
+68
+00:06:33,440 --> 00:06:38,280
+And then what that enables me to do is work with that through the Azure control plane.
+
+69
+00:06:38,560 --> 00:06:42,800
+So I could do standard ARM create, update, delete, call actions.
+
+70
+00:06:43,200 --> 00:06:50,560
+So it's really useful if I had some legacy system I was integrating into third-party APIs and I wanted to just do that via ARM.
+
+71
+00:06:51,040 --> 00:06:52,560
+So with that going away,
+
+72
+00:06:52,880 --> 00:06:54,640
+you're going to need to look at another method.
+
+73
+00:06:54,640 --> 00:07:01,920
+So for example, you can use things like deployment scripts within your template, depending on exact scenario.
+
+74
+00:07:01,920 --> 00:07:05,600
+Maybe you've actually just use a Bicep extension, but definitely go and look at that.
+
+75
+00:07:05,600 --> 00:07:08,480
+If you're using it, look at other options.
+
+76
+00:07:10,880 --> 00:07:16,400
+Dragon HD Omni is a new text-to-speech model that is available in preview.
+
+77
+00:07:16,720 --> 00:07:23,360
+So it has over 700 high-quality voices with expressiveness, multilingual fluency.
+
+78
+00:07:23,600 --> 00:07:26,320
+You can even give it specific styles you want it to talk in.
+
+79
+00:07:26,320 --> 00:07:29,040
+So it's curious, it's angry, it's embarrassed.
+
+80
+00:07:29,680 --> 00:07:30,400
+There was a ton of them.
+
+81
+00:07:30,400 --> 00:07:31,920
+There's even a chill surfer.
+
+82
+00:07:31,920 --> 00:07:32,400
+Whoa.
+
+83
+00:07:32,960 --> 00:07:35,040
+So you can go and recreate
+
+84
+00:07:35,760 --> 00:07:37,360
+point break if you really want to.
+
+85
+00:07:37,760 --> 00:07:43,880
+You can access it in the speech playground and obviously your apps through the APIs once you go ahead and do a deployment.
+
+86
+00:07:44,880 --> 00:07:54,080
+Finally, GPT-4.0 specific versions, 2024-05.13 and 2024-08.06 are being retired end of March 2026.
+
+87
+00:07:54,480 --> 00:08:04,480
+Now if you have it configured as auto upgrade and it's a standard, data zone standard, global standard, it will just automatically upgrade to GPT-5.1.
+
+88
+00:08:04,960 --> 00:08:08,080
+But if you're not doing that, go ahead and look and make sure.
+
+89
+00:08:08,600 --> 00:08:16,000
+And as you move your model, remember, you should always then go and retest and reevaluate your AI apps, your AI agents.
+
+90
+00:08:16,000 --> 00:08:21,440
+You want to be using evaluations to ensure it's going to continue functioning as you would expect.
+
+91
+00:08:21,840 --> 00:08:28,080
+Large language models, the whole goal around them and the way they function is they are non-deterministic.
+
+92
+00:08:28,800 --> 00:08:30,320
+So the same input,
+
+93
+00:08:30,800 --> 00:08:38,000
+will not always yield the same output, so you need to use things like evaluations to ensure it is behaving as expected.
+
+94
+00:08:38,800 --> 00:08:40,480
+And that was it.
+
+95
+00:08:40,960 --> 00:08:42,000
+As always, I hope that was useful.
+
+96
+00:08:42,160 --> 00:08:43,280
+Till next video, take care.

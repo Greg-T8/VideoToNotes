@@ -41,6 +41,9 @@ function Split-Transcript {
 	$raw = Get-Content -Path $InputFile -Raw -Encoding UTF8
 	$text = $raw -replace "`r`n", "`n" -replace "`r", "`n"
 
+	# Convert SRT format to simple timestamp format if needed
+	$text = ConvertFrom-SrtFormat -Text $text
+
 	# Split into timestamp blocks
 	$blocks = Get-TimestampBlock -Text $text
 
@@ -64,6 +67,34 @@ function Split-Transcript {
 }
 
 $SplitTranscriptHelpers = {
+	function ConvertFrom-SrtFormat {
+		param([string]$Text)
+
+		# Detect SRT format: looks for pattern like "1\n00:00:00,560 --> 00:00:04,880\n"
+		$srtPattern = '^\d+\n\d{2}:\d{2}:\d{2},\d{3}\s*-->'
+		if ($Text -notmatch $srtPattern) {
+			# Not SRT format, return as-is
+			return $Text
+		}
+
+		# Parse SRT and convert to simple timestamp format
+		$output = New-Object System.Text.StringBuilder
+		$srtRegex = [regex]'(?ms)^\d+\n(?<start>\d{2}:\d{2}:\d{2}),\d{3}\s*-->\s*\d{2}:\d{2}:\d{2},\d{3}\n(?<text>.*?)(?=\n\n\d+\n|\z)'
+
+		foreach ($match in $srtRegex.Matches($Text)) {
+			$startTs = $match.Groups['start'].Value
+			$textContent = $match.Groups['text'].Value.Trim() -replace "`n", " "
+
+			# Skip empty entries
+			if ([string]::IsNullOrWhiteSpace($textContent)) { continue }
+
+			# Output in simple format: HH:MM:SS Text
+			[void]$output.AppendLine("$startTs $textContent")
+		}
+
+		return $output.ToString()
+	}
+
 	function Get-TimestampFromText {
 		param([string]$Text)
 
