@@ -93,6 +93,13 @@ def parse_args() -> argparse.Namespace:
         help="Save intermediate outputs for debugging"
     )
 
+    parser.add_argument(
+        "--debug-dir",
+        type=Path,
+        default=None,
+        help="Directory for debug output (default: output/debug)"
+    )
+
     return parser.parse_args()
 
 
@@ -111,7 +118,12 @@ def print_error(message: str) -> None:
     print(f"✗ {message}", file=sys.stderr)
 
 
-def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = False) -> int:
+def run_pipeline(
+    config: PipelineConfig,
+    verbose: bool = False,
+    debug: bool = False,
+    debug_dir: Path | None = None
+) -> int:
     """
     Run the notes generation pipeline.
 
@@ -119,6 +131,7 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
         config: Pipeline configuration
         verbose: Enable verbose output
         debug: Save intermediate outputs for debugging
+        debug_dir: Custom directory for debug output
 
     Returns:
         Exit code (0 for success)
@@ -129,10 +142,14 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
     # Initialize pipeline state
     state = PipelineState(config=config)
 
-    # Debug output directory
-    debug_dir = Path(config.output_path).parent / "debug"
+    # Debug output directory (use custom or default to output/debug)
+    if debug_dir:
+        actual_debug_dir = debug_dir
+    else:
+        actual_debug_dir = Path(config.output_path).parent / "debug"
+
     if debug:
-        debug_dir.mkdir(parents=True, exist_ok=True)
+        actual_debug_dir.mkdir(parents=True, exist_ok=True)
 
     try:
         # Stage 0: Normalize
@@ -153,7 +170,7 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
                 "title": state.normalized_index.title,
                 "sections": [asdict(s) for s in state.normalized_index.sections]
             }
-            (debug_dir / "01_normalized_index.json").write_text(
+            (actual_debug_dir / "01_normalized_index.json").write_text(
                 json.dumps(index_data, indent=2), encoding="utf-8"
             )
 
@@ -187,12 +204,12 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
         if debug:
             # Save extracted partials
             partials_data = [asdict(p) for p in state.partials]
-            (debug_dir / "02_extracted_partials.json").write_text(
+            (actual_debug_dir / "02_extracted_partials.json").write_text(
                 json.dumps(partials_data, indent=2), encoding="utf-8"
             )
             # Also save section titles for quick analysis
             titles = sorted(set(p.section_title for p in state.partials))
-            (debug_dir / "02_extracted_titles.txt").write_text(
+            (actual_debug_dir / "02_extracted_titles.txt").write_text(
                 "\n".join(titles), encoding="utf-8"
             )
 
@@ -212,12 +229,12 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
         if debug:
             # Save merged sections
             merged_data = [asdict(m) for m in state.merged_sections]
-            (debug_dir / "03_merged_sections.json").write_text(
+            (actual_debug_dir / "03_merged_sections.json").write_text(
                 json.dumps(merged_data, indent=2), encoding="utf-8"
             )
             # Also save section titles for quick analysis
             titles = sorted(set(m.section_title for m in state.merged_sections))
-            (debug_dir / "03_merged_titles.txt").write_text(
+            (actual_debug_dir / "03_merged_titles.txt").write_text(
                 "\n".join(titles), encoding="utf-8"
             )
 
@@ -235,7 +252,7 @@ def run_pipeline(config: PipelineConfig, verbose: bool = False, debug: bool = Fa
         print_success(f"Document created: {config.output_path}")
 
         if debug:
-            print_success(f"Debug output saved to: {debug_dir}")
+            print_success(f"Debug output saved to: {actual_debug_dir}")
 
         return 0
 
@@ -293,7 +310,12 @@ def main() -> int:
     print()
 
     # Run the pipeline
-    return run_pipeline(config, verbose=args.verbose, debug=args.debug)
+    return run_pipeline(
+        config,
+        verbose=args.verbose,
+        debug=args.debug,
+        debug_dir=args.debug_dir
+    )
 
 
 if __name__ == "__main__":

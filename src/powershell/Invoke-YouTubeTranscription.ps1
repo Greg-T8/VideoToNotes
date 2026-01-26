@@ -22,7 +22,10 @@ param(
 	[switch]$ForceBatch,
 
 	[Parameter()]
-	[switch]$KeepIntermediateFiles
+	[switch]$KeepIntermediateFiles,
+
+	[Parameter(HelpMessage = "Output files directly to OutputPath without creating a subfolder")]
+	[switch]$FlatOutput
 )
 
 $Main = {
@@ -32,9 +35,21 @@ $Main = {
 	# Validate required tools are installed
 	Confirm-Prerequisite
 
-	# Get video metadata and create output folder
+	# Get video metadata
 	$videoInfo = Get-YouTubeVideoInfo -Url $YouTubeUrl
-	$outputFolder = Initialize-OutputFolder -VideoInfo $videoInfo -BasePath $OutputPath
+
+	# Determine output folder based on FlatOutput mode
+	if ($FlatOutput) {
+		# Output directly to the specified path
+		$outputFolder = $OutputPath
+		if (-not (Test-Path $outputFolder)) {
+			New-Item -ItemType Directory -Path $outputFolder -Force | Out-Null
+		}
+	}
+	else {
+		# Create subfolder named after the video
+		$outputFolder = Initialize-OutputFolder -VideoInfo $videoInfo -BasePath $OutputPath
+	}
 
 	# Download audio from YouTube
 	$downloadedAudio = Get-YouTubeAudio -Url $YouTubeUrl -OutputFolder $outputFolder
@@ -115,13 +130,20 @@ $Helpers = {
 
 		Write-Host "Fetching video information..." -ForegroundColor Cyan
 
-		# Get video metadata as JSON
-		$jsonOutput = yt-dlp `
+		# Get video metadata as JSON (suppress warnings to avoid polluting JSON)
+		$jsonOutput = & yt-dlp `
 			--dump-json `
 			--no-download `
-			$Url 2>&1
+			--no-warnings `
+			$Url
 
-		$info = $jsonOutput | ConvertFrom-Json
+		if ($LASTEXITCODE -ne 0) {
+			throw "Failed to fetch video metadata. Exit code: $LASTEXITCODE"
+		}
+
+		# Join output lines if array and parse JSON
+		$jsonString = if ($jsonOutput -is [array]) { $jsonOutput -join "`n" } else { $jsonOutput }
+		$info = $jsonString | ConvertFrom-Json
 
 		return @{
 			Id         = $info.id
@@ -175,14 +197,17 @@ $Helpers = {
 
 		$outputTemplate = Join-Path $OutputFolder "source_audio.%(ext)s"
 
-		# Download best audio quality
+		# Download best audio quality using specific format selector
+		# Format 140 is m4a medium quality (129k), format 251 is webm opus (123k)
+		# Use bestaudio as fallback; convert to wav for Azure Speech
+		# Pipe to Out-Null to prevent output from polluting function return
 		yt-dlp `
+			-f "140/251/bestaudio" `
 			--extract-audio `
 			--audio-format wav `
-			--audio-quality 0 `
 			--output $outputTemplate `
 			--no-playlist `
-			$Url
+			$Url | Out-Host
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "yt-dlp failed to download audio."
@@ -196,8 +221,9 @@ $Helpers = {
 			throw "Audio file not found after download."
 		}
 
+		$audioPath = $audioFile.FullName
 		Write-Host "Downloaded: $($audioFile.Name)" -ForegroundColor Green
-		return $audioFile.FullName
+		return $audioPath
 	}
 
 	function Convert-AudioForSpeech {

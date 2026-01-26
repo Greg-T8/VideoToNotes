@@ -124,6 +124,7 @@ $Main = {
 
 		$script:IndexPath = $transcriptionResult.IndexPath
 		$script:TranscriptPath = $transcriptionResult.TranscriptPath
+		$script:DataFolder = $transcriptionResult.DataFolder
 		$videoTitle = $transcriptionResult.VideoTitle
 	}
 	else {
@@ -172,49 +173,64 @@ $Helpers = {
             Runs the full YouTube transcription workflow.
         .DESCRIPTION
             Downloads video, extracts contents/chapters, transcribes audio.
+            All artifacts are stored in a single folder named after the video.
         #>
 		param([string]$Url)
 
 		Show-Stage "YouTube" "Starting YouTube transcription workflow..."
 		Write-Host ""
 
-		# Create data folder for this video
-		$dataFolder = Join-Path $PSScriptRoot "data\youtube"
-		if (-not (Test-Path $dataFolder)) {
-			New-Item -ItemType Directory -Path $dataFolder -Force | Out-Null
-		}
-
-		# Step 1: Extract contents/index from YouTube
+		# Step 1: Extract contents/index from YouTube (to get video title first)
 		Show-Stage "Contents" "Extracting video chapters and contents..."
 
 		$contentsScript = Join-Path $PSScriptRoot "src\powershell\Get-YouTubeContents.ps1"
-		$tempFolder = Join-Path $dataFolder "temp_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
-		New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
 
-		# Run contents extraction
-		& $contentsScript -YouTubeUrl $Url -OutputPath $tempFolder
+		# Create a temporary location for initial contents extraction
+		$tempInitFolder = Join-Path $PSScriptRoot "data\.temp_init"
+		if (Test-Path $tempInitFolder) {
+			Remove-Item $tempInitFolder -Recurse -Force
+		}
+		New-Item -ItemType Directory -Path $tempInitFolder -Force | Out-Null
+
+		# Run contents extraction to get video metadata
+		& $contentsScript -YouTubeUrl $Url -OutputPath $tempInitFolder
 
 		if ($LASTEXITCODE -ne 0) {
+			Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
 			throw "Failed to extract video contents"
 		}
 
-		$indexPath = Join-Path $tempFolder "contents.md"
-		if (-not (Test-Path $indexPath)) {
-			throw "Contents file not created at: $indexPath"
-		}
+		# Get video title from contents to create final folder
+		$contentsJson = Get-Content (Join-Path $tempInitFolder "contents.json") | ConvertFrom-Json
+		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
 
+		# Create the final data folder named after the video
+		$dataFolder = Join-Path $PSScriptRoot "data\$videoTitle"
+		if (Test-Path $dataFolder) {
+			Write-Host "  Removing existing data folder..." -ForegroundColor DarkGray
+			Remove-Item $dataFolder -Recurse -Force
+		}
+		New-Item -ItemType Directory -Path $dataFolder -Force | Out-Null
+
+		# Move contents files to final location
+		Move-Item (Join-Path $tempInitFolder "contents.json") $dataFolder -Force
+		Move-Item (Join-Path $tempInitFolder "contents.md") $dataFolder -Force
+		Remove-Item $tempInitFolder -Recurse -Force
+
+		$indexPath = Join-Path $dataFolder "contents.md"
 		Write-Host "✓ " -ForegroundColor Green -NoNewline
 		Write-Host "Contents extracted: $indexPath"
 
-		# Step 2: Transcribe the video
+		# Step 2: Transcribe the video (directly to final data folder)
 		Show-Stage "Transcribe" "Transcribing video audio..."
 
 		$transcribeScript = Join-Path $PSScriptRoot "src\powershell\Invoke-YouTubeTranscription.ps1"
 
 		$transcribeParams = @{
 			YouTubeUrl = $Url
-			OutputPath = $tempFolder
+			OutputPath = $dataFolder
 			Language   = $Language
+			FlatOutput = $true
 		}
 
 		if ($KeepIntermediateFiles) {
@@ -227,26 +243,20 @@ $Helpers = {
 			throw "Failed to transcribe video"
 		}
 
-		# Find the transcript file (it will be in a subfolder)
-		$transcriptFile = Get-ChildItem -Path $tempFolder -Recurse -Filter "transcript.srt" |
-		Select-Object -First 1
-
-		if (-not $transcriptFile) {
-			throw "Transcript file not found after transcription"
+		# Transcript file should be directly in the data folder now
+		$transcriptFile = Join-Path $dataFolder "transcript.srt"
+		if (-not (Test-Path $transcriptFile)) {
+			throw "Transcript file not found at: $transcriptFile"
 		}
 
 		Write-Host "✓ " -ForegroundColor Green -NoNewline
-		Write-Host "Transcription complete: $($transcriptFile.FullName)"
-
-		# Get video title from contents
-		$contentsJson = Get-Content (Join-Path $tempFolder "contents.json") | ConvertFrom-Json
-		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+		Write-Host "Transcription complete: $transcriptFile"
 
 		return @{
 			IndexPath      = $indexPath
-			TranscriptPath = $transcriptFile.FullName
+			TranscriptPath = $transcriptFile
 			VideoTitle     = $videoTitle
-			TempFolder     = $tempFolder
+			DataFolder     = $dataFolder
 		}
 	}
 
@@ -430,8 +440,15 @@ $Helpers = {
 			"--transcript", $script:TranscriptPath,
 			"--output", $script:Output,
 			"--extract-model", $ExtractModel,
-			"--merge-model", $MergeModel
+			"--merge-model", $MergeModel,
+			"--debug"
 		)
+
+		# Add debug-dir if we have a data folder from YouTube workflow
+		if ($script:DataFolder) {
+			$debugDir = Join-Path $script:DataFolder "debug"
+			$pythonArgs += "--debug-dir", $debugDir
+		}
 
 		# Set PYTHONPATH to include src/python
 		$env:PYTHONPATH = Join-Path $PSScriptRoot "src\python"
