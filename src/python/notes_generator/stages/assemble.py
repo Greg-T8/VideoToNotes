@@ -185,40 +185,34 @@ def fuzzy_match_section(
 def build_content_map(
     merged_sections: List[MergedSection],
     index: NormalizedIndex
-) -> Dict[str, MergedSection]:
+) -> Dict[int, MergedSection]:
     """
     Build a content map with fuzzy matching of section titles.
 
     Uses timestamps to disambiguate similar section titles like
-    "Text Analytics" vs "Text Analysis".
+    "Face Service" under "Congitive Services" vs "Face Service" under "Follow Alongs".
 
     Args:
         merged_sections: List of merged section content
         index: The normalized index for title matching
 
     Returns:
-        Dictionary mapping index section titles to merged content
+        Dictionary mapping section ORDER (unique ID) to merged content
     """
     content_map = {}
 
     # Build normalized index lookup with timestamp disambiguation
-    # Key: (normalized_title, timestamp_prefix) -> index_title
-    norm_ts_to_index = {}
-    norm_only_to_index = {}  # Fallback without timestamp
+    # Key: (normalized_title, timestamp_prefix) -> IndexSection
+    norm_ts_to_section = {}
 
     for section in index.sections:
         norm = normalize_title(section.title)
-        # Use the timestamp field from the section, not from the title
         ts_prefix = section.timestamp[:5] if section.timestamp else None  # HH:MM prefix
 
-        # Store with timestamp for disambiguation
+        # Store with timestamp for disambiguation (timestamp is the best disambiguator)
         if ts_prefix:
             key = (norm, ts_prefix)
-            norm_ts_to_index[key] = section.title
-
-        # Also store without timestamp as fallback (first one wins)
-        if norm not in norm_only_to_index:
-            norm_only_to_index[norm] = section.title
+            norm_ts_to_section[key] = section
 
     for merged in merged_sections:
         merged_norm = normalize_title(merged.section_title)
@@ -228,56 +222,75 @@ def build_content_map(
             merged_ts = extract_timestamp_from_range(merged.timestamp_range)
         merged_ts_prefix = merged_ts[:5] if merged_ts else None
 
-        matched_title = None
+        # Check if this is a parent section by looking for [PARENT SECTION] marker
+        is_parent_content = "[PARENT SECTION]" in merged.content
 
-        # Try exact match with timestamp first
+        matched_section = None
+
+        # Try exact match with timestamp first - this is the best method
         if merged_ts_prefix:
             key = (merged_norm, merged_ts_prefix)
-            if key in norm_ts_to_index:
-                matched_title = norm_ts_to_index[key]
+            if key in norm_ts_to_section:
+                matched_section = norm_ts_to_section[key]
 
         # If merged has timestamp but exact match failed, try fuzzy with timestamp awareness
-        # (fuzzy considers timestamps, norm_only doesn't)
-        if not matched_title and merged_ts_prefix:
+        if not matched_section and merged_ts_prefix:
             matched_title = fuzzy_match_section(
                 merged.section_title, index.sections,
                 fallback_timestamp=merged_ts
             )
+            if matched_title:
+                # Find section with closest timestamp to disambiguate duplicates
+                candidates = [s for s in index.sections if s.title == matched_title]
+                if len(candidates) == 1:
+                    matched_section = candidates[0]
+                elif len(candidates) > 1:
+                    # Multiple matches - use timestamp to find the right one
+                    merged_seconds = timestamp_to_seconds(merged_ts) if merged_ts else 0
+                    best_match = None
+                    best_diff = float('inf')
+                    for c in candidates:
+                        c_seconds = timestamp_to_seconds(c.timestamp)
+                        diff = abs(c_seconds - merged_seconds)
+                        if diff < best_diff:
+                            best_diff = diff
+                            best_match = c
+                    matched_section = best_match
 
-        # Try exact normalized match only when there's no timestamp
-        if not matched_title and merged_norm in norm_only_to_index:
-            matched_title = norm_only_to_index[merged_norm]
+        # Fallback: try to find by normalized title only (for cases without timestamps)
+        if not matched_section:
+            # For parent content, prefer level 2 sections
+            target_level = 2 if is_parent_content else 3
+            candidates = [s for s in index.sections if normalize_title(s.title) == merged_norm]
+            if candidates:
+                # Prefer the section with matching level
+                level_matches = [c for c in candidates if c.level == target_level]
+                if level_matches:
+                    matched_section = level_matches[0]
+                else:
+                    matched_section = candidates[0]
 
-        # Try fuzzy match as last resort for non-timestamped titles
-        if not matched_title:
+        # Try fuzzy match as last resort
+        if not matched_section:
             matched_title = fuzzy_match_section(
                 merged.section_title, index.sections,
                 fallback_timestamp=merged_ts
             )
-
-        # If matched to a parent section (has children), try to find better child match
-        if matched_title:
-            matched_section = next(
-                (s for s in index.sections if s.title == matched_title), None
-            )
-            if matched_section and matched_section.children and merged_ts:
-                # This content matched a parent but has a timestamp - try to find child
-                child_match = fuzzy_match_section(
-                    merged.section_title,
-                    [s for s in index.sections if s.title in matched_section.children],
-                    fallback_timestamp=merged_ts
+            if matched_title:
+                matched_section = next(
+                    (s for s in index.sections if s.title == matched_title), None
                 )
-                if child_match:
-                    matched_title = child_match
 
-        # Skip content that's mostly empty placeholders (parent sections with no real content)
-        if matched_title and matched_title not in content_map:
-            # Check if content is meaningful (not just "None in this chunk" placeholders)
+        # Use order as key (unique identifier for each section)
+        if matched_section:
+            map_key = matched_section.order
+            # Skip content that's mostly empty placeholders
             content_lower = merged.content.lower()
             none_count = content_lower.count("none in this chunk")
             if none_count >= 4:  # 4+ "none" entries means it's an empty placeholder
                 continue
-            content_map[matched_title] = merged
+            if map_key not in content_map:
+                content_map[map_key] = merged
 
     return content_map
 
@@ -305,18 +318,28 @@ def build_hierarchy_map(index: NormalizedIndex) -> Dict[str, List[str]]:
 
 def get_section_by_title(
     index: NormalizedIndex,
-    title: str
+    title: str,
+    parent_title: Optional[str] = None
 ) -> Optional[IndexSection]:
     """
-    Get a section from the index by title.
+    Get a section from the index by title, optionally filtered by parent.
 
     Args:
         index: The normalized index
         title: Section title to find
+        parent_title: Optional parent title to filter by (for duplicate names)
 
     Returns:
         IndexSection or None if not found
     """
+    # If parent is specified, find the section with that specific parent
+    if parent_title is not None:
+        for section in index.sections:
+            if section.title == title and section.parent == parent_title:
+                return section
+        # Fall through to return first match if parent match not found
+
+    # Return first match
     for section in index.sections:
         if section.title == title:
             return section
@@ -362,26 +385,32 @@ def build_document_structure(
         lines.append(f"{indent}- [{section.title}](#{slugify(section.title)})")
     lines.append("")
 
-    # Track rendered sections to prevent infinite recursion
-    rendered_sections = set()
+    # Track rendered sections to prevent infinite recursion (using order as unique key)
+    rendered_sections = set()  # Set of order integers
     sections_with_rules = set()  # Track which sections already have a rule before them
     last_content_section = [None]  # Track last section that had content (mutable for closure)
+
+    def get_content_for_section(section: IndexSection) -> Optional[MergedSection]:
+        """Get content for a section using order as key (unique ID)."""
+        return content_map.get(section.order)
 
     # Render each section recursively
     def render_section(section: IndexSection, depth: int = 0, parent_has_content: bool = False,
                        is_first_child: bool = False):
         nonlocal sections_with_rules
         # Prevent infinite recursion from circular references
-        if section.title in rendered_sections:
+        # Use order as unique key since titles can be duplicated
+        if section.order in rendered_sections:
             return []
-        rendered_sections.add(section.title)
+        rendered_sections.add(section.order)
 
         # Limit recursion depth as safety measure
         if depth > 10:
             return []
 
         section_lines = []
-        has_content = section.title in content_map
+        merged_content = get_content_for_section(section)
+        has_content = merged_content is not None
 
         # Add horizontal rule before sections with content
         # Skip only if this is the very first content section in the document
@@ -391,7 +420,7 @@ def build_document_structure(
             section_lines.append("")
 
         if has_content:
-            sections_with_rules.add(section.title)
+            sections_with_rules.add(section.order)
             last_content_section[0] = section.title
 
         # Add heading
@@ -399,16 +428,14 @@ def build_document_structure(
         section_lines.append(f"{heading_prefix} {section.title}")
         section_lines.append("")
 
-        # Add content if this is a content section (has merged content)
-        if section.title in content_map:
-            merged = content_map[section.title]
-
+        # Add content if this section has merged content
+        if merged_content:
             # Extract content without the heading (it's already added)
-            content = merged.content
+            content = merged_content.content
 
             # Remove the ### heading from content if present
             content = content.lstrip()
-            if content.startswith("###"):
+            if content.startswith("###") or content.startswith("##"):
                 # Remove first line (the heading)
                 content = "\n".join(content.split("\n")[1:]).lstrip()
 
@@ -420,9 +447,10 @@ def build_document_structure(
             section_lines.append(content)
             section_lines.append("")
 
-        # Render children
+        # Render children - pass current section title as parent to find correct child
+        # (handles duplicate child names like "Face Service" under both "Congitive Services" and "Follow Alongs")
         for child_title in section.children:
-            child = get_section_by_title(index, child_title)
+            child = get_section_by_title(index, child_title, parent_title=section.title)
             if child:
                 section_lines.extend(render_section(child, depth + 1, has_content))
 
