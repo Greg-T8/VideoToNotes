@@ -589,7 +589,9 @@ def assemble_from_sections(
         # Find all ancestor sections that need headers
         ancestors = []
         current_title = section.section_title
-        while current_title in parent_map:
+        visited = set()  # Prevent infinite loops from circular parent references
+        while current_title in parent_map and current_title not in visited:
+            visited.add(current_title)
             parent_title = parent_map[current_title]
             if parent_title not in output_parents and parent_title in section_lookup:
                 parent_section = section_lookup[parent_title]
