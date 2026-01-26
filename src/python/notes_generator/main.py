@@ -14,9 +14,8 @@ Usage:
 The pipeline runs these stages:
     0. Normalize - Convert varied index formats to JSON
     1. Chunk     - Split transcript into ~20KB pieces
-    2. Extract   - Generate section notes from chunks (parallel, LLM)
-    3. Merge     - Combine and deduplicate partials (LLM)
-    4. Assemble  - Build final markdown document
+    2. Extract   - Generate section notes (per-section, LLM)
+    3. Assemble  - Build final markdown document
 """
 
 import argparse
@@ -188,63 +187,57 @@ def run_pipeline(
         state.chunks = load_chunks_from_zip(zip_path)
         print_success(f"Transcript chunked: {len(state.chunks)} chunks")
 
-        # Stage 2: Extract
-        print_stage("Extract", "Extracting notes from chunks...")
+        # Stage 2: Extract (per-section)
+        print_stage("Extract", "Extracting notes per section...")
         state.current_stage = "extract"
 
-        from notes_generator.stages.extract import extract_all_chunks_sync
-
-        state.partials = extract_all_chunks_sync(
-            state.chunks,
-            state.normalized_index,
-            model=config.extract_model
+        from notes_generator.stages.extract_by_section import (
+            extract_all_sections_sync,
+            get_leaf_sections
         )
-        print_success(f"Extracted: {len(state.partials)} section partials")
+
+        leaf_count = len(get_leaf_sections(state.normalized_index))
+        print(f"  Processing {leaf_count} sections...")
+
+        # Create sections output directory for individual section files
+        sections_dir = actual_debug_dir / "sections" if debug else None
+
+        state.merged_sections = extract_all_sections_sync(
+            index=state.normalized_index,
+            chunks=state.chunks,
+            model=config.extract_model,
+            sections_output_dir=sections_dir
+        )
+        print_success(f"Extracted: {len(state.merged_sections)} sections")
 
         if debug:
-            # Save extracted partials
-            partials_data = [asdict(p) for p in state.partials]
-            (actual_debug_dir / "02_extracted_partials.json").write_text(
-                json.dumps(partials_data, indent=2), encoding="utf-8"
+            # Save extracted sections
+            sections_data = [asdict(m) for m in state.merged_sections]
+            (actual_debug_dir / "02_extracted_sections.json").write_text(
+                json.dumps(sections_data, indent=2), encoding="utf-8"
             )
             # Also save section titles for quick analysis
-            titles = sorted(set(p.section_title for p in state.partials))
+            titles = sorted(set(m.section_title for m in state.merged_sections))
             (actual_debug_dir / "02_extracted_titles.txt").write_text(
                 "\n".join(titles), encoding="utf-8"
             )
 
-        # Stage 3: Merge
-        print_stage("Merge", "Merging section partials...")
-        state.current_stage = "merge"
+            # Track sections without content
+            extracted_titles = {m.section_title for m in state.merged_sections}
+            leaf_sections = get_leaf_sections(state.normalized_index)
+            empty_sections = [s.title for s in leaf_sections if s.title not in extracted_titles]
+            if empty_sections:
+                (actual_debug_dir / "04_empty_sections.txt").write_text(
+                    "\n".join(empty_sections), encoding="utf-8"
+                )
 
-        from notes_generator.stages.merge import merge_all_sections_sync
-
-        state.merged_sections = merge_all_sections_sync(
-            state.partials,
-            state.normalized_index,
-            model=config.merge_model
-        )
-        print_success(f"Merged: {len(state.merged_sections)} sections")
-
-        if debug:
-            # Save merged sections
-            merged_data = [asdict(m) for m in state.merged_sections]
-            (actual_debug_dir / "03_merged_sections.json").write_text(
-                json.dumps(merged_data, indent=2), encoding="utf-8"
-            )
-            # Also save section titles for quick analysis
-            titles = sorted(set(m.section_title for m in state.merged_sections))
-            (actual_debug_dir / "03_merged_titles.txt").write_text(
-                "\n".join(titles), encoding="utf-8"
-            )
-
-        # Stage 4: Assemble
+        # Stage 3: Assemble
         print_stage("Assemble", "Building final document...")
         state.current_stage = "assemble"
 
-        from notes_generator.stages.assemble import assemble_document
+        from notes_generator.stages.assemble import assemble_from_sections
 
-        assemble_document(
+        assemble_from_sections(
             state.normalized_index,
             state.merged_sections,
             Path(config.output_path)

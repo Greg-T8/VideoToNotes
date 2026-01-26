@@ -411,11 +411,11 @@ $Helpers = {
 		# Install or update Python dependencies
 		$pipPath = Join-Path $venvPath "Scripts\pip.exe"
 		Show-Stage "Setup" "Checking Python dependencies..."
-		
+
 		# Suppress all pip output including cache cleanup messages
 		# Use --no-cache-dir to prevent async cache operations that print to console
 		$null = & $pipPath install -q --disable-pip-version-check --no-cache-dir -r $requirementsPath 2>&1
-		
+
 		if ($LASTEXITCODE -ne 0) {
 			throw "Failed to install Python dependencies"
 		}

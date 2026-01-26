@@ -532,6 +532,124 @@ def generate_summary(
     return "\n".join(lines)
 
 
+def assemble_from_sections(
+    index: NormalizedIndex,
+    sections: List[MergedSection],
+    output_path: Path
+) -> None:
+    """
+    Assemble document directly from ordered sections.
+
+    This is a simpler assembly approach that:
+    1. Sorts sections by their order field
+    2. Adds parent section headers when level changes
+    3. Writes content in order without complex matching
+
+    Args:
+        index: The normalized index (for parent section headers and TOC)
+        sections: List of MergedSection objects (already have order, level, content)
+        output_path: Path to write the final document
+    """
+    # Sort sections by order
+    sorted_sections = sorted(sections, key=lambda s: s.order)
+
+    # Build parent lookup from index: section_title -> parent_title
+    parent_map = {}
+    for s in index.sections:
+        if s.parent:
+            parent_map[s.title] = s.parent
+
+    # Build section lookup from index for level info
+    section_lookup = {s.title: s for s in index.sections}
+
+    lines = []
+
+    # Document title
+    lines.append(f"# {index.title} - Exam Notes")
+    lines.append("")
+    lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+
+    # Build table of contents from index
+    lines.append("## Table of Contents")
+    lines.append("")
+    for section in sorted(index.sections, key=lambda s: s.order):
+        if section.level >= 2:
+            indent = "  " * (section.level - 2)
+            lines.append(f"{indent}- [{section.title}](#{slugify(section.title)})")
+    lines.append("")
+
+    # Track which parent sections we've output headers for
+    output_parents = set()
+    last_level = 2
+
+    for section in sorted_sections:
+        # Find all ancestor sections that need headers
+        ancestors = []
+        current_title = section.section_title
+        while current_title in parent_map:
+            parent_title = parent_map[current_title]
+            if parent_title not in output_parents and parent_title in section_lookup:
+                parent_section = section_lookup[parent_title]
+                ancestors.append(parent_section)
+            current_title = parent_title
+
+        # Output ancestor headers in order (root first)
+        for ancestor in reversed(ancestors):
+            if ancestor.level >= 2:
+                lines.append(f"{'#' * ancestor.level} {ancestor.title}")
+                lines.append("")
+                if ancestor.level == 2:
+                    lines.append("---")
+                    lines.append("")
+                output_parents.add(ancestor.title)
+
+        # Now output the section content
+        content = section.content.strip()
+
+        # Remove duplicate heading if content starts with the section header
+        content_lines = content.split('\n')
+        if content_lines and content_lines[0].startswith('#'):
+            # Check if it matches our section title
+            first_line = content_lines[0].lstrip('#').strip()
+            clean_title = re.sub(r'[☁️🎤\[\]]+', '', section.section_title).strip()
+            if clean_title.lower() in first_line.lower() or first_line.lower() in clean_title.lower():
+                # Skip duplicate heading
+                content = '\n'.join(content_lines[1:]).strip()
+
+        # Add section heading
+        level = section.level if section.level >= 2 else 3
+        lines.append(f"{'#' * level} {section.section_title}")
+        lines.append("")
+
+        # Add content
+        if content:
+            lines.append(content)
+            lines.append("")
+            lines.append("---")
+            lines.append("")
+
+    # Build final document
+    document = "\n".join(lines)
+
+    # Clean up excessive blank lines and trailing rules
+    document = re.sub(r'\n{4,}', '\n\n\n', document)
+    document = re.sub(r'---\s*---', '---', document)
+    document = document.rstrip('\n-') + '\n'
+
+    # Ensure output directory exists
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Write the file
+    output_path.write_text(document, encoding="utf-8")
+
+    print(f"Document assembled: {output_path}")
+    print(f"Total sections: {len(sections)}")
+    print(f"Document size: {len(document):,} characters")
+
+
 if __name__ == "__main__":
     # Allow running this stage directly for debugging
     print("Assemble stage - run with debugger for testing")

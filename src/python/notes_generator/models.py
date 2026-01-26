@@ -29,11 +29,12 @@ class IndexSection:
     """
 
     title: str
-    timestamp: str  # HH:MM:SS format
+    timestamp: str  # HH:MM:SS format (start time)
     level: int  # 2 = ##, 3 = ###, 4 = ####
     order: int  # Position in document (1-indexed)
     parent: Optional[str] = None  # Parent section title
     children: List[str] = field(default_factory=list)  # Child section titles
+    end_timestamp: Optional[str] = None  # HH:MM:SS format (end time, usually start of next section)
 
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
@@ -43,7 +44,8 @@ class IndexSection:
             "level": self.level,
             "order": self.order,
             "parent": self.parent,
-            "children": self.children
+            "children": self.children,
+            "end_timestamp": self.end_timestamp
         }
 
     @classmethod
@@ -55,7 +57,8 @@ class IndexSection:
             level=data["level"],
             order=data["order"],
             parent=data.get("parent"),
-            children=data.get("children", [])
+            children=data.get("children", []),
+            end_timestamp=data.get("end_timestamp")
         )
 
 

@@ -157,7 +157,38 @@ async def normalize_index(
             raise ValueError(f"Failed to parse LLM response as JSON: {e}\nResponse preview: {response[:500]}")
 
     # Convert to NormalizedIndex
-    return NormalizedIndex.from_dict(data)
+    normalized = NormalizedIndex.from_dict(data)
+
+    # Post-process: Calculate end_timestamp for each section
+    normalized = _calculate_end_timestamps(normalized)
+
+    return normalized
+
+
+def _calculate_end_timestamps(index: NormalizedIndex) -> NormalizedIndex:
+    """
+    Calculate end_timestamp for each section based on the next section.
+
+    Args:
+        index: Normalized index without end timestamps
+
+    Returns:
+        Same index with end_timestamp populated
+    """
+    # Sort sections by order
+    sorted_sections = sorted(index.sections, key=lambda s: s.order)
+
+    for i, section in enumerate(sorted_sections):
+        # Find the next section at same or higher (lower number) level
+        end_ts = None
+        for next_section in sorted_sections[i + 1:]:
+            if next_section.level <= section.level:
+                end_ts = next_section.timestamp
+                break
+
+        section.end_timestamp = end_ts
+
+    return index
 
 
 def normalize_index_sync(
