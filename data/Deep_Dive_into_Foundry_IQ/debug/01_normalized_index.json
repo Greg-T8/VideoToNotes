@@ -1,0 +1,199 @@
+{
+  "title": "Deep Dive into Foundry IQ",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "AI models and their knowledge",
+      "timestamp": "00:00:15",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "RAG to the rescue",
+      "timestamp": "00:01:31",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Azure AI Search",
+      "timestamp": "00:03:12",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Foundry IQ",
+      "timestamp": "00:08:24",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": [
+        "Agentic RAG",
+        "Multiple knowledge sources",
+        "New types of knowledge source",
+        "Remote knowledge sources",
+        "Knowledge bases and use of Azure AI Search resource",
+        "Adding knowledge sources",
+        "SKU limits",
+        "Collections of knowledge sources",
+        "Reasoning effort",
+        "Importance of good descriptions and instructions",
+        "Self-reflection",
+        "Output modes",
+        "Seeing the output modes in action",
+        "Peeking inside its thinking",
+        "Summary",
+        "How the IQs work together",
+        "Close"
+      ]
+    },
+    {
+      "title": "Agentic RAG",
+      "timestamp": "00:09:03",
+      "level": 3,
+      "order": 6,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Multiple knowledge sources",
+      "timestamp": "00:09:32",
+      "level": 3,
+      "order": 7,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "New types of knowledge source",
+      "timestamp": "00:10:18",
+      "level": 3,
+      "order": 8,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Remote knowledge sources",
+      "timestamp": "00:11:55",
+      "level": 3,
+      "order": 9,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Knowledge bases and use of Azure AI Search resource",
+      "timestamp": "00:14:22",
+      "level": 3,
+      "order": 10,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Adding knowledge sources",
+      "timestamp": "00:15:44",
+      "level": 3,
+      "order": 11,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "SKU limits",
+      "timestamp": "00:17:09",
+      "level": 3,
+      "order": 12,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Collections of knowledge sources",
+      "timestamp": "00:17:46",
+      "level": 3,
+      "order": 13,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Reasoning effort",
+      "timestamp": "00:18:49",
+      "level": 3,
+      "order": 14,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Importance of good descriptions and instructions",
+      "timestamp": "00:22:31",
+      "level": 3,
+      "order": 15,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Self-reflection",
+      "timestamp": "00:23:51",
+      "level": 3,
+      "order": 16,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Output modes",
+      "timestamp": "00:25:39",
+      "level": 3,
+      "order": 17,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Seeing the output modes in action",
+      "timestamp": "00:28:31",
+      "level": 3,
+      "order": 18,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Peeking inside its thinking",
+      "timestamp": "00:33:11",
+      "level": 3,
+      "order": 19,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Summary",
+      "timestamp": "00:34:37",
+      "level": 3,
+      "order": 20,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "How the IQs work together",
+      "timestamp": "00:35:15",
+      "level": 3,
+      "order": 21,
+      "parent": "Foundry IQ",
+      "children": []
+    },
+    {
+      "title": "Close",
+      "timestamp": "00:37:43",
+      "level": 3,
+      "order": 22,
+      "parent": "Foundry IQ",
+      "children": []
+    }
+  ]
+}

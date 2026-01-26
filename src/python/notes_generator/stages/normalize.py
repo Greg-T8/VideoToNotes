@@ -230,25 +230,41 @@ def index_to_toc_string(index: NormalizedIndex) -> str:
     Convert normalized index back to a readable TOC string.
 
     Useful for including in prompts for the extraction stage.
-    Uses ☁️ for parent sections and 🎤 for leaf sections to help
-    the LLM distinguish content targets.
+    Shows section time ranges (start – end) to help the LLM
+    understand section boundaries.
 
     Args:
         index: The normalized index
 
     Returns:
-        Formatted TOC string
+        Formatted TOC string with time ranges
     """
     lines = [f"# {index.title}", ""]
 
-    for section in sorted(index.sections, key=lambda s: s.order):
+    # Sort sections by order
+    sorted_sections = sorted(index.sections, key=lambda s: s.order)
+
+    for i, section in enumerate(sorted_sections):
         prefix = "#" * section.level
 
         # Determine if leaf (no children) or parent (has children)
         is_leaf = len(section.children) == 0
         marker = "🎤" if is_leaf else "☁️"
 
-        lines.append(f"{prefix} {marker} [{section.timestamp}] {section.title}")
+        # Calculate end time (start of next section at same or higher level)
+        end_ts = None
+        for next_section in sorted_sections[i + 1:]:
+            if next_section.level <= section.level:
+                end_ts = next_section.timestamp
+                break
+
+        # Format timestamp range
+        if end_ts:
+            ts_display = f"{section.timestamp} – {end_ts}"
+        else:
+            ts_display = f"{section.timestamp} – end"
+
+        lines.append(f"{prefix} {marker} [{ts_display}] {section.title}")
 
     return "\n".join(lines)
 

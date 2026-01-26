@@ -118,6 +118,32 @@ $Helpers = {
 		}
 	}
 
+	# Script-level cache for browser cookies argument
+	$script:BrowserCookiesArg = $null
+
+	function Get-BrowserCookiesArg {
+		<#
+		.SYNOPSIS
+			Determines which browser to use for cookies (Chrome first, then Firefox fallback).
+		#>
+		if ($script:BrowserCookiesArg) {
+			return $script:BrowserCookiesArg
+		}
+
+		# Try Chrome first
+		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 2>&1
+		if ($LASTEXITCODE -eq 0) {
+			$script:BrowserCookiesArg = "chrome"
+			Write-Verbose "Using Chrome for YouTube cookies"
+			return $script:BrowserCookiesArg
+		}
+
+		# Fall back to Firefox
+		$script:BrowserCookiesArg = "firefox"
+		Write-Verbose "Using Firefox for YouTube cookies (Chrome failed)"
+		return $script:BrowserCookiesArg
+	}
+
 	function Get-YouTubeVideoInfo {
 		<#
         .SYNOPSIS
@@ -131,7 +157,10 @@ $Helpers = {
 		Write-Host "Fetching video information..." -ForegroundColor Cyan
 
 		# Get video metadata as JSON (suppress warnings to avoid polluting JSON)
+		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
+		$browser = Get-BrowserCookiesArg
 		$jsonOutput = & yt-dlp `
+			--cookies-from-browser $browser `
 			--dump-json `
 			--no-download `
 			--no-warnings `
@@ -197,6 +226,7 @@ $Helpers = {
 			[string]$OutputFolder
 		)
 
+		Write-Host "  [Step 1/3] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Downloading audio from YouTube..." -ForegroundColor Cyan
 
 		$outputTemplate = Join-Path $OutputFolder "source_audio.%(ext)s"
@@ -204,13 +234,28 @@ $Helpers = {
 		# Try audio-only formats first, fall back to format 18 (360p with audio)
 		# Format 18 uses progressive streaming which bypasses SABR restrictions
 		# See: https://github.com/yt-dlp/yt-dlp/issues/12482
-		yt-dlp `
+		# Use --progress to show single-line progress, --quiet to suppress other noise
+		# Then filter to show only key status lines
+		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
+		$browser = Get-BrowserCookiesArg
+		$ytOutput = yt-dlp `
+			--cookies-from-browser $browser `
 			-f "140/251/bestaudio/18" `
 			--extract-audio `
 			--audio-format wav `
 			--output $outputTemplate `
 			--no-playlist `
-			$Url | Out-Host
+			--newline `
+			$Url 2>&1
+
+		# Filter and display only important lines (skip repetitive download progress)
+		$ytOutput | ForEach-Object {
+			$line = $_.ToString()
+			# Show: 100% complete, destination, extraction, deletion, errors/warnings
+			if ($line -match '100%|Destination:|ExtractAudio|Deleting|ERROR|WARNING|FixupM4a') {
+				Write-Host $line
+			}
+		}
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "yt-dlp failed to download audio."
@@ -243,6 +288,7 @@ $Helpers = {
 			[string]$OutputFolder
 		)
 
+		Write-Host "  [Step 2/3] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Optimizing audio for speech recognition..." -ForegroundColor Cyan
 
 		$outputFile = Join-Path $OutputFolder "audio_optimized.wav"
@@ -303,15 +349,29 @@ $Helpers = {
 			[string]$Language = "en-US"
 		)
 
+		Write-Host "  [Step 3/3] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Starting fast transcription..." -ForegroundColor Cyan
 
 		$srtFile = Join-Path $OutputFolder "transcript.srt"
 
-		# Pipe to Out-Host to display output without capturing in return value
-		spx transcribe `
+		# Capture output and show only header lines (not the full transcript text)
+		$spxOutput = spx transcribe `
 			--file $AudioFile `
 			--language $Language `
-			--output-srt-file $srtFile | Out-Host
+			--output-srt-file $srtFile 2>&1
+
+		# Display only the SPX header/config lines, not the transcript content
+		$headerLines = 0
+		$maxHeaderLines = 12
+		$spxOutput | ForEach-Object {
+			$line = $_.ToString()
+			# Show SPX banner, config lines (indented with spaces), and stop after header
+			if ($line -match '^SPX|^Copyright|^\s{2}\w+\.' -and $headerLines -lt $maxHeaderLines) {
+				Write-Host $line
+				$headerLines++
+			}
+		}
+		Write-Host "  ...transcribing..." -ForegroundColor DarkGray
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "spx transcribe failed."
@@ -341,6 +401,7 @@ $Helpers = {
 			[double]$DurationSeconds
 		)
 
+		Write-Host "  [Step 3/3] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Starting batch transcription..." -ForegroundColor Cyan
 
 		# Split into 1-hour chunks
@@ -357,21 +418,25 @@ $Helpers = {
 
 			$chunkSrt = $chunk.FullName -replace '\.wav$', '.srt'
 
-			# Use fast transcription for each chunk
-			spx transcribe `
+			# Use fast transcription for each chunk (suppress output to avoid polluting return value)
+			$null = spx transcribe `
 				--file $chunk.FullName `
 				--language $Language `
-				--output-srt-file $chunkSrt
+				--output-srt-file $chunkSrt 2>&1
 
 			if ($LASTEXITCODE -ne 0) {
-				Write-Warning "Transcription failed for chunk: $($chunk.Name)"
-				continue
+				throw "Transcription failed for chunk: $($chunk.Name). Exit code: $LASTEXITCODE"
+			}
+
+			# Verify the SRT file was actually created
+			if (-not (Test-Path $chunkSrt)) {
+				throw "SRT file was not created for chunk: $($chunk.Name). File expected at: $chunkSrt"
 			}
 
 			$srtFiles += @{
 				File       = $chunkSrt
 				ChunkIndex = [int]($chunk.Name -replace '\D', '')
-				OffsetMs   = ([int]($chunk.Name -replace '\D', '') - 1) * $chunkDurationSeconds * 1000
+				OffsetMs   = [int]($chunk.Name -replace '\D', '') * $chunkDurationSeconds * 1000
 			}
 		}
 
@@ -451,8 +516,7 @@ $Helpers = {
 
 		foreach ($srtInfo in $sortedFiles) {
 			if (-not (Test-Path $srtInfo.File)) {
-				Write-Warning "SRT file not found: $($srtInfo.File)"
-				continue
+				throw "SRT file not found during merge: $($srtInfo.File). Batch transcription is incomplete."
 			}
 
 			$content = Get-Content $srtInfo.File -Raw
@@ -520,12 +584,13 @@ $Helpers = {
 			[long]$Milliseconds
 		)
 
-		$hours = [math]::Floor($Milliseconds / 3600000)
+		# Cast to integers to ensure format specifier works correctly
+		$hours = [int][math]::Floor($Milliseconds / 3600000)
 		$remaining = $Milliseconds % 3600000
-		$minutes = [math]::Floor($remaining / 60000)
+		$minutes = [int][math]::Floor($remaining / 60000)
 		$remaining = $remaining % 60000
-		$seconds = [math]::Floor($remaining / 1000)
-		$ms = $remaining % 1000
+		$seconds = [int][math]::Floor($remaining / 1000)
+		$ms = [int]($remaining % 1000)
 
 		return "{0:D2}:{1:D2}:{2:D2},{3:D3}" -f $hours, $minutes, $seconds, $ms
 	}

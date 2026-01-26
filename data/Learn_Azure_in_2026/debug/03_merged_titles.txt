@@ -1,0 +1,12 @@
+🎤 [00:00:26 – 00:04:46] Foundational knowledge
+🎤 [00:04:46 – 00:06:26] Curated content
+🎤 [00:06:26 – 00:10:03] Getting access to Azure
+🎤 [00:10:03 – 00:13:39] Optimize resource use
+🎤 [00:13:39 – 00:15:59] Information in the portal
+🎤 [00:15:59 – 00:17:37] Microsoft Learn
+🎤 [00:17:37 – 00:18:25] Using the cloud shell
+🎤 [00:18:25 – 00:23:25] AI help with Copilot
+🎤 [00:23:25 – 00:23:43] Deeper video help
+🎤 [00:23:43 – 00:26:30] Key certifications
+🎤 [00:26:30 – 00:27:32] Staying current
+🎤 [00:27:32 – 00:28:09] Summary

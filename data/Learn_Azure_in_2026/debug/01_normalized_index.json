@@ -1,0 +1,117 @@
+{
+  "title": "Learn Azure in 2026",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Foundational knowledge",
+      "timestamp": "00:00:26",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Curated content",
+      "timestamp": "00:04:46",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Getting access to Azure",
+      "timestamp": "00:06:26",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Optimize resource use",
+      "timestamp": "00:10:03",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Information in the portal",
+      "timestamp": "00:13:39",
+      "level": 2,
+      "order": 6,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Microsoft Learn",
+      "timestamp": "00:15:59",
+      "level": 2,
+      "order": 7,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Using the cloud shell",
+      "timestamp": "00:17:37",
+      "level": 2,
+      "order": 8,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "AI help with Copilot",
+      "timestamp": "00:18:25",
+      "level": 2,
+      "order": 9,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Deeper video help",
+      "timestamp": "00:23:25",
+      "level": 2,
+      "order": 10,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Key certifications",
+      "timestamp": "00:23:43",
+      "level": 2,
+      "order": 11,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Staying current",
+      "timestamp": "00:26:30",
+      "level": 2,
+      "order": 12,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Summary",
+      "timestamp": "00:27:32",
+      "level": 2,
+      "order": 13,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Close",
+      "timestamp": "00:28:09",
+      "level": 2,
+      "order": 14,
+      "parent": null,
+      "children": []
+    }
+  ]
+}

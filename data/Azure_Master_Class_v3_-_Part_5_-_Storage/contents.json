@@ -1,0 +1,443 @@
+{
+  "description": "Part 5 of the v3 Master Class.\n\n🔎 Looking for content on a particular topic? Search the channel. If I have something it will be there!\n\n▬▬▬▬▬▬  C H A P T E R S ⏰  ▬▬▬▬▬▬\n00:00 - Introduction\n00:35 - Types of storage\n06:14 - Azure Storage 101\n12:17 - Storage account basics\n16:29 - Storage durability\n17:42 - Resiliency options\n23:12 - Storage account failover\n25:16 - APIs and other features\n29:35 - Object level replication\n35:14 - Storage account services\n35:39 - Blob offerings\n45:08 - Files\n47:58 - Table\n48:24 - Queue\n51:26 - Money\n54:18 - Tiering\n1:01:58 - Provisioned based billing services\n1:04:32 - Provisioned v2 standard \n1:07:36 - Data Lake features\n1:15:46 - Hosting a website\n1:18:46 - Access control options\n1:19:01 - Account keys\n1:22:17 - Blob anonymous access\n1:23:24 - Entra ID integrated data plane RBAC\n1:26:33 - Shared Access Signatures\n1:32:14 - Don't worry about key over TLS\n1:34:01 - Encryption\n1:36:36 - Encryption scopes\n1:39:16 - Network protection\n1:44:48 - Lifecycle management\n1:48:45 - Azure Storage Actions\n1:52:19 - Native protection constructs\n1:52:53 - Blob versioning\n1:55:05 - Change feed\n1:55:57 - Soft delete\n1:56:42 - Point-in-time restore\n1:57:48 - Azure File Sync\n2:02:13 - Azure Elastic SAN\n2:06:40 - Azure NetApp Files\n2:12:07 - Managed Disks\n2:21:37 - VM Storage\n2:27:55 - Handling big volumes\n2:28:55 - Storage tools\n2:31:15 - AzCopy\n2:32:38 - Azure Storage Mover\n2:34:03 - Import and Export\n2:35:59 - Data Governance\n2:38:13 - Close\n\n▬▬▬▬▬▬  K E Y   L I N K S 🔗 ▬▬▬▬▬▬\n► Playlist for the Master Class:\n🔗 https://www.youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n► GitHub Repo\n🔗 https://github.com/johnthebrit/AzureMasterClass\n\n▬▬▬▬▬▬  Want to learn more? 🚀  ▬▬▬▬▬▬ \n📖 Recommended Learning Path for Azure\n🔗 https://learn.onboardtoazure.com\n🥇 Certification Content Repository\n🔗 https://github.com/johnthebrit/CertificationMaterials\n📅 Weekly Azure Update\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nEv7jSfOVmQGRp9wAoAM0Ks\n☁ Azure Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n⚙ DevOps Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nFr8RzQ4GIxUEznpNR53ERq\n💻 PowerShell Master Class\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8\n🎓 Certification Cram Videos\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nHz2qfLvPsAz9CnnXofhmcA\n🧠 Mentoring Content\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nGHxNkSWB0PjzZHwZ0BkXZZ\n❔ Question about my setup?\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nHuSSHudxXDdn9Vz3T4-0mS\n👕 Cure Childhood Cancer Charity T-Shirt Channel Store\n🔗 https://johns-t-shirts-store.creator-spring.com/\n\nSUBSCRIBE  ✅  https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ?sub_confirmation=1\n\n#microsoft #azure #johnsavillstechnicaltraining #onboardtoazure #cloud",
+  "url": "https://www.youtube.com/watch?v=YnFkgLxqrKQ",
+  "chapters": [
+    {
+      "children": [],
+      "title": "Introduction",
+      "endTime": 35,
+      "startTime": 0,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "00:00"
+    },
+    {
+      "children": [],
+      "title": "Types of storage",
+      "endTime": 374,
+      "startTime": 35,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "00:35"
+    },
+    {
+      "children": [],
+      "title": "Azure Storage 101",
+      "endTime": 737,
+      "startTime": 374,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "06:14"
+    },
+    {
+      "children": [],
+      "title": "Storage account basics",
+      "endTime": 989,
+      "startTime": 737,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "12:17"
+    },
+    {
+      "children": [],
+      "title": "Storage durability",
+      "endTime": 1062,
+      "startTime": 989,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "16:29"
+    },
+    {
+      "children": [],
+      "title": "Resiliency options",
+      "endTime": 1392,
+      "startTime": 1062,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "17:42"
+    },
+    {
+      "children": [],
+      "title": "Storage account failover",
+      "endTime": 1516,
+      "startTime": 1392,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "23:12"
+    },
+    {
+      "children": [],
+      "title": "APIs and other features",
+      "endTime": 1775,
+      "startTime": 1516,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "25:16"
+    },
+    {
+      "children": [],
+      "title": "Object level replication",
+      "endTime": 2114,
+      "startTime": 1775,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "29:35"
+    },
+    {
+      "children": [],
+      "title": "Storage account services",
+      "endTime": 2139,
+      "startTime": 2114,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "35:14"
+    },
+    {
+      "children": [],
+      "title": "Blob offerings",
+      "endTime": 2708,
+      "startTime": 2139,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "35:39"
+    },
+    {
+      "children": [],
+      "title": "Files",
+      "endTime": 2878,
+      "startTime": 2708,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "45:08"
+    },
+    {
+      "children": [],
+      "title": "Table",
+      "endTime": 2904,
+      "startTime": 2878,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "47:58"
+    },
+    {
+      "children": [],
+      "title": "Queue",
+      "endTime": 3086,
+      "startTime": 2904,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "48:24"
+    },
+    {
+      "children": [],
+      "title": "Money",
+      "endTime": 3258,
+      "startTime": 3086,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "51:26"
+    },
+    {
+      "children": [],
+      "title": "Tiering",
+      "endTime": 3718,
+      "startTime": 3258,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "54:18"
+    },
+    {
+      "children": [],
+      "title": "Provisioned based billing services",
+      "endTime": 3872,
+      "startTime": 3718,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:01:58"
+    },
+    {
+      "children": [],
+      "title": "Provisioned v2 standard",
+      "endTime": 4056,
+      "startTime": 3872,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:04:32"
+    },
+    {
+      "children": [],
+      "title": "Data Lake features",
+      "endTime": 4546,
+      "startTime": 4056,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:07:36"
+    },
+    {
+      "children": [],
+      "title": "Hosting a website",
+      "endTime": 4726,
+      "startTime": 4546,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:15:46"
+    },
+    {
+      "children": [],
+      "title": "Access control options",
+      "endTime": 4741,
+      "startTime": 4726,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:18:46"
+    },
+    {
+      "children": [],
+      "title": "Account keys",
+      "endTime": 4937,
+      "startTime": 4741,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:19:01"
+    },
+    {
+      "children": [],
+      "title": "Blob anonymous access",
+      "endTime": 5004,
+      "startTime": 4937,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:22:17"
+    },
+    {
+      "children": [],
+      "title": "Entra ID integrated data plane RBAC",
+      "endTime": 5193,
+      "startTime": 5004,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:23:24"
+    },
+    {
+      "children": [],
+      "title": "Shared Access Signatures",
+      "endTime": 5534,
+      "startTime": 5193,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:26:33"
+    },
+    {
+      "children": [],
+      "title": "Don't worry about key over TLS",
+      "endTime": 5641,
+      "startTime": 5534,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:32:14"
+    },
+    {
+      "children": [],
+      "title": "Encryption",
+      "endTime": 5796,
+      "startTime": 5641,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:34:01"
+    },
+    {
+      "children": [],
+      "title": "Encryption scopes",
+      "endTime": 5956,
+      "startTime": 5796,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:36:36"
+    },
+    {
+      "children": [],
+      "title": "Network protection",
+      "endTime": 6288,
+      "startTime": 5956,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:39:16"
+    },
+    {
+      "children": [],
+      "title": "Lifecycle management",
+      "endTime": 6525,
+      "startTime": 6288,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:44:48"
+    },
+    {
+      "children": [],
+      "title": "Azure Storage Actions",
+      "endTime": 6739,
+      "startTime": 6525,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:48:45"
+    },
+    {
+      "children": [],
+      "title": "Native protection constructs",
+      "endTime": 6773,
+      "startTime": 6739,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:52:19"
+    },
+    {
+      "children": [],
+      "title": "Blob versioning",
+      "endTime": 6905,
+      "startTime": 6773,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:52:53"
+    },
+    {
+      "children": [],
+      "title": "Change feed",
+      "endTime": 6957,
+      "startTime": 6905,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:55:05"
+    },
+    {
+      "children": [],
+      "title": "Soft delete",
+      "endTime": 7002,
+      "startTime": 6957,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:55:57"
+    },
+    {
+      "children": [],
+      "title": "Point-in-time restore",
+      "endTime": 7068,
+      "startTime": 7002,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:56:42"
+    },
+    {
+      "children": [],
+      "title": "Azure File Sync",
+      "endTime": 7333,
+      "startTime": 7068,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "1:57:48"
+    },
+    {
+      "children": [],
+      "title": "Azure Elastic SAN",
+      "endTime": 7600,
+      "startTime": 7333,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:02:13"
+    },
+    {
+      "children": [],
+      "title": "Azure NetApp Files",
+      "endTime": 7927,
+      "startTime": 7600,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:06:40"
+    },
+    {
+      "children": [],
+      "title": "Managed Disks",
+      "endTime": 8497,
+      "startTime": 7927,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:12:07"
+    },
+    {
+      "children": [],
+      "title": "VM Storage",
+      "endTime": 8875,
+      "startTime": 8497,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:21:37"
+    },
+    {
+      "children": [],
+      "title": "Handling big volumes",
+      "endTime": 8935,
+      "startTime": 8875,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:27:55"
+    },
+    {
+      "children": [],
+      "title": "Storage tools",
+      "endTime": 9075,
+      "startTime": 8935,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:28:55"
+    },
+    {
+      "children": [],
+      "title": "AzCopy",
+      "endTime": 9158,
+      "startTime": 9075,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:31:15"
+    },
+    {
+      "children": [],
+      "title": "Azure Storage Mover",
+      "endTime": 9243,
+      "startTime": 9158,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:32:38"
+    },
+    {
+      "children": [],
+      "title": "Import and Export",
+      "endTime": 9359,
+      "startTime": 9243,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:34:03"
+    },
+    {
+      "children": [],
+      "title": "Data Governance",
+      "endTime": 9493,
+      "startTime": 9359,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:35:59"
+    },
+    {
+      "children": [],
+      "title": "Close",
+      "endTime": null,
+      "startTime": 9493,
+      "level": 1,
+      "isSection": false,
+      "timestamp": "2:38:13"
+    }
+  ],
+  "channel": "John Savill's Technical Training",
+  "title": "Azure Master Class v3 - Part 5 - Storage",
+  "uploadDate": "20250203",
+  "duration": 9518,
+  "chaptersSource": "description"
+}

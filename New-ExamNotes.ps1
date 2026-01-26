@@ -148,12 +148,14 @@ $Main = {
 		New-Item -ItemType Directory -Path $outputDir -Force | Out-Null
 	}
 
+	# Phase 3: Notes Generation Pipeline
+	Show-Phase "PHASE 3: Notes Generation" "Normalize, extract, merge, and assemble notes"
+
 	# Display current configuration
 	Show-Configuration
 
 	# Validate and setup Python virtual environment
 	$pythonExe = Confirm-PythonEnvironment
-	Write-Host ""
 
 	# Execute the Python notes generation pipeline
 	Invoke-Pipeline -PythonExe $pythonExe
@@ -177,8 +179,7 @@ $Helpers = {
         #>
 		param([string]$Url)
 
-		Show-Stage "YouTube" "Starting YouTube transcription workflow..."
-		Write-Host ""
+		Show-Phase "PHASE 1: YouTube Processing" "Download metadata, chapters, and audio"
 
 		# Step 1: Extract contents/index from YouTube (to get video title first)
 		Show-Stage "Contents" "Extracting video chapters and contents..."
@@ -222,7 +223,8 @@ $Helpers = {
 		Write-Host "Contents extracted: $indexPath"
 
 		# Step 2: Transcribe the video (directly to final data folder)
-		Show-Stage "Transcribe" "Transcribing video audio..."
+		Show-Phase "PHASE 2: Audio Transcription" "Download, optimize, and transcribe audio"
+		Show-Stage "Transcribe" "Starting audio transcription..."
 
 		$transcribeScript = Join-Path $PSScriptRoot "src\powershell\Invoke-YouTubeTranscription.ps1"
 
@@ -314,6 +316,25 @@ $Helpers = {
 		Write-Host $Message
 	}
 
+	function Show-Phase {
+		<#
+		.SYNOPSIS
+			Displays a major phase header with visual separation.
+		#>
+		param(
+			[string]$Phase,
+			[string]$Description
+		)
+
+		Write-Host ""
+		Write-Host "───────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
+		Write-Host "  $Phase" -ForegroundColor Yellow
+		if ($Description) {
+			Write-Host "  $Description" -ForegroundColor DarkGray
+		}
+		Write-Host "───────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
+	}
+
 	function Show-Success {
 		<#
         .SYNOPSIS
@@ -390,7 +411,11 @@ $Helpers = {
 		# Install or update Python dependencies
 		$pipPath = Join-Path $venvPath "Scripts\pip.exe"
 		Show-Stage "Setup" "Checking Python dependencies..."
-		& $pipPath install -q -r $requirementsPath
+		
+		# Suppress all pip output including cache cleanup messages
+		# Use --no-cache-dir to prevent async cache operations that print to console
+		$null = & $pipPath install -q --disable-pip-version-check --no-cache-dir -r $requirementsPath 2>&1
+		
 		if ($LASTEXITCODE -ne 0) {
 			throw "Failed to install Python dependencies"
 		}

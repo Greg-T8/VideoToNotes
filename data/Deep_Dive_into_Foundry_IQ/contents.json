@@ -1,0 +1,209 @@
+{
+  "duration": 2285,
+  "channel": "John Savill's Technical Training",
+  "title": "Deep Dive into Foundry IQ",
+  "description": "A walkthrough of Microsoft Foundry IQ and its capabilities.\n\n🔎 Looking for content on a particular topic? Search the channel. If I have something it will be there!\n🤔  Due to the channel growth and number of people wanting help I no longer can answer or even read questions and they will just stay in the moderation queue never to be seen so please post questions to other sites like Reddit, Microsoft Community Hub etc.\n\n▬▬▬▬▬▬  C H A P T E R S ⏰  ▬▬▬▬▬▬\n00:00 - Introduction\n00:15 - AI models and their knowledge\n01:31 - RAG to the rescue\n03:12 - Azure AI Search\n08:24 - Foundry IQ\n09:03 - Agentic RAG\n09:32 - Multiple knowledge sources\n10:18 - New types of knowledge source\n11:55 - Remote knowledge sources\n14:22 - Knowledge bases and use of Azure AI Search resource\n15:44 - Adding knowledge sources\n17:09 - SKU limits\n17:46 - Collections of knowledge sources\n18:49 - Reasoning effort\n22:31 - Importance of good descriptions and instructions\n23:51 - Self-reflection\n25:39 - Output modes\n28:31 - Seeing the output modes in action\n33:11 - Peeking inside its thinking\n34:37 - Summary\n35:15 - How the IQs work together\n37:43 - Close\n\n▬▬▬▬▬▬  K E Y   L I N K S 🔗 ▬▬▬▬▬▬\n► Whiteboard:\n🔗 \nhttps://github.com/johnthebrit/RandomStuff/raw/master/Whiteboards/FoundryIQ.png\n► SKU limits:\n🔗 https://learn.microsoft.com/azure/search/search-limits-quotas-capacity#agentic-retrieval-limits\n► Foundry IQ reasoning blog:\n🔗 https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/foundry-iq-boost-response-relevance-by-36-with-agentic-retrieval/4470720\n\n▬▬▬▬▬▬  Want to learn more? 🚀  ▬▬▬▬▬▬ \n📖 Recommended Learning Path for Azure\n🔗 https://learn.onboardtoazure.com\n🥇 Certification Content Repository\n🔗 https://github.com/johnthebrit/CertificationMaterials\n📅 Weekly Azure Update\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nEv7jSfOVmQGRp9wAoAM0Ks\n☁ Azure Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n⚙ DevOps Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nFr8RzQ4GIxUEznpNR53ERq\n💻 PowerShell Master Class\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8\n🎓 Certification Cram Videos\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nHz2qfLvPsAz9CnnXofhmcA\n🧠 Mentoring Content\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nGHxNkSWB0PjzZHwZ0BkXZZ\n❔ Questions? Maybe I answered it in my FAQ\n🔗 https://savilltech.com/faq\n👕 Cure Childhood Cancer Charity T-Shirt Channel Store\n🔗 https://johns-t-shirts-store.creator-spring.com/\n\n👂 Enable the subtitles and from there you can translate to your native language via the auto-translate feature in settings! https://youtu.be/v5b53-PgEmI for a demo of using this feature.\n\nSUBSCRIBE  ✅  https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ?sub_confirmation=1\n\n#microsoft #azureai #AI #LLM #johnsavillstechnicaltraining #onboardtoazure",
+  "uploadDate": "20260119",
+  "chaptersSource": "description",
+  "chapters": [
+    {
+      "endTime": 15,
+      "startTime": 0,
+      "title": "Introduction",
+      "isSection": false,
+      "timestamp": "00:00",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 91,
+      "startTime": 15,
+      "title": "AI models and their knowledge",
+      "isSection": false,
+      "timestamp": "00:15",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 192,
+      "startTime": 91,
+      "title": "RAG to the rescue",
+      "isSection": false,
+      "timestamp": "01:31",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 504,
+      "startTime": 192,
+      "title": "Azure AI Search",
+      "isSection": false,
+      "timestamp": "03:12",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 543,
+      "startTime": 504,
+      "title": "Foundry IQ",
+      "isSection": false,
+      "timestamp": "08:24",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 572,
+      "startTime": 543,
+      "title": "Agentic RAG",
+      "isSection": false,
+      "timestamp": "09:03",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 618,
+      "startTime": 572,
+      "title": "Multiple knowledge sources",
+      "isSection": false,
+      "timestamp": "09:32",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 715,
+      "startTime": 618,
+      "title": "New types of knowledge source",
+      "isSection": false,
+      "timestamp": "10:18",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 862,
+      "startTime": 715,
+      "title": "Remote knowledge sources",
+      "isSection": false,
+      "timestamp": "11:55",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 944,
+      "startTime": 862,
+      "title": "Knowledge bases and use of Azure AI Search resource",
+      "isSection": false,
+      "timestamp": "14:22",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1029,
+      "startTime": 944,
+      "title": "Adding knowledge sources",
+      "isSection": false,
+      "timestamp": "15:44",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1066,
+      "startTime": 1029,
+      "title": "SKU limits",
+      "isSection": false,
+      "timestamp": "17:09",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1129,
+      "startTime": 1066,
+      "title": "Collections of knowledge sources",
+      "isSection": false,
+      "timestamp": "17:46",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1351,
+      "startTime": 1129,
+      "title": "Reasoning effort",
+      "isSection": false,
+      "timestamp": "18:49",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1431,
+      "startTime": 1351,
+      "title": "Importance of good descriptions and instructions",
+      "isSection": false,
+      "timestamp": "22:31",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1539,
+      "startTime": 1431,
+      "title": "Self-reflection",
+      "isSection": false,
+      "timestamp": "23:51",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1711,
+      "startTime": 1539,
+      "title": "Output modes",
+      "isSection": false,
+      "timestamp": "25:39",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 1991,
+      "startTime": 1711,
+      "title": "Seeing the output modes in action",
+      "isSection": false,
+      "timestamp": "28:31",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 2077,
+      "startTime": 1991,
+      "title": "Peeking inside its thinking",
+      "isSection": false,
+      "timestamp": "33:11",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 2115,
+      "startTime": 2077,
+      "title": "Summary",
+      "isSection": false,
+      "timestamp": "34:37",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": 2263,
+      "startTime": 2115,
+      "title": "How the IQs work together",
+      "isSection": false,
+      "timestamp": "35:15",
+      "children": [],
+      "level": 1
+    },
+    {
+      "endTime": null,
+      "startTime": 2263,
+      "title": "Close",
+      "isSection": false,
+      "timestamp": "37:43",
+      "children": [],
+      "level": 1
+    }
+  ],
+  "url": "https://www.youtube.com/watch?v=uDVkcZwB0EU"
+}

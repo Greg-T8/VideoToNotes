@@ -1,0 +1,413 @@
+{
+  "title": "Azure Master Class v3 - Part 5 - Storage",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Types of storage",
+      "timestamp": "00:00:35",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Azure Storage 101",
+      "timestamp": "00:06:14",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Storage account basics",
+      "timestamp": "00:12:17",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Storage durability",
+      "timestamp": "00:16:29",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Resiliency options",
+      "timestamp": "00:17:42",
+      "level": 2,
+      "order": 6,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Storage account failover",
+      "timestamp": "00:23:12",
+      "level": 2,
+      "order": 7,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "APIs and other features",
+      "timestamp": "00:25:16",
+      "level": 2,
+      "order": 8,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Object level replication",
+      "timestamp": "00:29:35",
+      "level": 2,
+      "order": 9,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Storage account services",
+      "timestamp": "00:35:14",
+      "level": 2,
+      "order": 10,
+      "parent": null,
+      "children": [
+        "Blob offerings",
+        "Files",
+        "Table",
+        "Queue"
+      ]
+    },
+    {
+      "title": "Blob offerings",
+      "timestamp": "00:35:39",
+      "level": 3,
+      "order": 11,
+      "parent": "Storage account services",
+      "children": []
+    },
+    {
+      "title": "Files",
+      "timestamp": "00:45:08",
+      "level": 3,
+      "order": 12,
+      "parent": "Storage account services",
+      "children": []
+    },
+    {
+      "title": "Table",
+      "timestamp": "00:47:58",
+      "level": 3,
+      "order": 13,
+      "parent": "Storage account services",
+      "children": []
+    },
+    {
+      "title": "Queue",
+      "timestamp": "00:48:24",
+      "level": 3,
+      "order": 14,
+      "parent": "Storage account services",
+      "children": []
+    },
+    {
+      "title": "Money",
+      "timestamp": "00:51:26",
+      "level": 2,
+      "order": 15,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Tiering",
+      "timestamp": "00:54:18",
+      "level": 2,
+      "order": 16,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Provisioned based billing services",
+      "timestamp": "01:01:58",
+      "level": 2,
+      "order": 17,
+      "parent": null,
+      "children": [
+        "Provisioned v2 standard"
+      ]
+    },
+    {
+      "title": "Provisioned v2 standard",
+      "timestamp": "01:04:32",
+      "level": 3,
+      "order": 18,
+      "parent": "Provisioned based billing services",
+      "children": []
+    },
+    {
+      "title": "Data Lake features",
+      "timestamp": "01:07:36",
+      "level": 2,
+      "order": 19,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Hosting a website",
+      "timestamp": "01:15:46",
+      "level": 2,
+      "order": 20,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Access control options",
+      "timestamp": "01:18:46",
+      "level": 2,
+      "order": 21,
+      "parent": null,
+      "children": [
+        "Account keys",
+        "Blob anonymous access",
+        "Entra ID integrated data plane RBAC",
+        "Shared Access Signatures"
+      ]
+    },
+    {
+      "title": "Account keys",
+      "timestamp": "01:19:01",
+      "level": 3,
+      "order": 22,
+      "parent": "Access control options",
+      "children": []
+    },
+    {
+      "title": "Blob anonymous access",
+      "timestamp": "01:22:17",
+      "level": 3,
+      "order": 23,
+      "parent": "Access control options",
+      "children": []
+    },
+    {
+      "title": "Entra ID integrated data plane RBAC",
+      "timestamp": "01:23:24",
+      "level": 3,
+      "order": 24,
+      "parent": "Access control options",
+      "children": []
+    },
+    {
+      "title": "Shared Access Signatures",
+      "timestamp": "01:26:33",
+      "level": 3,
+      "order": 25,
+      "parent": "Access control options",
+      "children": []
+    },
+    {
+      "title": "Don't worry about key over TLS",
+      "timestamp": "01:32:14",
+      "level": 2,
+      "order": 26,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Encryption",
+      "timestamp": "01:34:01",
+      "level": 2,
+      "order": 27,
+      "parent": null,
+      "children": [
+        "Encryption scopes"
+      ]
+    },
+    {
+      "title": "Encryption scopes",
+      "timestamp": "01:36:36",
+      "level": 3,
+      "order": 28,
+      "parent": "Encryption",
+      "children": []
+    },
+    {
+      "title": "Network protection",
+      "timestamp": "01:39:16",
+      "level": 2,
+      "order": 29,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Lifecycle management",
+      "timestamp": "01:44:48",
+      "level": 2,
+      "order": 30,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Azure Storage Actions",
+      "timestamp": "01:48:45",
+      "level": 2,
+      "order": 31,
+      "parent": null,
+      "children": [
+        "Native protection constructs",
+        "Blob versioning",
+        "Change feed",
+        "Soft delete",
+        "Point-in-time restore"
+      ]
+    },
+    {
+      "title": "Native protection constructs",
+      "timestamp": "01:52:19",
+      "level": 3,
+      "order": 32,
+      "parent": "Azure Storage Actions",
+      "children": []
+    },
+    {
+      "title": "Blob versioning",
+      "timestamp": "01:52:53",
+      "level": 3,
+      "order": 33,
+      "parent": "Azure Storage Actions",
+      "children": []
+    },
+    {
+      "title": "Change feed",
+      "timestamp": "01:55:05",
+      "level": 3,
+      "order": 34,
+      "parent": "Azure Storage Actions",
+      "children": []
+    },
+    {
+      "title": "Soft delete",
+      "timestamp": "01:55:57",
+      "level": 3,
+      "order": 35,
+      "parent": "Azure Storage Actions",
+      "children": []
+    },
+    {
+      "title": "Point-in-time restore",
+      "timestamp": "01:56:42",
+      "level": 3,
+      "order": 36,
+      "parent": "Azure Storage Actions",
+      "children": []
+    },
+    {
+      "title": "Azure File Sync",
+      "timestamp": "01:57:48",
+      "level": 2,
+      "order": 37,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Azure Elastic SAN",
+      "timestamp": "02:02:13",
+      "level": 2,
+      "order": 38,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Azure NetApp Files",
+      "timestamp": "02:06:40",
+      "level": 2,
+      "order": 39,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Managed Disks",
+      "timestamp": "02:12:07",
+      "level": 2,
+      "order": 40,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "VM Storage",
+      "timestamp": "02:21:37",
+      "level": 2,
+      "order": 41,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Handling big volumes",
+      "timestamp": "02:27:55",
+      "level": 2,
+      "order": 42,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Storage tools",
+      "timestamp": "02:28:55",
+      "level": 2,
+      "order": 43,
+      "parent": null,
+      "children": [
+        "AzCopy",
+        "Azure Storage Mover",
+        "Import and Export"
+      ]
+    },
+    {
+      "title": "AzCopy",
+      "timestamp": "02:31:15",
+      "level": 3,
+      "order": 44,
+      "parent": "Storage tools",
+      "children": []
+    },
+    {
+      "title": "Azure Storage Mover",
+      "timestamp": "02:32:38",
+      "level": 3,
+      "order": 45,
+      "parent": "Storage tools",
+      "children": []
+    },
+    {
+      "title": "Import and Export",
+      "timestamp": "02:34:03",
+      "level": 3,
+      "order": 46,
+      "parent": "Storage tools",
+      "children": []
+    },
+    {
+      "title": "Data Governance",
+      "timestamp": "02:35:59",
+      "level": 2,
+      "order": 47,
+      "parent": null,
+      "children": []
+    },
+    {
+      "title": "Close",
+      "timestamp": "02:38:13",
+      "level": 2,
+      "order": 48,
+      "parent": null,
+      "children": []
+    }
+  ]
+}

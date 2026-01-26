@@ -1,0 +1,38 @@
+🎤 [00:00:35 – 00:06:14] Types of storage
+🎤 [00:06:14 – 00:12:17] Azure Storage 101
+🎤 [00:12:17 – 00:16:29] Storage account basics
+🎤 [00:16:29 – 00:17:42] Storage durability
+🎤 [00:17:42 – 00:23:12] Resiliency options
+🎤 [00:23:12 – 00:25:16] Storage account failover
+🎤 [00:25:16 – 00:29:35] APIs and other features
+🎤 [00:29:35 – 00:35:14] Object level replication
+🎤 [00:35:14 – 00:51:26] Storage account services
+🎤 [00:35:39 – 00:45:08] Blob offerings
+🎤 [00:45:08 – 00:47:58] Files
+🎤 [00:47:58 – 00:48:24] Table
+🎤 [00:48:24 – 00:51:26] Queue
+🎤 [00:51:26 – 00:54:18] Money
+🎤 [00:54:18 – 01:01:58] Tiering
+🎤 [01:01:58 – 01:07:36] Provisioned based billing services
+🎤 [01:07:36 – 01:15:46] Data Lake features
+🎤 [01:15:46 – 01:18:46] Hosting a website
+🎤 [01:19:01 – 01:22:17] Account keys
+🎤 [01:22:17 – 01:23:24] Blob anonymous access
+🎤 [01:23:24 – 01:26:33] Entra ID integrated data plane RBAC
+🎤 [01:26:33 – 01:32:14] Shared Access Signatures
+🎤 [01:34:01 – 01:39:16] Encryption
+🎤 [01:39:16 – 01:44:48] Network protection
+🎤 [01:44:48 – 01:48:45] Lifecycle management
+🎤 [01:48:45 – 01:57:48] Azure Storage Actions
+🎤 [01:52:19 – 01:52:53] Native protection constructs
+🎤 [01:52:53 – 01:55:05] Blob versioning
+🎤 [01:55:05 – 01:55:57] Change feed
+🎤 [01:55:57 – 01:56:42] Soft delete
+🎤 [01:56:42 – 01:57:48] Point-in-time restore
+🎤 [01:57:48 – 02:02:13] Azure File Sync
+🎤 [02:02:13 – 02:06:40] Azure Elastic SAN
+🎤 [02:06:40 – 02:12:07] Azure NetApp Files
+🎤 [02:12:07 – 02:21:37] Managed Disks
+🎤 [02:21:37 – 02:27:55] VM Storage
+🎤 [02:28:55 – 02:35:59] Storage tools
+🎤 [02:35:59 – 02:38:13] Data Governance

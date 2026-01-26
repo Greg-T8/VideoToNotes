@@ -34,11 +34,11 @@ EXTRACT_PROMPT = '''# Chunk Processing
 
 Generate exam-focused study notes from this transcript chunk.
 
-## Table of Contents (EXACT section titles to use)
+## Table of Contents with Time Ranges
 {toc}
 
 ## Transcript Chunk {chunk_id} of {total_chunks}
-Timestamps: {start_ts} – {end_ts}
+This chunk covers: {start_ts} – {end_ts}
 
 ```
 {chunk_text}
@@ -46,61 +46,50 @@ Timestamps: {start_ts} – {end_ts}
 
 ## Instructions
 
-Analyze this transcript and create INDIVIDUAL note blocks for EACH LEAF SECTION (🎤 sections) from the TOC above.
+Create note blocks for sections from the TOC whose time range overlaps with this chunk ({start_ts} – {end_ts}).
 
-## ⚠️ CRITICAL RULES - READ CAREFULLY
+### Understanding the TOC Format
 
-### Rule 1: NEVER CREATE NOTE BLOCKS FOR PARENT SECTIONS (☁️)
-- Parent sections are marked with ☁️ - DO NOT create any note blocks for them
-- ONLY create note blocks for 🎤 sections
-- If you see content that seems like it belongs to a ☁️ parent, put it in the most relevant 🎤 child instead
-- Examples of parent sections you must SKIP:
-  - ☁️ ML Studio → put content in its children like 🎤 Azure Machine Learning Service
-  - ☁️ Follow Alongs → put content in its children like 🎤 Setup, 🎤 AutoML
-  - ☁️ Congitive Services → put content in its children
-- If you create ANY note block for a ☁️ section, that is WRONG
+Each section shows: `[START_TIME – END_TIME] Section Name`
+- **START_TIME**: When this section begins
+- **END_TIME**: When this section ends (start of next section)
+- **🎤 sections**: Create notes for these (they are final topics)
+- **☁️ sections**: These are PARENT sections - split content into their 🎤 children instead
 
-### Rule 2: CREATE SEPARATE BLOCKS FOR EACH CHILD
-- If the transcript discusses Transformers, Tokenization, AND Embeddings:
-  - Create THREE separate note blocks
-  - One for each 🎤 leaf section
-  - Do NOT create one big block for the ☁️ parent
-- IMPORTANT: Even short sections (30 seconds to 1 minute) deserve their own note block
-- Example: If "Responsible AI" has children "Fairness", "Reliability", "Privacy", etc.
-  - Create SEPARATE note blocks for EACH: 🎤 Fairness, 🎤 Reliability, 🎤 Privacy
-  - Do NOT bundle them all into one "Responsible AI" block
+### CRITICAL: Match Content to the CORRECT Section by Time
 
-### Rule 3: MATCH CONTENT TO MOST SPECIFIC SECTION
-- "Tokens are split into subwords" → goes to 🎤 Tokenization (not parent)
-- "Attention mechanism allows focus" → goes to 🎤 Attention (not parent)
-- "Embeddings represent words as vectors" → goes to 🎤 Embeddings (not parent)
+Look at the timestamps IN THE TRANSCRIPT. Match them to the section whose time range contains that timestamp.
 
-### Rule 4: SPLIT RELATED SIBLING SECTIONS
-- When you see multiple 🎤 sections with similar names, they are SEPARATE topics
-- Example: "Form Recognizer", "Form Recognizer Custom Models", "Form Recognizer Prebuilt Models"
-  - These are THREE separate 🎤 sections, not one
-  - Content about custom models goes to "Form Recognizer Custom Models"
-  - Content about prebuilt/pre-built models goes to "Form Recognizer Prebuilt Models"
-  - Only general Form Recognizer overview goes to "Form Recognizer"
-- Example: "Computer Vision", "Computer Vision AI", "Custom Vision"
-  - These are separate sections - split content appropriately
+**Example**: If TOC shows:
+```
+## ☁️ [01:18:46 – 01:32:14] Access control options
+### 🎤 [01:19:01 – 01:22:17] Account keys
+### 🎤 [01:22:17 – 01:23:24] Blob anonymous access
+### 🎤 [01:23:24 – 01:26:33] Entra ID integrated RBAC
+### 🎤 [01:26:33 – 01:32:14] Shared Access Signatures
+```
 
-### Rule 5: USE EXACT SECTION TITLES FROM TOC (WITH TIMESTAMPS)
-- Copy the ENTIRE section title from the TOC exactly as written
-- Section titles include the marker (🎤), timestamp in brackets, AND the name
-- CORRECT: `### 🎤 [02:35:02] Computer Vision`
-- WRONG: `### 🎤 Computer Vision AI` (missing timestamp, wrong name)
-- WRONG: `### Computer Vision` (missing marker and timestamp)
-- The TOC above shows the ONLY valid titles - use them exactly
-- If content matches timestamp 02:35:02, use title `🎤 [02:35:02] Computer Vision`
-- Do NOT make up titles or omit any parts
+And transcript at 01:20:30 discusses "storage account keys have two keys for rotation":
+- This goes in "🎤 [01:19:01 – 01:22:17] Account keys" (timestamp 01:20:30 is in range 01:19:01–01:22:17)
+- Do NOT put it in the parent "☁️ Access control options"
+
+**Another example**: Transcript at 01:25:00 discusses "RBAC roles for blob data":
+- This goes in "🎤 [01:23:24 – 01:26:33] Entra ID integrated RBAC"
+- NOT in parent, NOT in SAS section
+
+### Important Rules
+
+1. **NEVER create note blocks for ☁️ parent sections** - split content into the relevant 🎤 children
+2. **Use timestamp ranges to match content** - each piece of content belongs to ONE section
+3. **Even short sections (1-3 minutes) need their own note block** - don't skip them
+4. **Copy section titles EXACTLY** from the TOC including the marker, timestamps, and name
 
 ## Output Format
 
-For EACH applicable 🎤 section, use this EXACT format:
+For EACH applicable 🎤 section in this chunk, output:
 
-### [EXACT Section Title from TOC - copy the 🎤 section title verbatim]
-**Timestamp**: [first timestamp] – [last timestamp]
+### [Copy EXACT section title from TOC: 🎤 [time range] Name]
+**Timestamp**: [actual first mention] – [actual last mention in chunk]
 
 **Key Concepts**
 - [main concepts as bullet points]
@@ -112,23 +101,19 @@ For EACH applicable 🎤 section, use this EXACT format:
 - [important facts, numbers, specifications]
 
 **Examples**
-- [concrete examples mentioned]
+- [concrete examples mentioned, or "None in this chunk" if none]
 
 **Key Takeaways 🎯**
 - [exam focus points]
 
-## Additional Rules
+---
 
-1. **ONE TOPIC PER BLOCK**: Each note block covers ONE specific section from the TOC
-2. **EXACT TITLES**: Copy section titles EXACTLY from the TOC including marker and timestamp - no modifications
-3. **PREFER 🎤 OVER ☁️**: Always match content to 🎤 sections, almost never ☁️ sections
-4. Use `###` for section titles ONLY
-5. Use bold (`**text**`) for subsection headers within each note block
-6. Be technically precise — preserve exact values
-7. If a subsection (like Key Facts) has no content, write "- None in this chunk"
-8. If content doesn't match any TOC section, skip it
-9. **ONLY OUTPUT SECTIONS WITH CONTENT**: Do NOT create note blocks for sections whose content is not in this chunk. If the section timestamp is outside this chunk's time range, do NOT output anything for it.
-10. **MATCH BY TIMESTAMP**: Use the chunk's timestamp range ({start_ts} – {end_ts}) to identify which TOC sections are covered. Only create notes for sections whose timestamps fall within or near this range.
+## IMPORTANT: Output Only Section Blocks
+
+- Output ONLY the note blocks for sections from the TOC
+- Do NOT add any commentary, summaries, checklists, or "final notes" sections
+- Do NOT output anything after the last section block
+- Your response should contain ONLY `### 🎤 [timestamp] Section Name` blocks
 '''
 
 
@@ -203,6 +188,9 @@ def parse_extraction_response(response: str, chunk_id: int) -> List[SectionParti
     # Split by ### headings
     sections = re.split(r'^###\s+', response, flags=re.MULTILINE)
 
+    # Pattern to validate section titles (must have 🎤 or ☁️ marker with timestamp)
+    valid_section_pattern = re.compile(r'^[🎤☁️]\s*\[[\d:]+\s*[–-]\s*[\d:]+\]')
+
     for section_text in sections[1:]:  # Skip content before first ###
         lines = section_text.strip().split('\n')
         if not lines:
@@ -210,6 +198,10 @@ def parse_extraction_response(response: str, chunk_id: int) -> List[SectionParti
 
         # First line is the section title
         title = lines[0].strip()
+
+        # Skip sections that don't match TOC format (filters out "Final notes", "Final checklist", etc.)
+        if not valid_section_pattern.match(title):
+            continue
 
         # Extract timestamp range
         timestamp_match = re.search(

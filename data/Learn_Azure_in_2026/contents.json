@@ -1,0 +1,137 @@
+{
+  "uploadDate": "20260126",
+  "title": "Learn Azure in 2026",
+  "url": "https://www.youtube.com/watch?v=usvlTo0TDoA",
+  "chaptersSource": "description",
+  "channel": "John Savill's Technical Training",
+  "chapters": [
+    {
+      "timestamp": "00:00",
+      "startTime": 0,
+      "level": 1,
+      "endTime": 26,
+      "isSection": false,
+      "children": [],
+      "title": "Introduction"
+    },
+    {
+      "timestamp": "00:26",
+      "startTime": 26,
+      "level": 1,
+      "endTime": 286,
+      "isSection": false,
+      "children": [],
+      "title": "Foundational knowledge"
+    },
+    {
+      "timestamp": "04:46",
+      "startTime": 286,
+      "level": 1,
+      "endTime": 386,
+      "isSection": false,
+      "children": [],
+      "title": "Curated content"
+    },
+    {
+      "timestamp": "06:26",
+      "startTime": 386,
+      "level": 1,
+      "endTime": 603,
+      "isSection": false,
+      "children": [],
+      "title": "Getting access to Azure"
+    },
+    {
+      "timestamp": "10:03",
+      "startTime": 603,
+      "level": 1,
+      "endTime": 819,
+      "isSection": false,
+      "children": [],
+      "title": "Optimize resource use"
+    },
+    {
+      "timestamp": "13:39",
+      "startTime": 819,
+      "level": 1,
+      "endTime": 959,
+      "isSection": false,
+      "children": [],
+      "title": "Information in the portal"
+    },
+    {
+      "timestamp": "15:59",
+      "startTime": 959,
+      "level": 1,
+      "endTime": 1057,
+      "isSection": false,
+      "children": [],
+      "title": "Microsoft Learn"
+    },
+    {
+      "timestamp": "17:37",
+      "startTime": 1057,
+      "level": 1,
+      "endTime": 1105,
+      "isSection": false,
+      "children": [],
+      "title": "Using the cloud shell"
+    },
+    {
+      "timestamp": "18:25",
+      "startTime": 1105,
+      "level": 1,
+      "endTime": 1405,
+      "isSection": false,
+      "children": [],
+      "title": "AI help with Copilot"
+    },
+    {
+      "timestamp": "23:25",
+      "startTime": 1405,
+      "level": 1,
+      "endTime": 1423,
+      "isSection": false,
+      "children": [],
+      "title": "Deeper video help"
+    },
+    {
+      "timestamp": "23:43",
+      "startTime": 1423,
+      "level": 1,
+      "endTime": 1590,
+      "isSection": false,
+      "children": [],
+      "title": "Key certifications"
+    },
+    {
+      "timestamp": "26:30",
+      "startTime": 1590,
+      "level": 1,
+      "endTime": 1652,
+      "isSection": false,
+      "children": [],
+      "title": "Staying current"
+    },
+    {
+      "timestamp": "27:32",
+      "startTime": 1652,
+      "level": 1,
+      "endTime": 1689,
+      "isSection": false,
+      "children": [],
+      "title": "Summary"
+    },
+    {
+      "timestamp": "28:09",
+      "startTime": 1689,
+      "level": 1,
+      "endTime": null,
+      "isSection": false,
+      "children": [],
+      "title": "Close"
+    }
+  ],
+  "description": "Quick video looking at how to start learning Azure today.\n\n🔎 Looking for content on a particular topic? Search the channel. If I have something it will be there!\n🤔  Due to the channel growth and number of people wanting help I no longer can answer or even read questions and they will just stay in the moderation queue never to be seen so please post questions to other sites like Reddit, Microsoft Community Hub etc.\n\n▬▬▬▬▬▬  C H A P T E R S ⏰  ▬▬▬▬▬▬\n00:00 - Introduction\n00:26 - Foundational knowledge\n04:46 - Curated content\n06:26 - Getting access to Azure\n10:03 - Optimize resource use\n13:39 - Information in the portal\n15:59 - Microsoft Learn\n17:37 - Using the cloud shell\n18:25 - AI help with Copilot\n23:25 - Deeper video help\n23:43 - Key certifications\n26:30 - Staying current\n27:32 - Summary\n28:09 - Close\n\n▬▬▬▬▬▬  K E Y   L I N K S 🔗 ▬▬▬▬▬▬\n► Learn.onboardtoazure.com:\n🔗 https://learn.onboardtoazure.com\n► Free account:\n🔗 https://azure.microsoft.com/pricing/purchase-options/azure-account\n► Microsoft Learn site:\n🔗 https://learn.microsoft.com\n► Copilot Chat\n🔗 https://copilot.microsoft.com/\n\n▬▬▬▬▬▬  Want to learn more? 🚀  ▬▬▬▬▬▬ \n📖 Recommended Learning Path for Azure\n🔗 https://learn.onboardtoazure.com\n🥇 Certification Content Repository\n🔗 https://github.com/johnthebrit/CertificationMaterials\n📅 Weekly Azure Update\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nEv7jSfOVmQGRp9wAoAM0Ks\n☁ Azure Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n⚙ DevOps Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nFr8RzQ4GIxUEznpNR53ERq\n💻 PowerShell Master Class\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8\n🎓 Certification Cram Videos\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nHz2qfLvPsAz9CnnXofhmcA\n🧠 Mentoring Content\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nGHxNkSWB0PjzZHwZ0BkXZZ\n❔ Questions? Maybe I answered it in my FAQ\n🔗 https://savilltech.com/faq\n👕 Cure Childhood Cancer Charity T-Shirt Channel Store\n🔗 https://johns-t-shirts-store.creator-spring.com/\n\n👂 Enable the subtitles and from there you can translate to your native language via the auto-translate feature in settings! https://youtu.be/v5b53-PgEmI for a demo of using this feature.\n\nSUBSCRIBE  ✅  https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ?sub_confirmation=1\n\n#microsoft #azure #johnsavillstechnicaltraining #onboardtoazure",
+  "duration": 1710
+}

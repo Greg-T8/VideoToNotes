@@ -39,6 +39,32 @@ $Main = {
 
 $Helpers = {
 
+	# Script-level cache for browser cookies argument
+	$script:BrowserCookiesArg = $null
+
+	function Get-BrowserCookiesArg {
+		<#
+		.SYNOPSIS
+			Determines which browser to use for cookies (Chrome first, then Firefox fallback).
+		#>
+		if ($script:BrowserCookiesArg) {
+			return $script:BrowserCookiesArg
+		}
+
+		# Try Chrome first
+		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 2>&1
+		if ($LASTEXITCODE -eq 0) {
+			$script:BrowserCookiesArg = "chrome"
+			Write-Verbose "Using Chrome for YouTube cookies"
+			return $script:BrowserCookiesArg
+		}
+
+		# Fall back to Firefox
+		$script:BrowserCookiesArg = "firefox"
+		Write-Verbose "Using Firefox for YouTube cookies (Chrome failed)"
+		return $script:BrowserCookiesArg
+	}
+
 	function Confirm-Prerequisite {
 		param([string]$Command, [string]$InstallHint)
 
@@ -50,10 +76,14 @@ $Helpers = {
 	function Get-VideoMetadata {
 		param([string]$Url)
 
+		Write-Host "  [Step 1/2] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Fetching video metadata..." -ForegroundColor Cyan
 
 		# Get JSON metadata from yt-dlp (capture stderr separately)
+		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
+		$browser = Get-BrowserCookiesArg
 		$jsonOutput = & yt-dlp `
+			--cookies-from-browser $browser `
 			--dump-json `
 			--no-download `
 			--no-warnings `
@@ -97,6 +127,7 @@ $Helpers = {
 		}
 
 		# Always parse chapters from description to capture full detail
+		Write-Host "  [Step 2/2] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Parsing timestamps from description..." -ForegroundColor Cyan
 		$parsedChapters = Get-ChapterFromDescription -Description $Metadata.description
 
