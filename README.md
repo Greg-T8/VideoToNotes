@@ -6,18 +6,28 @@ Generate structured, exam-focused study notes from video transcripts using AI.
 
 This tool transforms video transcripts into comprehensive markdown notes by:
 
-1. **Normalize** - Convert varied index formats to consistent JSON (LLM)
-2. **Chunk** - Split transcript into ~20KB pieces (PowerShell)
-3. **Extract** - Generate section notes from chunks in parallel (LLM)
-4. **Merge** - Combine and deduplicate partials by section (LLM)
-5. **Assemble** - Build final markdown document (deterministic)
+1. **Transcribe** - Download YouTube video and transcribe audio (optional)
+2. **Normalize** - Convert varied index formats to consistent JSON (LLM)
+3. **Chunk** - Split transcript into ~20KB pieces (PowerShell)
+4. **Extract** - Generate section notes from chunks in parallel (LLM)
+5. **Merge** - Combine and deduplicate partials by section (LLM)
+6. **Assemble** - Build final markdown document (deterministic)
 
 ## Quick Start
 
+### From YouTube URL (Recommended)
+
 ```powershell
-# Generate notes from a video transcript
-.\New-ExamNotes.ps1 -Index "data\samples\AI-900_FreeCodeCamp\Index - FreeCodeCamp.txt" `
-                    -Transcript "data\samples\AI-900_FreeCodeCamp\Transcript - FreeCodeCamp.txt"
+# Generate notes directly from a YouTube video
+.\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+### From Existing Files
+
+```powershell
+# Generate notes from pre-existing index and transcript files
+.\New-ExamNotes.ps1 -Index "data\samples\contents.md" `
+                    -Transcript "data\samples\transcript.srt"
 ```
 
 ## Project Structure
@@ -27,13 +37,8 @@ Exam-Notes-Generator/
 ├── New-ExamNotes.ps1            # Main entry point (PowerShell wrapper)
 ├── requirements.txt             # Python dependencies
 ├── data/
-│   └── samples/                 # Sample input files
-│       ├── AI-900_FreeCodeCamp/
-│       │   ├── Index - FreeCodeCamp.txt
-│       │   └── Transcript - FreeCodeCamp.txt
-│       └── Deep_Dive_Into_Foundry_IQ/
-│           ├── Index - Deep Dive into Foundry IQ.txt
-│           └── Transcript - Deep Dive into Foundry IQ.txt
+│   ├── samples/                 # Sample input files
+│   └── youtube/                 # YouTube transcriptions (auto-generated)
 ├── output/                      # Generated notes
 ├── prompts/                     # LLM prompt templates
 │   ├── normalize.md             # Index → JSON conversion
@@ -41,7 +46,9 @@ Exam-Notes-Generator/
 │   └── merge.md                 # Partials → merged section
 ├── src/
 │   ├── powershell/
-│   │   └── transcript_chunker.ps1   # Transcript splitting utility
+│   │   ├── transcript_chunker.ps1       # Transcript splitting utility
+│   │   ├── Get-YouTubeContents.ps1      # Extract video chapters/TOC
+│   │   └── Invoke-YouTubeTranscription.ps1  # Download & transcribe audio
 │   └── python/
 │       └── notes_generator/
 │           ├── __init__.py
@@ -62,6 +69,16 @@ Exam-Notes-Generator/
 - Python 3.10+
 - PowerShell 7+ (pwsh)
 - VS Code with recommended extensions
+
+### For YouTube Transcription (Optional)
+
+| Tool | Purpose | Installation |
+|------|---------|--------------|
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube audio download | `winget install yt-dlp` |
+| [ffmpeg](https://ffmpeg.org/) | Audio conversion | `winget install ffmpeg` |
+| [Azure Speech CLI](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/spx-overview) | Transcription | `dotnet tool install -g Microsoft.CognitiveServices.Speech.CLI` |
+
+You'll also need an Azure Speech Services resource configured with the `spx` CLI.
 
 ## Installation
 
@@ -210,7 +227,7 @@ Each section in the generated notes follows this structure:
 **Examples**
 - Example 1
 
-**Exam Tips 🎯**
+**Key Takeaways 🎯**
 - Tip 1
 ```
 

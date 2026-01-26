@@ -1,0 +1,8 @@
+# YouTube Transcriptions
+
+This folder contains transcriptions generated from YouTube videos.
+
+Each video creates a subfolder with:
+- `contents.json` - Structured chapter data
+- `contents.md` - Human-readable table of contents
+- `transcript.srt` - Full transcript in SRT format

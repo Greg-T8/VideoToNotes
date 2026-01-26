@@ -63,7 +63,7 @@ You MUST output in this EXACT format:
 **Examples**
 - [merged examples]
 
-**Exam Tips 🎯**
+**Key Takeaways 🎯**
 - [merged tips]
 
 ### Merge Rules
@@ -72,7 +72,7 @@ You MUST output in this EXACT format:
 2. **Definitions**: Keep the most complete definition for each term
 3. **Key Facts**: Remove redundant facts, keep unique ones
 4. **Examples**: Keep ALL unique examples (high value for exams)
-5. **Exam Tips**: Combine tips, prioritize actionable ones
+5. **Key Takeaways**: Combine tips, prioritize actionable ones
 
 ### Quality Rules
 

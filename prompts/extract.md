@@ -39,7 +39,7 @@ For EACH section that has content in this chunk, generate notes in this EXACT fo
 
 - [concrete examples, commands, configurations mentioned]
 
-**Exam Tips 🎯**
+**Key Takeaways 🎯**
 
 - [what to remember for the exam, common pitfalls]
 

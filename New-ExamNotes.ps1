@@ -7,18 +7,30 @@
 
 <#
 .SYNOPSIS
-    Generates structured exam notes from a video transcript and index file.
+    Generates structured exam notes from a YouTube video or existing files.
 
 .DESCRIPTION
     This tool processes a video transcript and its corresponding index (table of
     contents) to produce a comprehensive, exam-focused markdown notes document.
 
+    When provided with a YouTube URL, it will:
+    1. Extract video metadata and chapter information (contents/index)
+    2. Download and transcribe the audio to SRT format
+    3. Process the transcript and index through the notes pipeline
+
+    When provided with existing files, it uses them directly.
+
     The pipeline consists of these stages:
+    - Transcribe: Download YouTube audio and transcribe (if URL provided)
     - Normalize: Convert varied index formats to consistent JSON structure
     - Chunk: Split transcript into ~20KB pieces for processing
     - Extract: Generate section notes from each chunk (parallel, LLM)
     - Merge: Combine and deduplicate partials by section (LLM)
     - Assemble: Build final markdown document
+
+.PARAMETER YouTubeUrl
+    YouTube video URL to transcribe and generate notes from.
+    If provided, -Index and -Transcript are ignored.
 
 .PARAMETER Index
     Path to the index file containing the table of contents with timestamps.
@@ -36,25 +48,37 @@
 .PARAMETER MergeModel
     LLM model for merge stage. Default: gpt-4.1-mini
 
-.PARAMETER SkipChunk
-    Skip chunking if transcript is already chunked (provide ZIP path instead).
+.PARAMETER Language
+    Language code for transcription. Default: en-US
+
+.PARAMETER KeepIntermediateFiles
+    Keep intermediate audio files after transcription.
 
 .EXAMPLE
-    .\New-ExamNotes.ps1 -Index "data\samples\AI-900_FreeCodeCamp\Index - FreeCodeCamp.txt" `
-                        -Transcript "data\samples\AI-900_FreeCodeCamp\Transcript - FreeCodeCamp.txt"
+    .\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
 
 .EXAMPLE
-    .\New-ExamNotes.ps1 -Index "path\to\index.txt" -Transcript "path\to\transcript.txt" `
+    .\New-ExamNotes.ps1 -Index "data\samples\contents.md" `
+                        -Transcript "data\samples\transcript.srt"
+
+.EXAMPLE
+    .\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID" `
                         -Output "output\MyNotes.md" -ExtractModel "gpt-4o"
 #>
 
-[CmdletBinding()]
+[CmdletBinding(DefaultParameterSetName = 'YouTube')]
 param(
-	[Parameter(Mandatory = $true, HelpMessage = "Path to the index/TOC file")]
+	[Parameter(ParameterSetName = 'YouTube', Mandatory = $true, Position = 0,
+		HelpMessage = "YouTube video URL to transcribe")]
+	[string]$YouTubeUrl,
+
+	[Parameter(ParameterSetName = 'Files', Mandatory = $true,
+		HelpMessage = "Path to the index/TOC file")]
 	[ValidateScript({ Test-Path $_ -PathType Leaf })]
 	[string]$Index,
 
-	[Parameter(Mandatory = $true, HelpMessage = "Path to the transcript file")]
+	[Parameter(ParameterSetName = 'Files', Mandatory = $true,
+		HelpMessage = "Path to the transcript file")]
 	[ValidateScript({ Test-Path $_ -PathType Leaf })]
 	[string]$Transcript,
 
@@ -65,7 +89,15 @@ param(
 	[string]$ExtractModel = "gpt-4.1-mini",
 
 	[Parameter(HelpMessage = "Model for merge stage")]
-	[string]$MergeModel = "gpt-4.1-mini"
+	[string]$MergeModel = "gpt-4.1-mini",
+
+	[Parameter(ParameterSetName = 'YouTube',
+		HelpMessage = "Language code for transcription")]
+	[string]$Language = "en-US",
+
+	[Parameter(ParameterSetName = 'YouTube',
+		HelpMessage = "Keep intermediate audio files")]
+	[switch]$KeepIntermediateFiles
 )
 
 Set-StrictMode -Version Latest
@@ -85,13 +117,24 @@ $Main = {
 	# Verify GitHub CLI authentication for API access
 	Confirm-GitHubAuth
 
-	# Resolve and validate input paths
-	$script:IndexPath = Resolve-Path $Index
-	$script:TranscriptPath = Resolve-Path $Transcript
+	# Handle YouTube URL or file paths
+	if ($YouTubeUrl) {
+		# Transcribe from YouTube
+		$transcriptionResult = Invoke-YouTubeWorkflow -Url $YouTubeUrl
 
-	# Determine output path from index filename if not specified
-	if (-not $Output) {
+		$script:IndexPath = $transcriptionResult.IndexPath
+		$script:TranscriptPath = $transcriptionResult.TranscriptPath
+		$videoTitle = $transcriptionResult.VideoTitle
+	}
+	else {
+		# Use provided files
+		$script:IndexPath = Resolve-Path $Index
+		$script:TranscriptPath = Resolve-Path $Transcript
 		$videoTitle = Get-VideoTitle -IndexPath $script:IndexPath
+	}
+
+	# Determine output path from video title if not specified
+	if (-not $Output) {
 		$script:Output = Join-Path $PSScriptRoot "output\${videoTitle}_Exam_Notes.md"
 	}
 	else {
@@ -123,6 +166,90 @@ $Main = {
 # -------------------------------------------------------------------------
 
 $Helpers = {
+	function Invoke-YouTubeWorkflow {
+		<#
+        .SYNOPSIS
+            Runs the full YouTube transcription workflow.
+        .DESCRIPTION
+            Downloads video, extracts contents/chapters, transcribes audio.
+        #>
+		param([string]$Url)
+
+		Show-Stage "YouTube" "Starting YouTube transcription workflow..."
+		Write-Host ""
+
+		# Create data folder for this video
+		$dataFolder = Join-Path $PSScriptRoot "data\youtube"
+		if (-not (Test-Path $dataFolder)) {
+			New-Item -ItemType Directory -Path $dataFolder -Force | Out-Null
+		}
+
+		# Step 1: Extract contents/index from YouTube
+		Show-Stage "Contents" "Extracting video chapters and contents..."
+
+		$contentsScript = Join-Path $PSScriptRoot "src\powershell\Get-YouTubeContents.ps1"
+		$tempFolder = Join-Path $dataFolder "temp_$(Get-Date -Format 'yyyyMMdd_HHmmss')"
+		New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
+
+		# Run contents extraction
+		& $contentsScript -YouTubeUrl $Url -OutputPath $tempFolder
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Failed to extract video contents"
+		}
+
+		$indexPath = Join-Path $tempFolder "contents.md"
+		if (-not (Test-Path $indexPath)) {
+			throw "Contents file not created at: $indexPath"
+		}
+
+		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host "Contents extracted: $indexPath"
+
+		# Step 2: Transcribe the video
+		Show-Stage "Transcribe" "Transcribing video audio..."
+
+		$transcribeScript = Join-Path $PSScriptRoot "src\powershell\Invoke-YouTubeTranscription.ps1"
+
+		$transcribeParams = @{
+			YouTubeUrl = $Url
+			OutputPath = $tempFolder
+			Language   = $Language
+		}
+
+		if ($KeepIntermediateFiles) {
+			$transcribeParams['KeepIntermediateFiles'] = $true
+		}
+
+		& $transcribeScript @transcribeParams
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Failed to transcribe video"
+		}
+
+		# Find the transcript file (it will be in a subfolder)
+		$transcriptFile = Get-ChildItem -Path $tempFolder -Recurse -Filter "transcript.srt" |
+		Select-Object -First 1
+
+		if (-not $transcriptFile) {
+			throw "Transcript file not found after transcription"
+		}
+
+		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host "Transcription complete: $($transcriptFile.FullName)"
+
+		# Get video title from contents
+		$contentsJson = Get-Content (Join-Path $tempFolder "contents.json") | ConvertFrom-Json
+		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+
+		return @{
+			IndexPath      = $indexPath
+			TranscriptPath = $transcriptFile.FullName
+			VideoTitle     = $videoTitle
+			TempFolder     = $tempFolder
+		}
+	}
+
 	function Confirm-GitHubAuth {
 		<#
         .SYNOPSIS

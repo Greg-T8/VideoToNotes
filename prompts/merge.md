@@ -40,7 +40,7 @@ Merge these partial notes into ONE coherent, comprehensive section.
 - Remove only exact duplicate examples
 - Preserve code snippets, CLI commands, and configuration samples exactly
 
-### 6. Exam Tips 🎯
+### 6. Key Takeaways 🎯
 
 - Combine all tips, remove duplicates
 - Prioritize actionable tips ("Remember to..." > "This is important")
@@ -75,6 +75,6 @@ Merge these partial notes into ONE coherent, comprehensive section.
 
 - [merged examples]
 
-**Exam Tips 🎯**
+**Key Takeaways 🎯**
 
 - [merged tips]

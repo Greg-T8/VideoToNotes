@@ -114,7 +114,7 @@ For EACH applicable 🎤 section, use this EXACT format:
 **Examples**
 - [concrete examples mentioned]
 
-**Exam Tips 🎯**
+**Key Takeaways 🎯**
 - [exam focus points]
 
 ## Additional Rules
@@ -231,7 +231,7 @@ def parse_extraction_response(response: str, chunk_id: int) -> List[SectionParti
         partial.definitions = extract_definitions(section_text)
         partial.key_facts = extract_list_section(section_text, "Key Facts")
         partial.examples = extract_list_section(section_text, "Examples")
-        partial.exam_tips = extract_list_section(section_text, "Exam Tips")
+        partial.exam_tips = extract_list_section(section_text, "Key Takeaways")
 
         partials.append(partial)
 
