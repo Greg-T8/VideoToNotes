@@ -11,9 +11,9 @@ ENV/
 # IDE
 .idea/
 
-# Output files
-output/*.md
-output/*.zip
+# Data and output folders
+data/
+output/
 
 # Temporary files
 *.tmp
