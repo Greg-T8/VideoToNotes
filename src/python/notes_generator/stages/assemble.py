@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: assemble.py
 # Description: Assemble stage - build final document from merged sections
-# Context: Stage 4 of the Exam Notes Generator pipeline
+# Context: Stage 4 of the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 

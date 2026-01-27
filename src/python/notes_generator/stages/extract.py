@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: extract.py
 # Description: Extract stage - process transcript chunks into structured notes
-# Context: Stage 2 of the Exam Notes Generator pipeline
+# Context: Stage 2 of the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 

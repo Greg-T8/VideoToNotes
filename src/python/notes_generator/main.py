@@ -1,12 +1,12 @@
 # -------------------------------------------------------------------------
 # File: main.py
-# Description: Main entry point for the Exam Notes Generator pipeline
+# Description: Main entry point for the VideoToNotes pipeline
 # Context: Orchestrates normalize, chunk, extract, merge, and assemble stages
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
 """
-Main entry point for the Exam Notes Generator.
+Main entry point for VideoToNotes.
 
 Usage:
     python -m notes_generator.main --index <path> --transcript <path>
@@ -49,7 +49,7 @@ def parse_args() -> argparse.Namespace:
         "--output",
         type=Path,
         default=None,
-        help="Output path for generated notes (default: output/<title>_Exam_Notes.md)"
+        help="Output path for generated notes (default: output/<title>_Notes.md)"
     )
 
     parser.add_argument(
@@ -275,7 +275,7 @@ def main() -> int:
     if output_path is None:
         # Generate from index filename
         title = args.index.stem.replace("Index - ", "").replace(" ", "_")
-        output_path = Path("output") / f"{title}_Exam_Notes.md"
+        output_path = Path("output") / f"{title}_Notes.md"
 
     # Ensure output directory exists
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -292,7 +292,7 @@ def main() -> int:
 
     # Display configuration
     print()
-    print("Exam Notes Generator")
+    print("VideoToNotes")
     print("=" * 60)
     print(f"Index:         {config.index_path}")
     print(f"Transcript:    {config.transcript_path}")

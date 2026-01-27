@@ -1,21 +1,20 @@
 # -------------------------------------------------------------------------
 # File: __init__.py
 # Description: Notes Generator package initialization
-# Context: Exam Notes Generator - Python package root
+# Context: VideoToNotes - Python package root
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
 """
-Exam Notes Generator
+VideoToNotes
 
-Generate structured, exam-focused study notes from video transcripts using AI.
+Generate structured study notes from video transcripts using AI.
 
 Pipeline stages:
 0. Normalize: Convert varied index formats to consistent JSON (LLM)
-1. Chunk: Split transcript into ~20KB pieces (PowerShell)
-2. Extract: Generate section notes from chunks in parallel (LLM)
-3. Merge: Combine and deduplicate partials by section (LLM)
-4. Assemble: Build final markdown document (deterministic)
+1. Chunk: Split transcript into ~20KB pieces (Python)
+2. Extract: Generate notes per section from relevant chunks (LLM)
+3. Assemble: Build final markdown document (deterministic)
 """
 
 __version__ = "0.1.0"

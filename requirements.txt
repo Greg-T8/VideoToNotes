@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 # File: requirements.txt
-# Description: Python dependencies for Exam Notes Generator
+# Description: Python dependencies for VideoToNotes
 # Context: Three-stage pipeline (extract, merge, assemble)
 # Author: Greg Tate
 # -------------------------------------------------------------------------

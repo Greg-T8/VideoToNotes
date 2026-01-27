@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: extract_by_section.py
 # Description: Section-based extraction - extract notes per section time range
-# Context: Alternative extraction approach for the Exam Notes Generator pipeline
+# Context: Alternative extraction approach for the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ from notes_generator.models import (
 # Prompt for section-specific extraction
 SECTION_EXTRACT_PROMPT = '''# Section Notes Extraction
 
-Extract exam-focused study notes for ONE SPECIFIC SECTION from the transcript content below.
+Extract structured study notes for ONE SPECIFIC SECTION from the transcript content below.
 
 ## Target Section
 **Title**: {section_title}
@@ -49,13 +49,13 @@ This content covers the time range for this section:
 
 ## Instructions
 
-Create comprehensive exam notes for the section "{section_title}" based on the transcript content above.
+Create comprehensive notes for the section "{section_title}" based on the transcript content above.
 
 Focus on:
 - Key concepts and definitions
 - Important facts, numbers, and specifications
 - Practical examples mentioned
-- Exam tips and things to remember
+- Key takeaways and things to remember
 
 ## Output Format
 
@@ -75,7 +75,7 @@ Focus on:
 - [concrete examples mentioned, or "None mentioned"]
 
 **Key Takeaways 🎯**
-- [exam focus points and things to remember]
+- [focus points and things to remember]
 
 ---
 

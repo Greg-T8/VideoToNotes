@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 # File: models.py
-# Description: Data classes for the Exam Notes Generator pipeline
+# Description: Data classes for the VideoToNotes pipeline
 # Context: Shared models used across all pipeline stages
 # Author: Greg Tate
 # -------------------------------------------------------------------------

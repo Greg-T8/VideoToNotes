@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: normalize.py
 # Description: Normalize stage - convert varied index formats to JSON
-# Context: Stage 0 of the Exam Notes Generator pipeline
+# Context: Stage 0 of the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 

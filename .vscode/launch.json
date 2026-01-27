@@ -2,7 +2,7 @@
   // -------------------------------------------------------------------------
   // Configuration: launch.json
   // Description: VS Code debug configurations for PowerShell and Python
-  // Context: Exam Notes Generator - three-stage pipeline debugging
+  // Context: VideoToNotes - pipeline debugging
   // Author: Greg Tate
   // -------------------------------------------------------------------------
   "version": "0.2.0",

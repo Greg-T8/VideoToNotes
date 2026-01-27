@@ -1,17 +1,17 @@
 # -------------------------------------------------------------------------
-# Program: New-ExamNotes.ps1
-# Description: Generate exam-focused study notes from video transcripts
-# Context: Main entry point for the Exam Notes Generator tool
+# Program: New-VideoNotes.ps1
+# Description: Generate study notes from video transcripts
+# Context: Main entry point for the VideoToNotes tool
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
 <#
 .SYNOPSIS
-    Generates structured exam notes from a YouTube video or existing files.
+    Generates structured notes from a YouTube video or existing files.
 
 .DESCRIPTION
     This tool processes a video transcript and its corresponding index (table of
-    contents) to produce a comprehensive, exam-focused markdown notes document.
+    contents) to produce a comprehensive markdown notes document.
 
     When provided with a YouTube URL, it will:
     1. Extract video metadata and chapter information (contents/index)
@@ -40,7 +40,7 @@
     Path to the transcript file with timestamped content.
 
 .PARAMETER Output
-    Path for the generated notes file. Defaults to output/<VideoTitle>_Exam_Notes.md
+    Path for the generated notes file. Defaults to output/<VideoTitle>_Notes.md
 
 .PARAMETER ExtractModel
     LLM model for extraction stage. Default: gpt-4.1-mini
@@ -55,14 +55,14 @@
     Keep intermediate audio files after transcription.
 
 .EXAMPLE
-    .\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
+    .\New-VideoNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
 
 .EXAMPLE
-    .\New-ExamNotes.ps1 -Index "data\samples\contents.md" `
+    .\New-VideoNotes.ps1 -Index "data\samples\contents.md" `
                         -Transcript "data\samples\transcript.srt"
 
 .EXAMPLE
-    .\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID" `
+    .\New-VideoNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID" `
                         -Output "output\MyNotes.md" -ExtractModel "gpt-4o"
 #>
 
@@ -136,7 +136,7 @@ $Main = {
 
 	# Determine output path from video title if not specified
 	if (-not $Output) {
-		$script:Output = Join-Path $PSScriptRoot "output\${videoTitle}_Exam_Notes.md"
+		$script:Output = Join-Path $PSScriptRoot "output\${videoTitle}_Notes.md"
 	}
 	else {
 		$script:Output = $Output
@@ -367,7 +367,7 @@ $Helpers = {
         #>
 		Write-Host ""
 		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
-		Write-Host "  Exam Notes Generator" -ForegroundColor Magenta
+		Write-Host "  VideoToNotes" -ForegroundColor Magenta
 		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
 		Write-Host ""
 	}

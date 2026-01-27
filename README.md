@@ -1,6 +1,6 @@
-# Exam Notes Generator
+# VideoToNotes
 
-Generate structured, exam-focused study notes from video transcripts using AI.
+Generate structured study notes from video transcripts using AI.
 
 ## Overview
 
@@ -8,10 +8,9 @@ This tool transforms video transcripts into comprehensive markdown notes by:
 
 1. **Transcribe** - Download YouTube video and transcribe audio (optional)
 2. **Normalize** - Convert varied index formats to consistent JSON (LLM)
-3. **Chunk** - Split transcript into ~20KB pieces (PowerShell)
-4. **Extract** - Generate section notes from chunks in parallel (LLM)
-5. **Merge** - Combine and deduplicate partials by section (LLM)
-6. **Assemble** - Build final markdown document (deterministic)
+3. **Chunk** - Split transcript into ~20KB pieces (Python)
+4. **Extract** - Generate notes per section from relevant chunks (LLM)
+5. **Assemble** - Build final markdown document (deterministic)
 
 ## Quick Start
 
@@ -19,30 +18,35 @@ This tool transforms video transcripts into comprehensive markdown notes by:
 
 ```powershell
 # Generate notes directly from a YouTube video
-.\New-ExamNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
+.\New-VideoNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
 ```
 
 ### From Existing Files
 
 ```powershell
 # Generate notes from pre-existing index and transcript files
-.\New-ExamNotes.ps1 -Index "data\samples\contents.md" `
-                    -Transcript "data\samples\transcript.srt"
+.\New-VideoNotes.ps1 -Index "data\video_title\contents.md" `
+                     -Transcript "data\video_title\transcript.srt"
 ```
 
 ## Project Structure
 
 ```
-Exam-Notes-Generator/
-├── New-ExamNotes.ps1            # Main entry point (PowerShell wrapper)
+VideoToNotes/
+├── New-VideoNotes.ps1           # Main entry point (PowerShell wrapper)
 ├── requirements.txt             # Python dependencies
 ├── data/
-│   ├── samples/                 # Sample input files
-│   └── youtube/                 # YouTube transcriptions (auto-generated)
+│   └── <video_title>/           # Video-specific data folders
+│       ├── contents.json        # Extracted video chapters (JSON)
+│       ├── contents.md          # Extracted video chapters (Markdown)
+│       ├── transcript.srt       # Transcribed audio (SRT format)
+│       └── debug/               # Debug output (intermediate files)
+├── input/                       # Manual input files
 ├── output/                      # Generated notes
+│   └── debug/                   # Debug output for file-based runs
 ├── prompts/                     # LLM prompt templates
 │   ├── normalize.md             # Index → JSON conversion
-│   ├── extract.md               # Chunk → section notes
+│   ├── extract.md               # Section → notes extraction
 │   └── merge.md                 # Partials → merged section
 ├── src/
 │   ├── powershell/
@@ -53,15 +57,18 @@ Exam-Notes-Generator/
 │       └── notes_generator/
 │           ├── __init__.py
 │           ├── main.py              # Python CLI (called by wrapper)
+│           ├── llm_client.py        # LLM API client (GitHub Models)
 │           ├── models.py            # Data classes
 │           └── stages/
 │               ├── __init__.py
-│               ├── normalize.py     # Stage 0: Index normalization
-│               ├── chunk.py         # Stage 1: Transcript chunking
-│               ├── extract.py       # Stage 2: Notes extraction
-│               ├── merge.py         # Stage 3: Section merging
-│               └── assemble.py      # Stage 4: Document assembly
-└── ideas/                       # Reference materials from design
+│               ├── normalize.py         # Stage 0: Index normalization
+│               ├── chunk.py             # Stage 1: Transcript chunking
+│               ├── extract_by_section.py  # Stage 2: Per-section extraction
+│               ├── extract.py           # Legacy chunk-based extraction
+│               ├── merge.py             # Legacy merge stage
+│               ├── validate.py          # Input validation
+│               └── assemble.py          # Stage 3: Document assembly
+└── tests/                       # Test suite
 ```
 
 ## Prerequisites
@@ -104,35 +111,40 @@ Or use VS Code tasks: `Ctrl+Shift+P` → "Tasks: Run Task" → "Setup: Install D
 ### Basic Usage
 
 ```powershell
-.\New-ExamNotes.ps1 -Index "path\to\index.txt" -Transcript "path\to\transcript.txt"
+.\New-VideoNotes.ps1 -Index "path\to\index.txt" -Transcript "path\to\transcript.txt"
 ```
 
 ### With Custom Output
 
 ```powershell
-.\New-ExamNotes.ps1 -Index "path\to\index.txt" `
-                    -Transcript "path\to\transcript.txt" `
-                    -Output "output\MyNotes.md"
+.\New-VideoNotes.ps1 -Index "path\to\index.txt" `
+                     -Transcript "path\to\transcript.txt" `
+                     -Output "output\MyNotes.md"
 ```
 
 ### With Custom Models
 
 ```powershell
-.\New-ExamNotes.ps1 -Index "path\to\index.txt" `
-                    -Transcript "path\to\transcript.txt" `
-                    -ExtractModel "gpt-4o" `
-                    -MergeModel "gpt-4o"
+.\New-VideoNotes.ps1 -Index "path\to\index.txt" `
+                     -Transcript "path\to\transcript.txt" `
+                     -ExtractModel "gpt-4o" `
+                     -MergeModel "gpt-4o"
 ```
 
 ### Parameters
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `-Index` | Yes | - | Path to index/TOC file with timestamps |
-| `-Transcript` | Yes | - | Path to transcript file |
+| `-YouTubeUrl` | Yes* | - | YouTube video URL to process |
+| `-Index` | Yes* | - | Path to index/TOC file with timestamps |
+| `-Transcript` | Yes* | - | Path to transcript file |
 | `-Output` | No | Auto-generated | Output path for notes |
 | `-ExtractModel` | No | gpt-4.1-mini | Model for extraction stage |
-| `-MergeModel` | No | deepseek-r1 | Model for merge stage |
+| `-MergeModel` | No | gpt-4.1-mini | Model for merge stage |
+| `-Language` | No | en-US | Language code for transcription |
+| `-KeepIntermediateFiles` | No | false | Keep audio files after transcription |
+
+*Either `-YouTubeUrl` OR both `-Index` and `-Transcript` are required.
 
 ## Input File Formats
 
@@ -183,25 +195,20 @@ additional uh paid materials where you can get access...
 
 ### Stage 1: Chunk
 
-- **Input**: Transcript file
+- **Input**: Transcript file (SRT format)
 - **Output**: ZIP file with ~20KB text chunks
-- **Technology**: PowerShell (transcript_chunker.ps1)
+- **Technology**: Python (chunk.py)
 
-### Stage 2: Extract
+### Stage 2: Extract (Per-Section)
 
-- **Input**: Chunks + Normalized index
-- **Output**: Section partials (notes per chunk)
-- **Model**: gpt-4.1-mini (parallel processing)
+- **Input**: Normalized index + All chunks
+- **Output**: Notes for each section
+- **Model**: gpt-4.1-mini
+- **Description**: For each leaf section, identifies relevant chunks by timestamp range and extracts focused notes
 
-### Stage 3: Merge
+### Stage 3: Assemble
 
-- **Input**: Section partials
-- **Output**: Merged sections (deduplicated)
-- **Model**: deepseek-r1 (reasoning)
-
-### Stage 4: Assemble
-
-- **Input**: Merged sections + Index
+- **Input**: Extracted sections + Normalized index
 - **Output**: Final markdown document
 - **Technology**: Python (deterministic)
 
@@ -250,8 +257,9 @@ Press `F5` to start debugging with the selected configuration.
 | Stage | Default Model | Purpose |
 |-------|---------------|---------|
 | Normalize | gpt-4.1-mini | Fast, structured output |
-| Extract | gpt-4.1-mini | Parallel chunk processing |
-| Merge | deepseek-r1 | Reasoning for deduplication |
+| Extract | gpt-4.1-mini | Per-section notes extraction |
+
+Models are accessed via [GitHub Models](https://github.com/marketplace/models) using the GitHub CLI for authentication.
 
 ## Author
 

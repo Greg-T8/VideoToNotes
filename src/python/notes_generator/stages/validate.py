@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: validate.py
 # Description: Validate stage - check for empty sections and re-extract if needed
-# Context: Post-merge validation for the Exam Notes Generator pipeline
+# Context: Post-merge validation for the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
@@ -152,7 +152,7 @@ def find_chunks_for_section(
 # Prompt for targeted re-extraction of a specific section
 TARGETED_EXTRACT_PROMPT = '''# Targeted Section Extraction
 
-Extract exam notes for ONE SPECIFIC SECTION from this transcript chunk.
+Extract notes for ONE SPECIFIC SECTION from this transcript chunk.
 
 ## Target Section
 **Section**: {section_title}
@@ -190,7 +190,7 @@ Look for transcript entries with timestamps between {section_start} and {section
 - [concrete examples or "None in this chunk"]
 
 **Key Takeaways 🎯**
-- [exam focus points]
+- [focus points]
 
 ---
 

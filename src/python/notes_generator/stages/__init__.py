@@ -1,16 +1,16 @@
 # -------------------------------------------------------------------------
 # File: __init__.py
 # Description: Stages package initialization
-# Context: Exam Notes Generator - pipeline stages
+# Context: VideoToNotes - pipeline stages
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
 """
-Pipeline stages for the Exam Notes Generator.
+Pipeline stages for VideoToNotes.
 
 Stages:
 - normalize: Convert varied index formats to JSON (LLM)
-- chunk: Split transcript into ~20KB pieces (PowerShell)
+- chunk: Split transcript into ~20KB pieces (Python)
 - extract: Generate section notes from chunks (LLM)
 - merge: Combine and deduplicate partials (LLM)
 - assemble: Build final markdown document

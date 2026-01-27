@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: llm_client.py
 # Description: GitHub Models client using GitHub CLI authentication
-# Context: LLM client for the Exam Notes Generator pipeline
+# Context: LLM client for the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 

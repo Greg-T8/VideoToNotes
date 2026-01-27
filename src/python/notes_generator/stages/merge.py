@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: merge.py
 # Description: Merge stage - combine partials by section, deduplicate
-# Context: Stage 3 of the Exam Notes Generator pipeline
+# Context: Stage 3 of the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------
 # File: chunk.py
 # Description: Chunk stage - split transcript into processable chunks
-# Context: Stage 1 of the Exam Notes Generator pipeline
+# Context: Stage 1 of the VideoToNotes pipeline
 # Author: Greg Tate
 # -------------------------------------------------------------------------
 
