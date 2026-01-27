@@ -165,10 +165,7 @@ def run_pipeline(
 
         if debug:
             # Save normalized index
-            index_data = {
-                "title": state.normalized_index.title,
-                "sections": [asdict(s) for s in state.normalized_index.sections]
-            }
+            index_data = state.normalized_index.to_dict()
             (actual_debug_dir / "01_normalized_index.json").write_text(
                 json.dumps(index_data, indent=2), encoding="utf-8"
             )

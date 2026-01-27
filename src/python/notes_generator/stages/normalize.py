@@ -159,10 +159,78 @@ async def normalize_index(
     # Convert to NormalizedIndex
     normalized = NormalizedIndex.from_dict(data)
 
+    # Try to extract URL from contents.json if it exists alongside the index file
+    contents_json_path = index_path.parent / "contents.json"
+    if contents_json_path.exists():
+        try:
+            contents_data = json.loads(contents_json_path.read_text(encoding="utf-8"))
+            if "url" in contents_data:
+                normalized.url = contents_data["url"]
+            if "uploadDate" in contents_data:
+                # Format YYYYMMDD to YYYY-MM-DD
+                raw_date = contents_data["uploadDate"]
+                if len(raw_date) == 8:
+                    normalized.upload_date = f"{raw_date[:4]}-{raw_date[4:6]}-{raw_date[6:8]}"
+                else:
+                    normalized.upload_date = raw_date
+        except (json.JSONDecodeError, IOError):
+            pass  # Ignore errors reading contents.json
+
+    # Check if source is a flat list (all items at same indentation)
+    # If so, flatten the normalized structure to remove incorrect hierarchy
+    normalized = _flatten_if_source_is_flat(normalized, raw_content)
+
     # Post-process: Calculate end_timestamp for each section
     normalized = _calculate_end_timestamps(normalized)
 
     return normalized
+
+
+def _flatten_if_source_is_flat(index: NormalizedIndex, raw_index: str) -> NormalizedIndex:
+    """
+    Check if the source index is a flat list and flatten the normalized result.
+
+    The LLM sometimes infers hierarchy based on topic relationships even when
+    the source is clearly a flat list. This function detects flat sources and
+    flattens the result.
+
+    Args:
+        index: Normalized index (possibly with incorrect hierarchy)
+        raw_index: Original raw index text
+
+    Returns:
+        Flattened index if source was flat, otherwise unchanged
+    """
+    # Check if source is flat: look for consistent bullet/dash patterns without indentation
+    lines = [l for l in raw_index.strip().split('\n') if l.strip()]
+
+    # Count lines that look like flat list items (timestamps with no leading whitespace)
+    flat_patterns = 0
+    indented_patterns = 0
+
+    for line in lines:
+        stripped = line.strip()
+        # Skip headers and metadata
+        if stripped.startswith('#') or stripped.startswith('**') or stripped.startswith('*Source'):
+            continue
+        # Check if it's a list item
+        if stripped.startswith('-') or stripped.startswith('*'):
+            # Check original line for leading whitespace (beyond the bullet)
+            leading = len(line) - len(line.lstrip())
+            if leading <= 2:  # No significant indentation
+                flat_patterns += 1
+            else:
+                indented_patterns += 1
+
+    # If mostly flat patterns and no indented ones, flatten the result
+    if flat_patterns > 0 and indented_patterns == 0:
+        # Flatten: set all sections to level 2, no parent, no children
+        for section in index.sections:
+            section.level = 2
+            section.parent = None
+            section.children = []
+
+    return index
 
 
 def _calculate_end_timestamps(index: NormalizedIndex) -> NormalizedIndex:

@@ -72,6 +72,8 @@ class NormalizedIndex:
 
     title: str
     sections: List[IndexSection]
+    url: Optional[str] = None
+    upload_date: Optional[str] = None
 
     def get_lowest_level_sections(self) -> List[IndexSection]:
         """Return only sections at the lowest (most detailed) level."""
@@ -89,17 +91,24 @@ class NormalizedIndex:
 
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
-        return {
+        result = {
             "title": self.title,
             "sections": [s.to_dict() for s in self.sections]
         }
+        if self.url:
+            result["url"] = self.url
+        if self.upload_date:
+            result["upload_date"] = self.upload_date
+        return result
 
     @classmethod
     def from_dict(cls, data: dict) -> "NormalizedIndex":
         """Create from dictionary."""
         return cls(
             title=data["title"],
-            sections=[IndexSection.from_dict(s) for s in data["sections"]]
+            sections=[IndexSection.from_dict(s) for s in data["sections"]],
+            url=data.get("url"),
+            upload_date=data.get("upload_date")
         )
 
 

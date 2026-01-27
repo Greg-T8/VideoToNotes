@@ -372,8 +372,16 @@ def build_document_structure(
     # Document title
     lines.append(f"# {index.title} - Exam Notes")
     lines.append("")
+
+    # Video link and publish date
+    if index.url:
+        lines.append(f"**Video:** [{index.url}]({index.url})")
+    if index.upload_date:
+        lines.append(f"**Published:** {index.upload_date}")
+
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
     lines.append("")
+
     lines.append("---")
     lines.append("")
 
@@ -595,8 +603,17 @@ def assemble_from_sections(
     # Document title
     lines.append(f"# {index.title} - Exam Notes")
     lines.append("")
+
+    # Video link and publish date
+    if index.url:
+        lines.append(f"**Video:** [{index.url}]({index.url})")
+    if index.upload_date:
+        lines.append(f"**Published:** {index.upload_date}")
+
+    lines.append("")
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
     lines.append("")
+
     lines.append("---")
     lines.append("")
 

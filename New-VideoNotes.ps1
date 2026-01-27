@@ -131,6 +131,7 @@ $Main = {
 		# Use provided files
 		$script:IndexPath = Resolve-Path $Index
 		$script:TranscriptPath = Resolve-Path $Transcript
+		$script:DataFolder = Split-Path -Parent $script:IndexPath
 		$videoTitle = Get-VideoTitle -IndexPath $script:IndexPath
 	}
 
@@ -194,29 +195,42 @@ $Helpers = {
 		New-Item -ItemType Directory -Path $tempInitFolder -Force | Out-Null
 
 		# Run contents extraction to get video metadata
-		& $contentsScript -YouTubeUrl $Url -OutputPath $tempInitFolder | Out-Null
+		# Get-YouTubeContents creates a dated subfolder: <upload_date>-<title>
+		$contentsResult = & $contentsScript -YouTubeUrl $Url -OutputPath $tempInitFolder
 
 		if ($LASTEXITCODE -ne 0) {
 			Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
 			throw "Failed to extract video contents"
 		}
 
-		# Get video title from contents to create final folder
-		$contentsJson = Get-Content (Join-Path $tempInitFolder "contents.json") | ConvertFrom-Json
-		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+		# Get the created output folder (dated subfolder)
+		$contentsOutputFolder = $contentsResult.OutputPath
+		$contentsJsonPath = $contentsResult.JsonPath
 
-		# Create the final data folder named after the video
-		$dataFolder = Join-Path $PSScriptRoot "data\$videoTitle"
+		# Get video title and upload date from contents
+		$contentsJson = Get-Content $contentsJsonPath | ConvertFrom-Json
+		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+		$uploadDate = $contentsResult.UploadDate
+
+		# Format upload date for folder name (YYYYMMDD -> YYYY-MM-DD)
+		$formattedDate = if ($uploadDate -match '^(\d{4})(\d{2})(\d{2})$') {
+			"$($Matches[1])-$($Matches[2])-$($Matches[3])"
+		}
+		else {
+			$uploadDate
+		}
+
+		# Create the final data folder named with date and video title
+		$dataFolderName = "$formattedDate-$videoTitle"
+		$dataFolder = Join-Path $PSScriptRoot "data\$dataFolderName"
 		if (Test-Path $dataFolder) {
 			Write-Host "  Removing existing data folder..." -ForegroundColor DarkGray
 			Remove-Item $dataFolder -Recurse -Force
 		}
-		New-Item -ItemType Directory -Path $dataFolder -Force | Out-Null
 
-		# Move contents files to final location
-		Move-Item (Join-Path $tempInitFolder "contents.json") $dataFolder -Force
-		Move-Item (Join-Path $tempInitFolder "contents.md") $dataFolder -Force
-		Remove-Item $tempInitFolder -Recurse -Force
+		# Move the entire dated folder to final location
+		Move-Item $contentsOutputFolder $dataFolder -Force
+		Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
 
 		$indexPath = Join-Path $dataFolder "contents.md"
 		Write-Host "✓ " -ForegroundColor Green -NoNewline
@@ -428,13 +442,52 @@ $Helpers = {
 	function Get-VideoTitle {
 		<#
         .SYNOPSIS
-            Extracts a video title from the index file path.
+            Extracts a video title from the index file or its parent folder.
         .PARAMETER IndexPath
             Path to the index file.
         .OUTPUTS
             Cleaned video title suitable for use as a filename.
         #>
 		param([string]$IndexPath)
+
+		$parentFolder = Split-Path -Parent $IndexPath
+		$folderName = Split-Path -Leaf $parentFolder
+
+		# Check if parent folder follows the dated naming pattern (YYYY-MM-DD-Title)
+		if ($folderName -match '^\d{4}-\d{2}-\d{2}-(.+)$') {
+			# Return the full folder name including date
+			return $folderName -replace "[^\w\s-]", "" -replace "\s+", "_"
+		}
+
+		# Try to read title from contents.json if it exists
+		$contentsJsonPath = Join-Path $parentFolder "contents.json"
+		if (Test-Path $contentsJsonPath) {
+			try {
+				$contents = Get-Content $contentsJsonPath | ConvertFrom-Json
+				if ($contents.title -and $contents.uploadDate) {
+					$uploadDate = $contents.uploadDate
+					$formattedDate = if ($uploadDate -match '^(\d{4})(\d{2})(\d{2})$') {
+						"$($Matches[1])-$($Matches[2])-$($Matches[3])"
+					}
+					else {
+						$uploadDate
+					}
+					$safeTitle = $contents.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+					return "$formattedDate-$safeTitle"
+				}
+				elseif ($contents.title) {
+					return $contents.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+				}
+			}
+			catch {
+				# Fall through to filename-based extraction
+			}
+		}
+
+		# Fallback: use folder name or file name
+		if ($folderName -and $folderName -ne "." -and $folderName -ne "data") {
+			return $folderName -replace "[^\w\s-]", "" -replace "\s+", "_"
+		}
 
 		$fileName = [System.IO.Path]::GetFileNameWithoutExtension($IndexPath)
 

@@ -28,12 +28,14 @@ $Main = {
 	$contents = Build-ContentsStructure -Metadata $metadata
 
 	# Save output
-	Save-ContentsFile -Contents $contents -OutputPath $OutputPath -VideoTitle $metadata.title
+	$result = Save-ContentsFile -Contents $contents -OutputPath $OutputPath -VideoTitle $metadata.title -UploadDate $metadata.upload_date
 
 	return @{
-		JsonPath = (Join-Path $OutputPath "contents.json")
-		MdPath   = (Join-Path $OutputPath "contents.md")
-		Title    = $metadata.title
+		JsonPath   = $result.JsonPath
+		MdPath     = $result.MdPath
+		OutputPath = $result.OutputPath
+		Title      = $metadata.title
+		UploadDate = $metadata.upload_date
 	}
 }
 
@@ -111,6 +113,26 @@ $Helpers = {
 			return "{0}:{1:D2}:{2:D2}" -f $ts.Hours, $ts.Minutes, $ts.Seconds
 		}
 		return "{0}:{1:D2}" -f $ts.Minutes, $ts.Seconds
+	}
+
+	function ConvertTo-SafeFileName {
+		<#
+		.SYNOPSIS
+			Converts a string to a safe file/folder name by removing invalid characters.
+		#>
+		param([string]$Name)
+
+		# Replace invalid file name characters with underscores
+		$invalidChars = [System.IO.Path]::GetInvalidFileNameChars() -join ''
+		$safeName = $Name -replace "[$([regex]::Escape($invalidChars))]", '_'
+
+		# Replace multiple underscores/spaces with single underscore
+		$safeName = $safeName -replace '[\s_]+', '_'
+
+		# Trim underscores from ends
+		$safeName = $safeName.Trim('_')
+
+		return $safeName
 	}
 
 	function Build-ContentsStructure {
@@ -333,25 +355,41 @@ $Helpers = {
 	}
 
 	function Save-ContentsFile {
-		param($Contents, [string]$OutputPath, [string]$VideoTitle)
+		param($Contents, [string]$OutputPath, [string]$VideoTitle, [string]$UploadDate)
+
+		# Format upload date for folder name (YYYYMMDD -> YYYY-MM-DD)
+		$formattedDate = if ($UploadDate -match '^(\d{4})(\d{2})(\d{2})$') {
+			"$($Matches[1])-$($Matches[2])-$($Matches[3])"
+		}
+		else {
+			$UploadDate
+		}
+
+		# Create dated output folder name
+		$datedFolderName = "$formattedDate-$(ConvertTo-SafeFileName -Name $VideoTitle)"
+		$datedOutputPath = Join-Path $OutputPath $datedFolderName
 
 		# Create output directory if needed
-		if (-not (Test-Path $OutputPath)) {
-			New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
+		if (-not (Test-Path $datedOutputPath)) {
+			New-Item -ItemType Directory -Path $datedOutputPath -Force | Out-Null
 		}
 
 		# Save as JSON for structured processing
-		$jsonPath = Join-Path $OutputPath "contents.json"
+		$jsonPath = Join-Path $datedOutputPath "contents.json"
 		$Contents | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonPath -Encoding UTF8
 		Write-Host "Saved: $jsonPath" -ForegroundColor Green
 
 		# Also save a human-readable markdown outline
-		$mdPath = Join-Path $OutputPath "contents.md"
+		$mdPath = Join-Path $datedOutputPath "contents.md"
 		$mdContent = Convert-ContentsToMarkdown -Contents $Contents
 		$mdContent | Set-Content -Path $mdPath -Encoding UTF8
 		Write-Host "Saved: $mdPath" -ForegroundColor Green
 
-		return $jsonPath
+		return @{
+			JsonPath   = $jsonPath
+			MdPath     = $mdPath
+			OutputPath = $datedOutputPath
+		}
 	}
 
 	function Convert-ContentsToMarkdown {

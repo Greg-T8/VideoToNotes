@@ -10,10 +10,11 @@ Convert this index/table of contents into a structured JSON format.
 
 ## Instructions
 
-1. **Identify the hierarchy**: Detect parent-child relationships between sections.
-   - Look for visual groupings (icons, indentation, heading markers)
-   - Parent sections typically have no timestamp or a broader scope
-   - Child sections have specific timestamps and detailed topics
+1. **Preserve the source structure EXACTLY**:
+   - CRITICAL: If all items in the source are at the same indentation level (like a flat list), they must ALL be level 2 with parent=null and children=[]
+   - Only create parent-child relationships if there is EXPLICIT indentation or nesting in the source
+   - Do NOT group items under a parent based on topic similarity or semantic meaning
+   - A flat list of chapters with timestamps should remain flat (all level 2)
 
 2. **Extract timestamps**: Find all timestamps and normalize to HH:MM:SS format.
    - MM:SS → 00:MM:SS
