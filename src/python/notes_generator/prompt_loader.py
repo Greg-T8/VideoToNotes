@@ -14,7 +14,8 @@ from pathlib import Path
 
 
 # Prompts directory relative to this module
-PROMPTS_DIR = Path(__file__).parent.parent.parent.parent / "prompts"
+# Path: src/python/notes_generator/prompt_loader.py -> src/prompts/
+PROMPTS_DIR = Path(__file__).parent.parent.parent / "prompts"
 
 
 def load_prompt(name: str) -> str:

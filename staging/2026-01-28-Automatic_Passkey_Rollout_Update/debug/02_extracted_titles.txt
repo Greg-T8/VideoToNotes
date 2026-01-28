@@ -1,8 +1,0 @@
-Authorization layer
-Benefits of passkeys
-Introduction
-Registration campaign change
-Summary
-Synced and device-bound
-Table of Contents
-What is changing
