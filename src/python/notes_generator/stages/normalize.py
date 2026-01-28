@@ -173,6 +173,8 @@ async def normalize_index(
                     normalized.upload_date = f"{raw_date[:4]}-{raw_date[4:6]}-{raw_date[6:8]}"
                 else:
                     normalized.upload_date = raw_date
+            if "duration" in contents_data:
+                normalized.duration = contents_data["duration"]
         except (json.JSONDecodeError, IOError):
             pass  # Ignore errors reading contents.json
 

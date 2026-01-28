@@ -356,26 +356,42 @@ $Helpers = {
 
 		$srtFile = Join-Path $OutputFolder "transcript.srt"
 
-		# Capture output and show only header lines (not the full transcript text)
-		$spxOutput = spx transcribe `
-			--file $AudioFile `
-			--language $Language `
-			--output-srt-file $srtFile 2>&1
+		# Use Start-Process to properly handle paths with special characters
+		# The native argument passing avoids PowerShell's command-line parsing issues
+		$spxArgs = @(
+			"transcribe"
+			"--file"
+			$AudioFile
+			"--language"
+			$Language
+			"--output-srt-file"
+			$srtFile
+		)
 
-		# Display only the SPX header/config lines, not the transcript content
-		$headerLines = 0
-		$maxHeaderLines = 12
-		$spxOutput | ForEach-Object {
-			$line = $_.ToString()
-			# Show SPX banner, config lines (indented with spaces), and stop after header
-			if ($line -match '^SPX|^Copyright|^\s{2}\w+\.' -and $headerLines -lt $maxHeaderLines) {
-				Write-Host $line
-				$headerLines++
+		$processInfo = Start-Process -FilePath "spx" -ArgumentList $spxArgs -Wait -NoNewWindow -PassThru -RedirectStandardOutput "$OutputFolder\spx_stdout.txt" -RedirectStandardError "$OutputFolder\spx_stderr.txt"
+
+		# Display SPX output
+		if (Test-Path "$OutputFolder\spx_stdout.txt") {
+			$spxOutput = Get-Content "$OutputFolder\spx_stdout.txt" -ErrorAction SilentlyContinue
+			# Display only the SPX header/config lines, not the transcript content
+			$headerLines = 0
+			$maxHeaderLines = 12
+			$spxOutput | ForEach-Object {
+				$line = $_
+				# Show SPX banner, config lines (indented with spaces), and stop after header
+				if ($line -match '^SPX|^Copyright|^\s{2}\w+\.' -and $headerLines -lt $maxHeaderLines) {
+					Write-Host $line
+					$headerLines++
+				}
 			}
+			Remove-Item "$OutputFolder\spx_stdout.txt" -Force -ErrorAction SilentlyContinue
+		}
+		if (Test-Path "$OutputFolder\spx_stderr.txt") {
+			Remove-Item "$OutputFolder\spx_stderr.txt" -Force -ErrorAction SilentlyContinue
 		}
 		Write-Host "  ...transcribing..." -ForegroundColor DarkGray
 
-		if ($LASTEXITCODE -ne 0) {
+		if ($processInfo.ExitCode -ne 0) {
 			throw "spx transcribe failed."
 		}
 
@@ -420,13 +436,20 @@ $Helpers = {
 
 			$chunkSrt = $chunk.FullName -replace '\.wav$', '.srt'
 
-			# Use fast transcription for each chunk (suppress output to avoid polluting return value)
-			$null = spx transcribe `
-				--file $chunk.FullName `
-				--language $Language `
-				--output-srt-file $chunkSrt 2>&1
+			# Use Start-Process to properly handle paths with special characters
+			$spxArgs = @(
+				"transcribe"
+				"--file"
+				$chunk.FullName
+				"--language"
+				$Language
+				"--output-srt-file"
+				$chunkSrt
+			)
 
-			if ($LASTEXITCODE -ne 0) {
+			$processInfo = Start-Process -FilePath "spx" -ArgumentList $spxArgs -Wait -NoNewWindow -PassThru
+
+			if ($processInfo.ExitCode -ne 0) {
 				throw "Transcription failed for chunk: $($chunk.Name). Exit code: $LASTEXITCODE"
 			}
 

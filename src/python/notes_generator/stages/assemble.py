@@ -24,6 +24,17 @@ from typing import List, Dict, Optional, Tuple
 from notes_generator.models import NormalizedIndex, MergedSection, IndexSection
 
 
+def format_duration(seconds: int) -> str:
+    """
+    Format duration in seconds to a human-readable string (H:MM:SS or M:SS).
+    """
+    hours, remainder = divmod(seconds, 3600)
+    minutes, secs = divmod(remainder, 60)
+    if hours > 0:
+        return f"{hours}:{minutes:02d}:{secs:02d}"
+    return f"{minutes}:{secs:02d}"
+
+
 def normalize_title(title: str) -> str:
     """
     Normalize a title for fuzzy matching.
@@ -378,6 +389,8 @@ def build_document_structure(
         lines.append(f"**Video:** [{index.url}]({index.url})")
     if index.upload_date:
         lines.append(f"**Published:** {index.upload_date}")
+    if index.duration:
+        lines.append(f"**Duration:** {format_duration(index.duration)}")
 
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
     lines.append("")
@@ -609,6 +622,8 @@ def assemble_from_sections(
         lines.append(f"**Video:** [{index.url}]({index.url})")
     if index.upload_date:
         lines.append(f"**Published:** {index.upload_date}")
+    if index.duration:
+        lines.append(f"**Duration:** {format_duration(index.duration)}")
 
     lines.append("")
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
