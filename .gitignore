@@ -12,7 +12,7 @@ ENV/
 .idea/
 
 # Data and output folders
-data/
+staging/
 output/
 
 # Temporary files
