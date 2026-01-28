@@ -309,7 +309,7 @@ if __name__ == "__main__":
     print("Normalize stage - run with debugger for testing")
 
     # Example: test with sample file
-    sample_path = Path("data/samples/AI-900_FreeCodeCamp/Index - FreeCodeCamp.txt")
+    sample_path = Path("staging/samples/AI-900_FreeCodeCamp/Index - FreeCodeCamp.txt")
     if sample_path.exists():
         print(f"Sample file found: {sample_path}")
         content = sample_path.read_text(encoding="utf-8")

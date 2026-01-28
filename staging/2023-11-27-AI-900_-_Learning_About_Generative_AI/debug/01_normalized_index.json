@@ -1,0 +1,197 @@
+{
+  "title": "AI-900 - Learning About Generative AI",
+  "sections": [
+    {
+      "title": "Useful associated videos:",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:00:00"
+    },
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:00:23"
+    },
+    {
+      "title": "AI vs Generative AI",
+      "timestamp": "00:00:23",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:05:16"
+    },
+    {
+      "title": "Training an LLM",
+      "timestamp": "00:05:16",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:09:06"
+    },
+    {
+      "title": "Capabilities of Generative AI",
+      "timestamp": "00:09:06",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:10:29"
+    },
+    {
+      "title": "Transformer model",
+      "timestamp": "00:10:29",
+      "level": 2,
+      "order": 6,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:13:16"
+    },
+    {
+      "title": "Parts of a transformer AI",
+      "timestamp": "00:13:16",
+      "level": 2,
+      "order": 7,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:19:00"
+    },
+    {
+      "title": "Positional encoding",
+      "timestamp": "00:19:00",
+      "level": 2,
+      "order": 8,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:20:06"
+    },
+    {
+      "title": "Attention",
+      "timestamp": "00:20:06",
+      "level": 2,
+      "order": 9,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:26:41"
+    },
+    {
+      "title": "Summary of the model",
+      "timestamp": "00:26:41",
+      "level": 2,
+      "order": 10,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:27:38"
+    },
+    {
+      "title": "OpenAI and GPT",
+      "timestamp": "00:27:38",
+      "level": 2,
+      "order": 11,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:32:20"
+    },
+    {
+      "title": "Microsoft Copilots",
+      "timestamp": "00:32:20",
+      "level": 2,
+      "order": 12,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:35:06"
+    },
+    {
+      "title": "Prompt engineering",
+      "timestamp": "00:35:06",
+      "level": 2,
+      "order": 13,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:37:04"
+    },
+    {
+      "title": "Copilot grounding",
+      "timestamp": "00:37:04",
+      "level": 2,
+      "order": 14,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:39:56"
+    },
+    {
+      "title": "Copilot demo",
+      "timestamp": "00:39:56",
+      "level": 2,
+      "order": 15,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:42:23"
+    },
+    {
+      "title": "Azure OpenAI services",
+      "timestamp": "00:42:23",
+      "level": 2,
+      "order": 16,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:45:02"
+    },
+    {
+      "title": "Azure OpenAI pricing",
+      "timestamp": "00:45:02",
+      "level": 2,
+      "order": 17,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:45:44"
+    },
+    {
+      "title": "Azure OpenAI Studio",
+      "timestamp": "00:45:44",
+      "level": 2,
+      "order": 18,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:48:41"
+    },
+    {
+      "title": "Adding data and Azure AI Search",
+      "timestamp": "00:48:41",
+      "level": 2,
+      "order": 19,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:52:25"
+    },
+    {
+      "title": "Responsible Generative AI",
+      "timestamp": "00:52:25",
+      "level": 2,
+      "order": 20,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:56:30"
+    },
+    {
+      "title": "Summary and close",
+      "timestamp": "00:56:30",
+      "level": 2,
+      "order": 21,
+      "parent": null,
+      "children": [],
+      "end_timestamp": null
+    }
+  ],
+  "url": "https://www.youtube.com/watch?v=Ch6KE7KxHGM",
+  "upload_date": "2023-11-27",
+  "duration": 3587
+}

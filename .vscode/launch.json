@@ -14,7 +14,7 @@
       "script": "${workspaceFolder}/src/powershell/Split-Transcript.ps1",
       "args": [
         "-InputFile",
-        "${workspaceFolder}/data/samples/Transcript - FreeCodeCamp.txt"
+        "${workspaceFolder}/staging/samples/Transcript - FreeCodeCamp.txt"
       ],
       "cwd": "${workspaceFolder}"
     },
@@ -48,9 +48,9 @@
       },
       "args": [
         "--contents",
-        "${workspaceFolder}/data/samples/contents.md",
+        "${workspaceFolder}/staging/samples/contents.md",
         "--chunks",
-        "${workspaceFolder}/data/samples/transcript.zip"
+        "${workspaceFolder}/staging/samples/transcript.zip"
       ]
     },
     {

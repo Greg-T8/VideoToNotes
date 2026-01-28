@@ -1,0 +1,596 @@
+{
+  "channel": "John Savill's Technical Training",
+  "description": "An updated version of the AZ-104 Study Cram!\n\n🔎 Looking for content on a particular topic? Search the channel. If I have something it will be there!\n\n▬▬▬▬▬▬  C H A P T E R S ⏰  ▬▬▬▬▬▬\n00:00 - Introduction\n00:44 - Materials to prepare\n02:20 - Entra ID\n05:01 - ADDS to Entra Sync\n07:59 - Tenant\n10:21 - Branding\n11:08 - Users\n15:51 - Groups\n18:57 - Devices\n20:48 - Licenses\n23:27 - SSPR\n25:00 - Roles\n27:23 - Clouds and regions\n34:48 - Subscriptions and Management Groups\n39:14 - Cost analysis and budgets\n43:31 - Resource Groups\n45:39 - Cost saving mechanisms\n51:20 - Tags\n54:35 - Azure Policy\n59:09 - RBAC\n1:06:56 - Resource locking\n1:09:28 - Networking\n1:10:15 - Virtual network\n1:20:00 - Peering\n1:24:36 - Azure Virtual Network Manager\n1:28:47 - Network Security Group\n1:36:27 - Azure Firewall\n1:38:41 - Azure DNS\n1:41:35 - Azure Private DNS\n1:46:51 - Connectivity\n1:47:52 - S2S VPN\n1:50:34 - ExpressRoute\n1:56:09 - Azure Virtual WAN\n1:58:36 - User Defined Routes\n1:59:55 - Service endpoints\n2:04:50 - Private endpoints\n2:08:03 - Azure Bastion\n2:10:24 - Load balancing\n2:12:03 - Azure Load Balancer\n2:18:13 - Azure App Gateway\n2:25:01 - Azure Traffic Manager\n2:26:51 - Azure Cross Region Load Balancer\n2:28:09 - Azure Front Door\n2:31:50 - Storage accounts\n2:42:07 - Storage tools\n2:44:20 - Blob tiering\n2:49:05 - Lifecycle management\n2:50:22 - Object replication\n2:52:45 - Azure Files\n2:56:41 - Access\n3:00:30 - Encryption\n3:02:54 - Managed disks\n3:10:21 - Provisioning resources\n3:15:07 - Types of service\n3:19:05 - Virtual machines\n3:28:11 - Availability Set and Zones\n3:30:54 - VMSS\n3:34:35 - Containers\n3:37:25 - AKS\n3:42:34 - App Service Plan\n3:45:25 - Monitoring\n3:50:48 - Alerting\n3:54:57 - Log Analytics Workspace\n3:59:05 - Network watcher\n4:00:16 - Summary and close\n\n▬▬▬▬▬▬  K E Y   L I N K S 🔗 ▬▬▬▬▬▬\n► Whiteboard:\n🔗 https://github.com/johnthebrit/CertificationMaterials/blob/main/whiteboards/AZ-104-Whiteboard-v2.png\n► Study Guide:\n🔗 https://learn.microsoft.com/credentials/certifications/resources/study-guides/az-104\n► Learn modules:\n🔗 https://learn.microsoft.com/credentials/certifications/exams/az-104/\n► Playlist:\n🔗 https://www.youtube.com/playlist?list=PLlVtbbG169nGlGPWs9xaLKT1KfwqREHbs\n► Entra licenses:\n🔗 https://www.microsoft.com/security/business/microsoft-entra-pricing\n► Regional AZ support:\n🔗 https://azure.microsoft.com/explore/global-infrastructure/geographies/#geographies\n► Pricing calculator:\n🔗 https://azure.microsoft.com/pricing/calculator/\n► Firewall SKUs:\n🔗 https://learn.microsoft.com/azure/firewall/choose-firewall-sku\n► Azure Virtual WAN SKUs:\n🔗 https://learn.microsoft.com/azure/virtual-wan/virtual-wan-about#basicstandard\n► Template examples:\n🔗 https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts \n► VM sizes:\n🔗 https://docs.microsoft.com/azure/virtual-machines/sizes\n\n▬▬▬▬▬▬  Want to learn more? 🚀  ▬▬▬▬▬▬ \n📖 Recommended Learning Path for Azure\n🔗 https://learn.onboardtoazure.com\n🥇 Certification Content Repository\n🔗 https://github.com/johnthebrit/CertificationMaterials\n📅 Weekly Azure Update\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nEv7jSfOVmQGRp9wAoAM0Ks\n☁ Azure Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n⚙ DevOps Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nFr8RzQ4GIxUEznpNR53ERq\n💻 PowerShell Master Class\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8\n🎓 Certification Cram Videos\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nHz2qfLvPsAz9CnnXofhmcA\n🧠 Mentoring Content\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nGHxNkSWB0PjzZHwZ0BkXZZ\n❔ Questions? Maybe I answered it in my FAQ\n🔗 https://savilltech.com/faq\n👕 Cure Childhood Cancer Charity T-Shirt Channel Store\n🔗 https://johns-t-shirts-store.creator-spring.com/\n\n👂  Enable the subtitles and from there you can translate to your native language via the auto-translate feature in settings! https://youtu.be/v5b53-PgEmI for a demo of using this feature.\n\nSUBSCRIBE  ✅  https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ?sub_confirmation=1\n\n#microsoft #azure #johnsavillstechnicaltraining",
+  "chaptersSource": "description",
+  "uploadDate": "20240212",
+  "url": "https://www.youtube.com/watch?v=0Knf9nub4-k",
+  "title": "AZ-104 Administrator Associate Study Cram v2",
+  "duration": 14494,
+  "chapters": [
+    {
+      "isSection": false,
+      "startTime": 0,
+      "level": 1,
+      "title": "Introduction",
+      "children": [],
+      "endTime": 44,
+      "timestamp": "00:00"
+    },
+    {
+      "isSection": false,
+      "startTime": 44,
+      "level": 1,
+      "title": "Materials to prepare",
+      "children": [],
+      "endTime": 140,
+      "timestamp": "00:44"
+    },
+    {
+      "isSection": false,
+      "startTime": 140,
+      "level": 1,
+      "title": "Entra ID",
+      "children": [],
+      "endTime": 301,
+      "timestamp": "02:20"
+    },
+    {
+      "isSection": false,
+      "startTime": 301,
+      "level": 1,
+      "title": "ADDS to Entra Sync",
+      "children": [],
+      "endTime": 479,
+      "timestamp": "05:01"
+    },
+    {
+      "isSection": false,
+      "startTime": 479,
+      "level": 1,
+      "title": "Tenant",
+      "children": [],
+      "endTime": 621,
+      "timestamp": "07:59"
+    },
+    {
+      "isSection": false,
+      "startTime": 621,
+      "level": 1,
+      "title": "Branding",
+      "children": [],
+      "endTime": 668,
+      "timestamp": "10:21"
+    },
+    {
+      "isSection": false,
+      "startTime": 668,
+      "level": 1,
+      "title": "Users",
+      "children": [],
+      "endTime": 951,
+      "timestamp": "11:08"
+    },
+    {
+      "isSection": false,
+      "startTime": 951,
+      "level": 1,
+      "title": "Groups",
+      "children": [],
+      "endTime": 1137,
+      "timestamp": "15:51"
+    },
+    {
+      "isSection": false,
+      "startTime": 1137,
+      "level": 1,
+      "title": "Devices",
+      "children": [],
+      "endTime": 1248,
+      "timestamp": "18:57"
+    },
+    {
+      "isSection": false,
+      "startTime": 1248,
+      "level": 1,
+      "title": "Licenses",
+      "children": [],
+      "endTime": 1407,
+      "timestamp": "20:48"
+    },
+    {
+      "isSection": false,
+      "startTime": 1407,
+      "level": 1,
+      "title": "SSPR",
+      "children": [],
+      "endTime": 1500,
+      "timestamp": "23:27"
+    },
+    {
+      "isSection": false,
+      "startTime": 1500,
+      "level": 1,
+      "title": "Roles",
+      "children": [],
+      "endTime": 1643,
+      "timestamp": "25:00"
+    },
+    {
+      "isSection": false,
+      "startTime": 1643,
+      "level": 1,
+      "title": "Clouds and regions",
+      "children": [],
+      "endTime": 2088,
+      "timestamp": "27:23"
+    },
+    {
+      "isSection": false,
+      "startTime": 2088,
+      "level": 1,
+      "title": "Subscriptions and Management Groups",
+      "children": [],
+      "endTime": 2354,
+      "timestamp": "34:48"
+    },
+    {
+      "isSection": false,
+      "startTime": 2354,
+      "level": 1,
+      "title": "Cost analysis and budgets",
+      "children": [],
+      "endTime": 2611,
+      "timestamp": "39:14"
+    },
+    {
+      "isSection": false,
+      "startTime": 2611,
+      "level": 1,
+      "title": "Resource Groups",
+      "children": [],
+      "endTime": 2739,
+      "timestamp": "43:31"
+    },
+    {
+      "isSection": false,
+      "startTime": 2739,
+      "level": 1,
+      "title": "Cost saving mechanisms",
+      "children": [],
+      "endTime": 3080,
+      "timestamp": "45:39"
+    },
+    {
+      "isSection": false,
+      "startTime": 3080,
+      "level": 1,
+      "title": "Tags",
+      "children": [],
+      "endTime": 3275,
+      "timestamp": "51:20"
+    },
+    {
+      "isSection": false,
+      "startTime": 3275,
+      "level": 1,
+      "title": "Azure Policy",
+      "children": [],
+      "endTime": 3549,
+      "timestamp": "54:35"
+    },
+    {
+      "isSection": false,
+      "startTime": 3549,
+      "level": 1,
+      "title": "RBAC",
+      "children": [],
+      "endTime": 4016,
+      "timestamp": "59:09"
+    },
+    {
+      "isSection": false,
+      "startTime": 4016,
+      "level": 1,
+      "title": "Resource locking",
+      "children": [],
+      "endTime": 4168,
+      "timestamp": "1:06:56"
+    },
+    {
+      "isSection": false,
+      "startTime": 4168,
+      "level": 1,
+      "title": "Networking",
+      "children": [],
+      "endTime": 4215,
+      "timestamp": "1:09:28"
+    },
+    {
+      "isSection": false,
+      "startTime": 4215,
+      "level": 1,
+      "title": "Virtual network",
+      "children": [],
+      "endTime": 4800,
+      "timestamp": "1:10:15"
+    },
+    {
+      "isSection": false,
+      "startTime": 4800,
+      "level": 1,
+      "title": "Peering",
+      "children": [],
+      "endTime": 5076,
+      "timestamp": "1:20:00"
+    },
+    {
+      "isSection": false,
+      "startTime": 5076,
+      "level": 1,
+      "title": "Azure Virtual Network Manager",
+      "children": [],
+      "endTime": 5327,
+      "timestamp": "1:24:36"
+    },
+    {
+      "isSection": false,
+      "startTime": 5327,
+      "level": 1,
+      "title": "Network Security Group",
+      "children": [],
+      "endTime": 5787,
+      "timestamp": "1:28:47"
+    },
+    {
+      "isSection": false,
+      "startTime": 5787,
+      "level": 1,
+      "title": "Azure Firewall",
+      "children": [],
+      "endTime": 5921,
+      "timestamp": "1:36:27"
+    },
+    {
+      "isSection": false,
+      "startTime": 5921,
+      "level": 1,
+      "title": "Azure DNS",
+      "children": [],
+      "endTime": 6095,
+      "timestamp": "1:38:41"
+    },
+    {
+      "isSection": false,
+      "startTime": 6095,
+      "level": 1,
+      "title": "Azure Private DNS",
+      "children": [],
+      "endTime": 6411,
+      "timestamp": "1:41:35"
+    },
+    {
+      "isSection": false,
+      "startTime": 6411,
+      "level": 1,
+      "title": "Connectivity",
+      "children": [],
+      "endTime": 6472,
+      "timestamp": "1:46:51"
+    },
+    {
+      "isSection": false,
+      "startTime": 6472,
+      "level": 1,
+      "title": "S2S VPN",
+      "children": [],
+      "endTime": 6634,
+      "timestamp": "1:47:52"
+    },
+    {
+      "isSection": false,
+      "startTime": 6634,
+      "level": 1,
+      "title": "ExpressRoute",
+      "children": [],
+      "endTime": 6969,
+      "timestamp": "1:50:34"
+    },
+    {
+      "isSection": false,
+      "startTime": 6969,
+      "level": 1,
+      "title": "Azure Virtual WAN",
+      "children": [],
+      "endTime": 7116,
+      "timestamp": "1:56:09"
+    },
+    {
+      "isSection": false,
+      "startTime": 7116,
+      "level": 1,
+      "title": "User Defined Routes",
+      "children": [],
+      "endTime": 7195,
+      "timestamp": "1:58:36"
+    },
+    {
+      "isSection": false,
+      "startTime": 7195,
+      "level": 1,
+      "title": "Service endpoints",
+      "children": [],
+      "endTime": 7490,
+      "timestamp": "1:59:55"
+    },
+    {
+      "isSection": false,
+      "startTime": 7490,
+      "level": 1,
+      "title": "Private endpoints",
+      "children": [],
+      "endTime": 7683,
+      "timestamp": "2:04:50"
+    },
+    {
+      "isSection": false,
+      "startTime": 7683,
+      "level": 1,
+      "title": "Azure Bastion",
+      "children": [],
+      "endTime": 7824,
+      "timestamp": "2:08:03"
+    },
+    {
+      "isSection": false,
+      "startTime": 7824,
+      "level": 1,
+      "title": "Load balancing",
+      "children": [],
+      "endTime": 7923,
+      "timestamp": "2:10:24"
+    },
+    {
+      "isSection": false,
+      "startTime": 7923,
+      "level": 1,
+      "title": "Azure Load Balancer",
+      "children": [],
+      "endTime": 8293,
+      "timestamp": "2:12:03"
+    },
+    {
+      "isSection": false,
+      "startTime": 8293,
+      "level": 1,
+      "title": "Azure App Gateway",
+      "children": [],
+      "endTime": 8701,
+      "timestamp": "2:18:13"
+    },
+    {
+      "isSection": false,
+      "startTime": 8701,
+      "level": 1,
+      "title": "Azure Traffic Manager",
+      "children": [],
+      "endTime": 8811,
+      "timestamp": "2:25:01"
+    },
+    {
+      "isSection": false,
+      "startTime": 8811,
+      "level": 1,
+      "title": "Azure Cross Region Load Balancer",
+      "children": [],
+      "endTime": 8889,
+      "timestamp": "2:26:51"
+    },
+    {
+      "isSection": false,
+      "startTime": 8889,
+      "level": 1,
+      "title": "Azure Front Door",
+      "children": [],
+      "endTime": 9110,
+      "timestamp": "2:28:09"
+    },
+    {
+      "isSection": false,
+      "startTime": 9110,
+      "level": 1,
+      "title": "Storage accounts",
+      "children": [],
+      "endTime": 9727,
+      "timestamp": "2:31:50"
+    },
+    {
+      "isSection": false,
+      "startTime": 9727,
+      "level": 1,
+      "title": "Storage tools",
+      "children": [],
+      "endTime": 9860,
+      "timestamp": "2:42:07"
+    },
+    {
+      "isSection": false,
+      "startTime": 9860,
+      "level": 1,
+      "title": "Blob tiering",
+      "children": [],
+      "endTime": 10145,
+      "timestamp": "2:44:20"
+    },
+    {
+      "isSection": false,
+      "startTime": 10145,
+      "level": 1,
+      "title": "Lifecycle management",
+      "children": [],
+      "endTime": 10222,
+      "timestamp": "2:49:05"
+    },
+    {
+      "isSection": false,
+      "startTime": 10222,
+      "level": 1,
+      "title": "Object replication",
+      "children": [],
+      "endTime": 10365,
+      "timestamp": "2:50:22"
+    },
+    {
+      "isSection": false,
+      "startTime": 10365,
+      "level": 1,
+      "title": "Azure Files",
+      "children": [],
+      "endTime": 10601,
+      "timestamp": "2:52:45"
+    },
+    {
+      "isSection": false,
+      "startTime": 10601,
+      "level": 1,
+      "title": "Access",
+      "children": [],
+      "endTime": 10830,
+      "timestamp": "2:56:41"
+    },
+    {
+      "isSection": false,
+      "startTime": 10830,
+      "level": 1,
+      "title": "Encryption",
+      "children": [],
+      "endTime": 10974,
+      "timestamp": "3:00:30"
+    },
+    {
+      "isSection": false,
+      "startTime": 10974,
+      "level": 1,
+      "title": "Managed disks",
+      "children": [],
+      "endTime": 11421,
+      "timestamp": "3:02:54"
+    },
+    {
+      "isSection": false,
+      "startTime": 11421,
+      "level": 1,
+      "title": "Provisioning resources",
+      "children": [],
+      "endTime": 11707,
+      "timestamp": "3:10:21"
+    },
+    {
+      "isSection": false,
+      "startTime": 11707,
+      "level": 1,
+      "title": "Types of service",
+      "children": [],
+      "endTime": 11945,
+      "timestamp": "3:15:07"
+    },
+    {
+      "isSection": false,
+      "startTime": 11945,
+      "level": 1,
+      "title": "Virtual machines",
+      "children": [],
+      "endTime": 12491,
+      "timestamp": "3:19:05"
+    },
+    {
+      "isSection": false,
+      "startTime": 12491,
+      "level": 1,
+      "title": "Availability Set and Zones",
+      "children": [],
+      "endTime": 12654,
+      "timestamp": "3:28:11"
+    },
+    {
+      "isSection": false,
+      "startTime": 12654,
+      "level": 1,
+      "title": "VMSS",
+      "children": [],
+      "endTime": 12875,
+      "timestamp": "3:30:54"
+    },
+    {
+      "isSection": false,
+      "startTime": 12875,
+      "level": 1,
+      "title": "Containers",
+      "children": [],
+      "endTime": 13045,
+      "timestamp": "3:34:35"
+    },
+    {
+      "isSection": false,
+      "startTime": 13045,
+      "level": 1,
+      "title": "AKS",
+      "children": [],
+      "endTime": 13354,
+      "timestamp": "3:37:25"
+    },
+    {
+      "isSection": false,
+      "startTime": 13354,
+      "level": 1,
+      "title": "App Service Plan",
+      "children": [],
+      "endTime": 13525,
+      "timestamp": "3:42:34"
+    },
+    {
+      "isSection": false,
+      "startTime": 13525,
+      "level": 1,
+      "title": "Monitoring",
+      "children": [],
+      "endTime": 13848,
+      "timestamp": "3:45:25"
+    },
+    {
+      "isSection": false,
+      "startTime": 13848,
+      "level": 1,
+      "title": "Alerting",
+      "children": [],
+      "endTime": 14097,
+      "timestamp": "3:50:48"
+    },
+    {
+      "isSection": false,
+      "startTime": 14097,
+      "level": 1,
+      "title": "Log Analytics Workspace",
+      "children": [],
+      "endTime": 14345,
+      "timestamp": "3:54:57"
+    },
+    {
+      "isSection": false,
+      "startTime": 14345,
+      "level": 1,
+      "title": "Network watcher",
+      "children": [],
+      "endTime": 14416,
+      "timestamp": "3:59:05"
+    },
+    {
+      "isSection": false,
+      "startTime": 14416,
+      "level": 1,
+      "title": "Summary and close",
+      "children": [],
+      "endTime": null,
+      "timestamp": "4:00:16"
+    }
+  ]
+}

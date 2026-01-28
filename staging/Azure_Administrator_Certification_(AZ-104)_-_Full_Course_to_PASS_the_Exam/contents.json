@@ -1,0 +1,1743 @@
+{
+  "description": "The Azure Administrator is the most popular Azure certification because it provides the broadest amount of practical knowledge to manage Azure infrastructure and it allows you to pivot into any career path for Azure-based roles. By the end of this full course taught by an expert trainer, you will be ready to take the exam for the Azure Administrator Certification - and pass!\n\n✏️ Course developed by Andrew Brown of ExamPro. Check out the ExamPro YouTube channel: https://www.youtube.com/ExamProChannel\n🔗 ExamPro Cloud Obsessed Certification Training: https://www.exampro.co\n\n⭐Course Contents⭐\n00:00 Getting Started\n\nAzure AD\n19:45 Intro\n21:43 Use Cases\n22:44 AD vs AAD\n23:37 Terminology\n25:54 Tenant\n26:42 AD DS\n27:51 AD Connect\n29:04 Users\n30:04 Groups\n30:53 Assign Access Rights\n31:38 External Identities\n32:17 Create a Tenant\n35:14 Upgrade License\n37:58 User and Groups\n41:39 Guest Users\n43:53 Mass Import\n46:45 MFA\n50:51 Self Service Rest Password\n53:22 AD CheatSheet\n\nAD Device Management\n57:31 Intro to Device Management\n1:00:14 AD Registered Devices\n1:01:57 Windows Hello\n1:02:31 MDM and MAM\n1:04:16 EMS\n1:05:10 MS Authenticator App\n1:05:50 AD Joined Devices\n1:07:35 FIDO2 and Security Keys\n1:09:41 Hybrid AD Joined Devices\n1:11:24 Windows Autopilot\n1:12:19 Device Management Cheatsheet\n\nRoles\n1:13:38 Type of Roles\n1:14:32 IAM Access Controls\n1:16:04 Classic Administrator\n1:17:14 RBAC\n1:20:06 AD Roles\n1:21:30 Roles\n1:24:21 Policies vs RBAC\n1:25:35 AD Roles vs RBAC\n1:26:50 Roles CheatSheet\n\nAzure Policies\n1:28:32 Intro\n1:30:06 Non Compliant Resources\n1:30:35 Policy Definition File\n1:34:45 Configure Policy\n1:41:06 Policies CheatSheet\n\nARM\n1:41:54 Intro\n1:43:18 Use Case\n1:44:26 Scoping\n1:45:54 Subscriptions\n1:47:00 Management Groups\n1:48:05 Resource Groups\n1:48:40 Resource Providers\n1:49:49 Resource Tags\n1:51:24 Resource Locks\n1:52:04 Blueprints\n1:54:06 Moving Resources\n2:06:40 ARM CheatSheet\n\nARM Templates\n2:08:58 Intro to ARM Templates\n2:11:53 ARM Template Skeleton\n2:13:15 ARM Template Resources\n2:14:32 ARM Template Parameters\n2:16:02 ARM Template Functions\n2:17:42 ARM Template Variables\n2:18:44 ARM Template Output\n2:19:36 Launch an ARM Template\n2:30:12 ARM Template CheatSheet\n\nStorage Accounts\n2:32:04 Intro to Storage Accounts\n2:33:48 Storage Comparison\n2:35:49 Core Storage Services\n2:37:43 Performance Tiers\n2:39:51 Access Tiers\n2:43:37 Replication Data Redundancy\n2:45:30 LRS ZRS\n2:47:01 GRS GZRS\n2:49:02 RAGRS_RA GZRS\n2:49:44 Intro to Blob\n2:50:51 Blob Types\n2:51:45 Blob Moving Data\n2:52:50 Intro to Files\n2:54:05 Files Use Cases\n2:57:31 Files Feature\n3:01:21 File Sync\n3:02:21 Storage Explorer\n3:02:55 AZCopy\n3:04:42 Import Export Service\n3:07:10 SAS\n3:10:09 Use AZCopy to copy files to Storage Accounts\n3:26:14 Create a File Share with Files\n3:37:22 Setup Files Sync\n3:54:31 Storage Accounts CheatSheet\n\nVMs\n4:02:22 Intro\n4:05:15 Operation Systems\n4:07:01 Cloud Init\n4:08:55 Sizes\n4:12:15 ACUs\n4:13:48 MobileApp\n4:14:38 VM Generations\n4:17:26 3 Ways To Connect\n4:19:29 SSH\n4:20:41 RDP\n4:21:25 Bastion\n4:23:57 Windows Vs Linux\n4:26:34 Update Management\n4:28:25 Create a Bastion\n4:33:23 Create a Windows VM and RDP\n4:38:53 Create a Linux VM and SSH\n4:53:15 VM Monitoring\n5:27:55 VM CheatSheets\n\nDisks\n5:31:25 Intro\n5:32:56 Encryption\n5:34:01 Disk Roles\n5:35:42 Managed Disk Snapshots Managed Custom Image\n5:37:07 Disk Types\n5:40:35 Bursting\n5:41:48 Attaching Partitioning and Mounting a Disk\n6:01:36 Disks CheatSheet\n\nApplication Gateway\n6:06:20 Intro\n6:08:47 Routing Rules\n6:11:43 AGW CheatSheet\n\nScale Sets\n6:13:20 Intro to Scale Sets\n6:14:18 Associate a Load Balancer\n6:15:24 Scaling Policy\n6:18:51 Health Monitoring\n6:20:18 Advanced Features\n6:21:22 Scale Sets CheatSheet\n\nApp Service\n6:23:06 Intro\n6:25:02 Runtimes\n6:26:32 Custom Containers\n6:27:15 Deployment Slots\n6:28:12 App Service Environment\n6:30:49 Deployment\n6:34:53 App Service Plan\n6:38:11 WebJobs\n6:39:37 Configure and Deploy App Service\n6:48:52 Trigger a Deploy via Github Actions\n6:56:24 Create Deployment Slots\n7:07:44 Scaling App Service\n7:14:02 App Services CheatSheet\n\nAvailability Follow Along\n7:16:53 Backup VM using Images\n7:23:27 Review Availability Sets\n7:26:03 Create a Scale Sets\n7:31:07 Create an Application Gateway\n\nMonitor\n7:37:36 Intro\n7:38:06 The Pillars of Observability\n7:39:18 Anatomy of Monitor\n7:40:36 Sources Application\n7:42:26 Sources Operation System\n7:44:00 Sources Resources\n7:44:57 Source Subscription\n7:45:16 Sources Tenant\n7:45:42 Sources Custom Sources\n7:46:08 Data Stores\n7:47:43 Log Analytics Workspaces\n7:48:35 Log Analytics\n7:49:12 Kusto\n7:50:31 Kusto Entities\n7:51:55 Scalar Data Types\n7:54:33 Control Commands\n7:55:51 Functions\n7:57:30 Scalar Operators\n7:59:35 Tabular Operators\n8:01:11 Metrics Explorer\n8:02:39 Alerts\n8:04:22 Dashboards\n8:05:04 Workbooks\n8:06:21 Application Insights\n8:09:54 Monitor CheatSheet\n\n8:15:45 Backup\n\n8:31:10 ACI\n\n8:41:42 ACR\n\n8:45:19 AKS\n\n9:13:36 DNS\n\n9:30:07 Networking\n\n10:53:41 NSG\n\n11:00:44 Virtual WAN\n\n11:12:38 VNGs",
+  "duration": 40585,
+  "chapters": [
+    {
+      "level": 1,
+      "timestamp": "00:00",
+      "startTime": 0,
+      "children": {
+        "level": 2,
+        "timestamp": "00:00",
+        "startTime": 0,
+        "children": [],
+        "endTime": 1185,
+        "isSection": false,
+        "title": "Getting Started"
+      },
+      "endTime": 0,
+      "isSection": true,
+      "title": "Course Contents"
+    },
+    {
+      "level": 1,
+      "timestamp": "19:45",
+      "startTime": 1185,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "19:45",
+          "startTime": 1185,
+          "children": [],
+          "endTime": 1303,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "21:43",
+          "startTime": 1303,
+          "children": [],
+          "endTime": 1364,
+          "isSection": false,
+          "title": "Use Cases"
+        },
+        {
+          "level": 2,
+          "timestamp": "22:44",
+          "startTime": 1364,
+          "children": [],
+          "endTime": 1417,
+          "isSection": false,
+          "title": "AD vs AAD"
+        },
+        {
+          "level": 2,
+          "timestamp": "23:37",
+          "startTime": 1417,
+          "children": [],
+          "endTime": 1554,
+          "isSection": false,
+          "title": "Terminology"
+        },
+        {
+          "level": 2,
+          "timestamp": "25:54",
+          "startTime": 1554,
+          "children": [],
+          "endTime": 1602,
+          "isSection": false,
+          "title": "Tenant"
+        },
+        {
+          "level": 2,
+          "timestamp": "26:42",
+          "startTime": 1602,
+          "children": [],
+          "endTime": 1671,
+          "isSection": false,
+          "title": "AD DS"
+        },
+        {
+          "level": 2,
+          "timestamp": "27:51",
+          "startTime": 1671,
+          "children": [],
+          "endTime": 1744,
+          "isSection": false,
+          "title": "AD Connect"
+        },
+        {
+          "level": 2,
+          "timestamp": "29:04",
+          "startTime": 1744,
+          "children": [],
+          "endTime": 1804,
+          "isSection": false,
+          "title": "Users"
+        },
+        {
+          "level": 2,
+          "timestamp": "30:04",
+          "startTime": 1804,
+          "children": [],
+          "endTime": 1853,
+          "isSection": false,
+          "title": "Groups"
+        },
+        {
+          "level": 2,
+          "timestamp": "30:53",
+          "startTime": 1853,
+          "children": [],
+          "endTime": 1898,
+          "isSection": false,
+          "title": "Assign Access Rights"
+        },
+        {
+          "level": 2,
+          "timestamp": "31:38",
+          "startTime": 1898,
+          "children": [],
+          "endTime": 1937,
+          "isSection": false,
+          "title": "External Identities"
+        },
+        {
+          "level": 2,
+          "timestamp": "32:17",
+          "startTime": 1937,
+          "children": [],
+          "endTime": 2114,
+          "isSection": false,
+          "title": "Create a Tenant"
+        },
+        {
+          "level": 2,
+          "timestamp": "35:14",
+          "startTime": 2114,
+          "children": [],
+          "endTime": 2278,
+          "isSection": false,
+          "title": "Upgrade License"
+        },
+        {
+          "level": 2,
+          "timestamp": "37:58",
+          "startTime": 2278,
+          "children": [],
+          "endTime": 2499,
+          "isSection": false,
+          "title": "User and Groups"
+        },
+        {
+          "level": 2,
+          "timestamp": "41:39",
+          "startTime": 2499,
+          "children": [],
+          "endTime": 2633,
+          "isSection": false,
+          "title": "Guest Users"
+        },
+        {
+          "level": 2,
+          "timestamp": "43:53",
+          "startTime": 2633,
+          "children": [],
+          "endTime": 2805,
+          "isSection": false,
+          "title": "Mass Import"
+        },
+        {
+          "level": 2,
+          "timestamp": "46:45",
+          "startTime": 2805,
+          "children": [],
+          "endTime": 3051,
+          "isSection": false,
+          "title": "MFA"
+        },
+        {
+          "level": 2,
+          "timestamp": "50:51",
+          "startTime": 3051,
+          "children": [],
+          "endTime": 3202,
+          "isSection": false,
+          "title": "Self Service Rest Password"
+        },
+        {
+          "level": 2,
+          "timestamp": "53:22",
+          "startTime": 3202,
+          "children": [],
+          "endTime": 3451,
+          "isSection": false,
+          "title": "AD CheatSheet"
+        }
+      ],
+      "endTime": 1185,
+      "isSection": true,
+      "title": "Azure AD"
+    },
+    {
+      "level": 1,
+      "timestamp": "57:31",
+      "startTime": 3451,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "57:31",
+          "startTime": 3451,
+          "children": [],
+          "endTime": 3451,
+          "isSection": false,
+          "title": "Intro to Device Management"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:00:14",
+          "startTime": 3614,
+          "children": [],
+          "endTime": 3717,
+          "isSection": false,
+          "title": "AD Registered Devices"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:01:57",
+          "startTime": 3717,
+          "children": [],
+          "endTime": 3751,
+          "isSection": false,
+          "title": "Windows Hello"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:02:31",
+          "startTime": 3751,
+          "children": [],
+          "endTime": 3856,
+          "isSection": false,
+          "title": "MDM and MAM"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:04:16",
+          "startTime": 3856,
+          "children": [],
+          "endTime": 3910,
+          "isSection": false,
+          "title": "EMS"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:05:10",
+          "startTime": 3910,
+          "children": [],
+          "endTime": 3950,
+          "isSection": false,
+          "title": "MS Authenticator App"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:05:50",
+          "startTime": 3950,
+          "children": [],
+          "endTime": 4055,
+          "isSection": false,
+          "title": "AD Joined Devices"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:07:35",
+          "startTime": 4055,
+          "children": [],
+          "endTime": 4181,
+          "isSection": false,
+          "title": "FIDO2 and Security Keys"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:09:41",
+          "startTime": 4181,
+          "children": [],
+          "endTime": 4284,
+          "isSection": false,
+          "title": "Hybrid AD Joined Devices"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:11:24",
+          "startTime": 4284,
+          "children": [],
+          "endTime": 4339,
+          "isSection": false,
+          "title": "Windows Autopilot"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:12:19",
+          "startTime": 4339,
+          "children": [],
+          "endTime": 4418,
+          "isSection": false,
+          "title": "Device Management Cheatsheet"
+        }
+      ],
+      "endTime": 3614,
+      "isSection": true,
+      "title": "AD Device Management"
+    },
+    {
+      "level": 1,
+      "timestamp": "1:13:38",
+      "startTime": 4418,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "1:13:38",
+          "startTime": 4418,
+          "children": [],
+          "endTime": 4418,
+          "isSection": false,
+          "title": "Type of Roles"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:14:32",
+          "startTime": 4472,
+          "children": [],
+          "endTime": 4564,
+          "isSection": false,
+          "title": "IAM Access Controls"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:16:04",
+          "startTime": 4564,
+          "children": [],
+          "endTime": 4634,
+          "isSection": false,
+          "title": "Classic Administrator"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:17:14",
+          "startTime": 4634,
+          "children": [],
+          "endTime": 4806,
+          "isSection": false,
+          "title": "RBAC"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:20:06",
+          "startTime": 4806,
+          "children": [],
+          "endTime": 4890,
+          "isSection": false,
+          "title": "AD Roles"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:21:30",
+          "startTime": 4890,
+          "children": [],
+          "endTime": 5061,
+          "isSection": false,
+          "title": "Roles"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:24:21",
+          "startTime": 5061,
+          "children": [],
+          "endTime": 5135,
+          "isSection": false,
+          "title": "Policies vs RBAC"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:25:35",
+          "startTime": 5135,
+          "children": [],
+          "endTime": 5210,
+          "isSection": false,
+          "title": "AD Roles vs RBAC"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:26:50",
+          "startTime": 5210,
+          "children": [],
+          "endTime": 5312,
+          "isSection": false,
+          "title": "Roles CheatSheet"
+        }
+      ],
+      "endTime": 4472,
+      "isSection": true,
+      "title": "Roles"
+    },
+    {
+      "level": 1,
+      "timestamp": "1:28:32",
+      "startTime": 5312,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "1:28:32",
+          "startTime": 5312,
+          "children": [],
+          "endTime": 5312,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:30:06",
+          "startTime": 5406,
+          "children": [],
+          "endTime": 5435,
+          "isSection": false,
+          "title": "Non Compliant Resources"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:30:35",
+          "startTime": 5435,
+          "children": [],
+          "endTime": 5685,
+          "isSection": false,
+          "title": "Policy Definition File"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:34:45",
+          "startTime": 5685,
+          "children": [],
+          "endTime": 6066,
+          "isSection": false,
+          "title": "Configure Policy"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:41:06",
+          "startTime": 6066,
+          "children": [],
+          "endTime": 6114,
+          "isSection": false,
+          "title": "Policies CheatSheet"
+        }
+      ],
+      "endTime": 5406,
+      "isSection": true,
+      "title": "Azure Policies"
+    },
+    {
+      "level": 1,
+      "timestamp": "1:41:54",
+      "startTime": 6114,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "1:41:54",
+          "startTime": 6114,
+          "children": [],
+          "endTime": 6198,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:43:18",
+          "startTime": 6198,
+          "children": [],
+          "endTime": 6266,
+          "isSection": false,
+          "title": "Use Case"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:44:26",
+          "startTime": 6266,
+          "children": [],
+          "endTime": 6354,
+          "isSection": false,
+          "title": "Scoping"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:45:54",
+          "startTime": 6354,
+          "children": [],
+          "endTime": 6420,
+          "isSection": false,
+          "title": "Subscriptions"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:47:00",
+          "startTime": 6420,
+          "children": [],
+          "endTime": 6485,
+          "isSection": false,
+          "title": "Management Groups"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:48:05",
+          "startTime": 6485,
+          "children": [],
+          "endTime": 6520,
+          "isSection": false,
+          "title": "Resource Groups"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:48:40",
+          "startTime": 6520,
+          "children": [],
+          "endTime": 6589,
+          "isSection": false,
+          "title": "Resource Providers"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:49:49",
+          "startTime": 6589,
+          "children": [],
+          "endTime": 6684,
+          "isSection": false,
+          "title": "Resource Tags"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:51:24",
+          "startTime": 6684,
+          "children": [],
+          "endTime": 6724,
+          "isSection": false,
+          "title": "Resource Locks"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:52:04",
+          "startTime": 6724,
+          "children": [],
+          "endTime": 6846,
+          "isSection": false,
+          "title": "Blueprints"
+        },
+        {
+          "level": 2,
+          "timestamp": "1:54:06",
+          "startTime": 6846,
+          "children": [],
+          "endTime": 7600,
+          "isSection": false,
+          "title": "Moving Resources"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:06:40",
+          "startTime": 7600,
+          "children": [],
+          "endTime": 7738,
+          "isSection": false,
+          "title": "ARM CheatSheet"
+        }
+      ],
+      "endTime": 6114,
+      "isSection": true,
+      "title": "ARM"
+    },
+    {
+      "level": 1,
+      "timestamp": "2:08:58",
+      "startTime": 7738,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "2:08:58",
+          "startTime": 7738,
+          "children": [],
+          "endTime": 7913,
+          "isSection": false,
+          "title": "Intro to ARM Templates"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:11:53",
+          "startTime": 7913,
+          "children": [],
+          "endTime": 7995,
+          "isSection": false,
+          "title": "ARM Template Skeleton"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:13:15",
+          "startTime": 7995,
+          "children": [],
+          "endTime": 8072,
+          "isSection": false,
+          "title": "ARM Template Resources"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:14:32",
+          "startTime": 8072,
+          "children": [],
+          "endTime": 8162,
+          "isSection": false,
+          "title": "ARM Template Parameters"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:16:02",
+          "startTime": 8162,
+          "children": [],
+          "endTime": 8262,
+          "isSection": false,
+          "title": "ARM Template Functions"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:17:42",
+          "startTime": 8262,
+          "children": [],
+          "endTime": 8324,
+          "isSection": false,
+          "title": "ARM Template Variables"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:18:44",
+          "startTime": 8324,
+          "children": [],
+          "endTime": 8376,
+          "isSection": false,
+          "title": "ARM Template Output"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:19:36",
+          "startTime": 8376,
+          "children": [],
+          "endTime": 9012,
+          "isSection": false,
+          "title": "Launch an ARM Template"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:30:12",
+          "startTime": 9012,
+          "children": [],
+          "endTime": 9124,
+          "isSection": false,
+          "title": "ARM Template CheatSheet"
+        }
+      ],
+      "endTime": 7738,
+      "isSection": true,
+      "title": "ARM Templates"
+    },
+    {
+      "level": 1,
+      "timestamp": "2:32:04",
+      "startTime": 9124,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "2:32:04",
+          "startTime": 9124,
+          "children": [],
+          "endTime": 9228,
+          "isSection": false,
+          "title": "Intro to Storage Accounts"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:33:48",
+          "startTime": 9228,
+          "children": [],
+          "endTime": 9349,
+          "isSection": false,
+          "title": "Storage Comparison"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:35:49",
+          "startTime": 9349,
+          "children": [],
+          "endTime": 9463,
+          "isSection": false,
+          "title": "Core Storage Services"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:37:43",
+          "startTime": 9463,
+          "children": [],
+          "endTime": 9591,
+          "isSection": false,
+          "title": "Performance Tiers"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:39:51",
+          "startTime": 9591,
+          "children": [],
+          "endTime": 9817,
+          "isSection": false,
+          "title": "Access Tiers"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:43:37",
+          "startTime": 9817,
+          "children": [],
+          "endTime": 9930,
+          "isSection": false,
+          "title": "Replication Data Redundancy"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:45:30",
+          "startTime": 9930,
+          "children": [],
+          "endTime": 10021,
+          "isSection": false,
+          "title": "LRS ZRS"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:47:01",
+          "startTime": 10021,
+          "children": [],
+          "endTime": 10142,
+          "isSection": false,
+          "title": "GRS GZRS"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:49:02",
+          "startTime": 10142,
+          "children": [],
+          "endTime": 10184,
+          "isSection": false,
+          "title": "RAGRS_RA GZRS"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:49:44",
+          "startTime": 10184,
+          "children": [],
+          "endTime": 10251,
+          "isSection": false,
+          "title": "Intro to Blob"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:50:51",
+          "startTime": 10251,
+          "children": [],
+          "endTime": 10305,
+          "isSection": false,
+          "title": "Blob Types"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:51:45",
+          "startTime": 10305,
+          "children": [],
+          "endTime": 10370,
+          "isSection": false,
+          "title": "Blob Moving Data"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:52:50",
+          "startTime": 10370,
+          "children": [],
+          "endTime": 10445,
+          "isSection": false,
+          "title": "Intro to Files"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:54:05",
+          "startTime": 10445,
+          "children": [],
+          "endTime": 10651,
+          "isSection": false,
+          "title": "Files Use Cases"
+        },
+        {
+          "level": 2,
+          "timestamp": "2:57:31",
+          "startTime": 10651,
+          "children": [],
+          "endTime": 10881,
+          "isSection": false,
+          "title": "Files Feature"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:01:21",
+          "startTime": 10881,
+          "children": [],
+          "endTime": 10941,
+          "isSection": false,
+          "title": "File Sync"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:02:21",
+          "startTime": 10941,
+          "children": [],
+          "endTime": 10975,
+          "isSection": false,
+          "title": "Storage Explorer"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:02:55",
+          "startTime": 10975,
+          "children": [],
+          "endTime": 11082,
+          "isSection": false,
+          "title": "AZCopy"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:04:42",
+          "startTime": 11082,
+          "children": [],
+          "endTime": 11230,
+          "isSection": false,
+          "title": "Import Export Service"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:07:10",
+          "startTime": 11230,
+          "children": [],
+          "endTime": 11409,
+          "isSection": false,
+          "title": "SAS"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:10:09",
+          "startTime": 11409,
+          "children": [],
+          "endTime": 12374,
+          "isSection": false,
+          "title": "Use AZCopy to copy files to Storage Accounts"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:26:14",
+          "startTime": 12374,
+          "children": [],
+          "endTime": 13042,
+          "isSection": false,
+          "title": "Create a File Share with Files"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:37:22",
+          "startTime": 13042,
+          "children": [],
+          "endTime": 14071,
+          "isSection": false,
+          "title": "Setup Files Sync"
+        },
+        {
+          "level": 2,
+          "timestamp": "3:54:31",
+          "startTime": 14071,
+          "children": [],
+          "endTime": 14542,
+          "isSection": false,
+          "title": "Storage Accounts CheatSheet"
+        }
+      ],
+      "endTime": 9124,
+      "isSection": true,
+      "title": "Storage Accounts"
+    },
+    {
+      "level": 1,
+      "timestamp": "4:02:22",
+      "startTime": 14542,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "4:02:22",
+          "startTime": 14542,
+          "children": [],
+          "endTime": 14715,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:05:15",
+          "startTime": 14715,
+          "children": [],
+          "endTime": 14821,
+          "isSection": false,
+          "title": "Operation Systems"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:07:01",
+          "startTime": 14821,
+          "children": [],
+          "endTime": 14935,
+          "isSection": false,
+          "title": "Cloud Init"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:08:55",
+          "startTime": 14935,
+          "children": [],
+          "endTime": 15135,
+          "isSection": false,
+          "title": "Sizes"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:12:15",
+          "startTime": 15135,
+          "children": [],
+          "endTime": 15228,
+          "isSection": false,
+          "title": "ACUs"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:13:48",
+          "startTime": 15228,
+          "children": [],
+          "endTime": 15278,
+          "isSection": false,
+          "title": "MobileApp"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:14:38",
+          "startTime": 15278,
+          "children": [],
+          "endTime": 15446,
+          "isSection": false,
+          "title": "VM Generations"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:17:26",
+          "startTime": 15446,
+          "children": [],
+          "endTime": 15569,
+          "isSection": false,
+          "title": "3 Ways To Connect"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:19:29",
+          "startTime": 15569,
+          "children": [],
+          "endTime": 15641,
+          "isSection": false,
+          "title": "SSH"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:20:41",
+          "startTime": 15641,
+          "children": [],
+          "endTime": 15685,
+          "isSection": false,
+          "title": "RDP"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:21:25",
+          "startTime": 15685,
+          "children": [],
+          "endTime": 15837,
+          "isSection": false,
+          "title": "Bastion"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:23:57",
+          "startTime": 15837,
+          "children": [],
+          "endTime": 15994,
+          "isSection": false,
+          "title": "Windows Vs Linux"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:26:34",
+          "startTime": 15994,
+          "children": [],
+          "endTime": 16105,
+          "isSection": false,
+          "title": "Update Management"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:28:25",
+          "startTime": 16105,
+          "children": [],
+          "endTime": 16403,
+          "isSection": false,
+          "title": "Create a Bastion"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:33:23",
+          "startTime": 16403,
+          "children": [],
+          "endTime": 16733,
+          "isSection": false,
+          "title": "Create a Windows VM and RDP"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:38:53",
+          "startTime": 16733,
+          "children": [],
+          "endTime": 17595,
+          "isSection": false,
+          "title": "Create a Linux VM and SSH"
+        },
+        {
+          "level": 2,
+          "timestamp": "4:53:15",
+          "startTime": 17595,
+          "children": [],
+          "endTime": 19675,
+          "isSection": false,
+          "title": "VM Monitoring"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:27:55",
+          "startTime": 19675,
+          "children": [],
+          "endTime": 19885,
+          "isSection": false,
+          "title": "VM CheatSheets"
+        }
+      ],
+      "endTime": 14542,
+      "isSection": true,
+      "title": "VMs"
+    },
+    {
+      "level": 1,
+      "timestamp": "5:31:25",
+      "startTime": 19885,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "5:31:25",
+          "startTime": 19885,
+          "children": [],
+          "endTime": 19976,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:32:56",
+          "startTime": 19976,
+          "children": [],
+          "endTime": 20041,
+          "isSection": false,
+          "title": "Encryption"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:34:01",
+          "startTime": 20041,
+          "children": [],
+          "endTime": 20142,
+          "isSection": false,
+          "title": "Disk Roles"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:35:42",
+          "startTime": 20142,
+          "children": [],
+          "endTime": 20227,
+          "isSection": false,
+          "title": "Managed Disk Snapshots Managed Custom Image"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:37:07",
+          "startTime": 20227,
+          "children": [],
+          "endTime": 20435,
+          "isSection": false,
+          "title": "Disk Types"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:40:35",
+          "startTime": 20435,
+          "children": [],
+          "endTime": 20508,
+          "isSection": false,
+          "title": "Bursting"
+        },
+        {
+          "level": 2,
+          "timestamp": "5:41:48",
+          "startTime": 20508,
+          "children": [],
+          "endTime": 21696,
+          "isSection": false,
+          "title": "Attaching Partitioning and Mounting a Disk"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:01:36",
+          "startTime": 21696,
+          "children": [],
+          "endTime": 21980,
+          "isSection": false,
+          "title": "Disks CheatSheet"
+        }
+      ],
+      "endTime": 19885,
+      "isSection": true,
+      "title": "Disks"
+    },
+    {
+      "level": 1,
+      "timestamp": "6:06:20",
+      "startTime": 21980,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "6:06:20",
+          "startTime": 21980,
+          "children": [],
+          "endTime": 22127,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:08:47",
+          "startTime": 22127,
+          "children": [],
+          "endTime": 22303,
+          "isSection": false,
+          "title": "Routing Rules"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:11:43",
+          "startTime": 22303,
+          "children": [],
+          "endTime": 22400,
+          "isSection": false,
+          "title": "AGW CheatSheet"
+        }
+      ],
+      "endTime": 21980,
+      "isSection": true,
+      "title": "Application Gateway"
+    },
+    {
+      "level": 1,
+      "timestamp": "6:13:20",
+      "startTime": 22400,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "6:13:20",
+          "startTime": 22400,
+          "children": [],
+          "endTime": 22400,
+          "isSection": false,
+          "title": "Intro to Scale Sets"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:14:18",
+          "startTime": 22458,
+          "children": [],
+          "endTime": 22524,
+          "isSection": false,
+          "title": "Associate a Load Balancer"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:15:24",
+          "startTime": 22524,
+          "children": [],
+          "endTime": 22731,
+          "isSection": false,
+          "title": "Scaling Policy"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:18:51",
+          "startTime": 22731,
+          "children": [],
+          "endTime": 22818,
+          "isSection": false,
+          "title": "Health Monitoring"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:20:18",
+          "startTime": 22818,
+          "children": [],
+          "endTime": 22882,
+          "isSection": false,
+          "title": "Advanced Features"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:21:22",
+          "startTime": 22882,
+          "children": [],
+          "endTime": 22986,
+          "isSection": false,
+          "title": "Scale Sets CheatSheet"
+        }
+      ],
+      "endTime": 22458,
+      "isSection": true,
+      "title": "Scale Sets"
+    },
+    {
+      "level": 1,
+      "timestamp": "6:23:06",
+      "startTime": 22986,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "6:23:06",
+          "startTime": 22986,
+          "children": [],
+          "endTime": 23102,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:25:02",
+          "startTime": 23102,
+          "children": [],
+          "endTime": 23192,
+          "isSection": false,
+          "title": "Runtimes"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:26:32",
+          "startTime": 23192,
+          "children": [],
+          "endTime": 23235,
+          "isSection": false,
+          "title": "Custom Containers"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:27:15",
+          "startTime": 23235,
+          "children": [],
+          "endTime": 23292,
+          "isSection": false,
+          "title": "Deployment Slots"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:28:12",
+          "startTime": 23292,
+          "children": [],
+          "endTime": 23449,
+          "isSection": false,
+          "title": "App Service Environment"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:30:49",
+          "startTime": 23449,
+          "children": [],
+          "endTime": 23693,
+          "isSection": false,
+          "title": "Deployment"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:34:53",
+          "startTime": 23693,
+          "children": [],
+          "endTime": 23891,
+          "isSection": false,
+          "title": "App Service Plan"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:38:11",
+          "startTime": 23891,
+          "children": [],
+          "endTime": 23977,
+          "isSection": false,
+          "title": "WebJobs"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:39:37",
+          "startTime": 23977,
+          "children": [],
+          "endTime": 24532,
+          "isSection": false,
+          "title": "Configure and Deploy App Service"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:48:52",
+          "startTime": 24532,
+          "children": [],
+          "endTime": 24984,
+          "isSection": false,
+          "title": "Trigger a Deploy via Github Actions"
+        },
+        {
+          "level": 2,
+          "timestamp": "6:56:24",
+          "startTime": 24984,
+          "children": [],
+          "endTime": 25664,
+          "isSection": false,
+          "title": "Create Deployment Slots"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:07:44",
+          "startTime": 25664,
+          "children": [],
+          "endTime": 26042,
+          "isSection": false,
+          "title": "Scaling App Service"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:14:02",
+          "startTime": 26042,
+          "children": [],
+          "endTime": 26213,
+          "isSection": false,
+          "title": "App Services CheatSheet"
+        }
+      ],
+      "endTime": 22986,
+      "isSection": true,
+      "title": "App Service"
+    },
+    {
+      "level": 1,
+      "timestamp": "7:16:53",
+      "startTime": 26213,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "7:16:53",
+          "startTime": 26213,
+          "children": [],
+          "endTime": 26607,
+          "isSection": false,
+          "title": "Backup VM using Images"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:23:27",
+          "startTime": 26607,
+          "children": [],
+          "endTime": 26763,
+          "isSection": false,
+          "title": "Review Availability Sets"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:26:03",
+          "startTime": 26763,
+          "children": [],
+          "endTime": 27067,
+          "isSection": false,
+          "title": "Create a Scale Sets"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:31:07",
+          "startTime": 27067,
+          "children": [],
+          "endTime": 27456,
+          "isSection": false,
+          "title": "Create an Application Gateway"
+        }
+      ],
+      "endTime": 26213,
+      "isSection": true,
+      "title": "Availability Follow Along"
+    },
+    {
+      "level": 1,
+      "timestamp": "7:37:36",
+      "startTime": 27456,
+      "children": [
+        {
+          "level": 2,
+          "timestamp": "7:37:36",
+          "startTime": 27456,
+          "children": [],
+          "endTime": 27486,
+          "isSection": false,
+          "title": "Intro"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:38:06",
+          "startTime": 27486,
+          "children": [],
+          "endTime": 27558,
+          "isSection": false,
+          "title": "The Pillars of Observability"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:39:18",
+          "startTime": 27558,
+          "children": [],
+          "endTime": 27636,
+          "isSection": false,
+          "title": "Anatomy of Monitor"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:40:36",
+          "startTime": 27636,
+          "children": [],
+          "endTime": 27746,
+          "isSection": false,
+          "title": "Sources Application"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:42:26",
+          "startTime": 27746,
+          "children": [],
+          "endTime": 27840,
+          "isSection": false,
+          "title": "Sources Operation System"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:44:00",
+          "startTime": 27840,
+          "children": [],
+          "endTime": 27897,
+          "isSection": false,
+          "title": "Sources Resources"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:44:57",
+          "startTime": 27897,
+          "children": [],
+          "endTime": 27916,
+          "isSection": false,
+          "title": "Source Subscription"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:45:16",
+          "startTime": 27916,
+          "children": [],
+          "endTime": 27942,
+          "isSection": false,
+          "title": "Sources Tenant"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:45:42",
+          "startTime": 27942,
+          "children": [],
+          "endTime": 27968,
+          "isSection": false,
+          "title": "Sources Custom Sources"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:46:08",
+          "startTime": 27968,
+          "children": [],
+          "endTime": 28063,
+          "isSection": false,
+          "title": "Data Stores"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:47:43",
+          "startTime": 28063,
+          "children": [],
+          "endTime": 28115,
+          "isSection": false,
+          "title": "Log Analytics Workspaces"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:48:35",
+          "startTime": 28115,
+          "children": [],
+          "endTime": 28152,
+          "isSection": false,
+          "title": "Log Analytics"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:49:12",
+          "startTime": 28152,
+          "children": [],
+          "endTime": 28231,
+          "isSection": false,
+          "title": "Kusto"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:50:31",
+          "startTime": 28231,
+          "children": [],
+          "endTime": 28315,
+          "isSection": false,
+          "title": "Kusto Entities"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:51:55",
+          "startTime": 28315,
+          "children": [],
+          "endTime": 28473,
+          "isSection": false,
+          "title": "Scalar Data Types"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:54:33",
+          "startTime": 28473,
+          "children": [],
+          "endTime": 28551,
+          "isSection": false,
+          "title": "Control Commands"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:55:51",
+          "startTime": 28551,
+          "children": [],
+          "endTime": 28650,
+          "isSection": false,
+          "title": "Functions"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:57:30",
+          "startTime": 28650,
+          "children": [],
+          "endTime": 28775,
+          "isSection": false,
+          "title": "Scalar Operators"
+        },
+        {
+          "level": 2,
+          "timestamp": "7:59:35",
+          "startTime": 28775,
+          "children": [],
+          "endTime": 28871,
+          "isSection": false,
+          "title": "Tabular Operators"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:01:11",
+          "startTime": 28871,
+          "children": [],
+          "endTime": 28959,
+          "isSection": false,
+          "title": "Metrics Explorer"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:02:39",
+          "startTime": 28959,
+          "children": [],
+          "endTime": 29062,
+          "isSection": false,
+          "title": "Alerts"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:04:22",
+          "startTime": 29062,
+          "children": [],
+          "endTime": 29104,
+          "isSection": false,
+          "title": "Dashboards"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:05:04",
+          "startTime": 29104,
+          "children": [],
+          "endTime": 29181,
+          "isSection": false,
+          "title": "Workbooks"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:06:21",
+          "startTime": 29181,
+          "children": [],
+          "endTime": 29394,
+          "isSection": false,
+          "title": "Application Insights"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:09:54",
+          "startTime": 29394,
+          "children": [],
+          "endTime": 29745,
+          "isSection": false,
+          "title": "Monitor CheatSheet"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:15:45",
+          "startTime": 29745,
+          "children": [],
+          "endTime": 30670,
+          "isSection": false,
+          "title": "Backup"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:31:10",
+          "startTime": 30670,
+          "children": [],
+          "endTime": 31302,
+          "isSection": false,
+          "title": "ACI"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:41:42",
+          "startTime": 31302,
+          "children": [],
+          "endTime": 31519,
+          "isSection": false,
+          "title": "ACR"
+        },
+        {
+          "level": 2,
+          "timestamp": "8:45:19",
+          "startTime": 31519,
+          "children": [],
+          "endTime": 33216,
+          "isSection": false,
+          "title": "AKS"
+        },
+        {
+          "level": 2,
+          "timestamp": "9:13:36",
+          "startTime": 33216,
+          "children": [],
+          "endTime": 34207,
+          "isSection": false,
+          "title": "DNS"
+        },
+        {
+          "level": 2,
+          "timestamp": "9:30:07",
+          "startTime": 34207,
+          "children": [],
+          "endTime": 39221,
+          "isSection": false,
+          "title": "Networking"
+        },
+        {
+          "level": 2,
+          "timestamp": "10:53:41",
+          "startTime": 39221,
+          "children": [],
+          "endTime": 39644,
+          "isSection": false,
+          "title": "NSG"
+        },
+        {
+          "level": 2,
+          "timestamp": "11:00:44",
+          "startTime": 39644,
+          "children": [],
+          "endTime": 40358,
+          "isSection": false,
+          "title": "Virtual WAN"
+        },
+        {
+          "level": 2,
+          "timestamp": "11:12:38",
+          "startTime": 40358,
+          "children": [],
+          "endTime": null,
+          "isSection": false,
+          "title": "VNGs"
+        }
+      ],
+      "endTime": 27456,
+      "isSection": true,
+      "title": "Monitor"
+    }
+  ],
+  "title": "Azure Administrator Certification (AZ-104) - Full Course to PASS the Exam",
+  "channel": "freeCodeCamp.org",
+  "uploadDate": "20210503",
+  "chaptersSource": "description",
+  "url": "https://www.youtube.com/watch?v=10PbGbTUSAg"
+}

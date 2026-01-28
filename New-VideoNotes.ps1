@@ -188,7 +188,7 @@ $Helpers = {
 		$contentsScript = Join-Path $PSScriptRoot "src\powershell\Get-YouTubeContents.ps1"
 
 		# Create a temporary location for initial contents extraction
-		$tempInitFolder = Join-Path $PSScriptRoot "data\.temp_init"
+		$tempInitFolder = Join-Path $PSScriptRoot "staging\.temp_init"
 		if (Test-Path $tempInitFolder) {
 			Remove-Item $tempInitFolder -Recurse -Force
 		}
@@ -225,7 +225,7 @@ $Helpers = {
 
 		# Create the final data folder named with date and video title
 		$dataFolderName = "$formattedDate-$rawTitle"
-		$dataFolder = Join-Path $PSScriptRoot "data\$dataFolderName"
+		$dataFolder = Join-Path $PSScriptRoot "staging\$dataFolderName"
 		if (Test-Path $dataFolder) {
 			Write-Host "  Removing existing data folder..." -ForegroundColor DarkGray
 			Remove-Item $dataFolder -Recurse -Force
@@ -488,7 +488,7 @@ $Helpers = {
 		}
 
 		# Fallback: use folder name or file name
-		if ($folderName -and $folderName -ne "." -and $folderName -ne "data") {
+		if ($folderName -and $folderName -ne "." -and $folderName -ne "staging") {
 			return $folderName -replace "[^\w\s-]", "" -replace "\s+", "_"
 		}
 

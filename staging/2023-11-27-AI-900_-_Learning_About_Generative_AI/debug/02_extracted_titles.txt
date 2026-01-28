@@ -1,0 +1,21 @@
+AI vs Generative AI
+Adding data and Azure AI Search
+Attention
+Azure OpenAI Studio
+Azure OpenAI pricing
+Azure OpenAI services
+Capabilities of Generative AI
+Copilot demo
+Copilot grounding
+Introduction
+Microsoft Copilots
+OpenAI and GPT
+Parts of a transformer AI
+Positional encoding
+Prompt engineering
+Responsible Generative AI
+Summary and close
+Summary of the model
+Training an LLM
+Transformer model
+Useful associated videos:

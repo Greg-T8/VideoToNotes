@@ -1,0 +1,218 @@
+{
+  "title": "AI-900 Study Cram v2 (the non-Generative AI bits)",
+  "description": "Welcome to our v2 AI-900 study cram!!\n\nThen watch https://youtu.be/Ch6KE7KxHGM for the generative AI-900 bits!\n\n🔎 Looking for content on a particular topic? Search the channel. If I have something it will be there!\n\n🤔  Due to the channel growth and number of people wanting help I no longer can answer or even read questions and they will just stay in the moderation queue never to be seen so please post questions to other sites like Reddit, Microsoft Community Hub etc.\n\n▬▬▬▬▬▬  C H A P T E R S ⏰  ▬▬▬▬▬▬\n00:00 - Introduction\n00:44 - Preparation materials\n02:28 - What is AI\n04:38 - Machine learning\n05:22 - Training process\n09:33 - Training data types\n13:40 - Azure Machine Learning Studio\n14:37 - Deep learning\n22:32 - Type summary\n23:07 - Provided solutions\n30:47 - Endpoints and keys\n33:32 - Responsible AI\n39:04 - Computer vision\n41:55 - Vision services\n47:08 - Face\n52:04 - Natural Language\n59:33 - Speech\n1:01:13 - Translation\n1:02:31 - Document intelligence\n1:06:05 - Knowledge mining\n1:09:39 - Review\n1:15:26 - Exam tips\n1:16:36 - Close\n\n▬▬▬▬▬▬  K E Y   L I N K S 🔗 ▬▬▬▬▬▬\n► Whiteboard:\n🔗https://raw.githubusercontent.com/johnthebrit/CertificationMaterials/main/whiteboards/AI-900-Whiteboard-V2.png\n► AI-900 MS Site\n🔗 https://learn.microsoft.com/credentials/certifications/azure-ai-fundamentals/?practice-assessment-type=certification\n🔗 https://learn.microsoft.com/credentials/certifications/resources/study-guides/ai-900\n\n▬▬▬▬▬▬  Want to learn more? 🚀  ▬▬▬▬▬▬ \n📖 Recommended Learning Path for Azure\n🔗 https://learn.onboardtoazure.com\n🥇 Certification Content Repository\n🔗 https://github.com/johnthebrit/CertificationMaterials\n📅 Weekly Azure Update\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nEv7jSfOVmQGRp9wAoAM0Ks\n☁ Azure Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nGccbp8VSpAozu3w9xSQJoY\n⚙ DevOps Master Class\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nFr8RzQ4GIxUEznpNR53ERq\n💻 PowerShell Master Class\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8\n🎓 Certification Cram Videos\n🔗  https://youtube.com/playlist?list=PLlVtbbG169nHz2qfLvPsAz9CnnXofhmcA\n🧠 Mentoring Content\n🔗 https://youtube.com/playlist?list=PLlVtbbG169nGHxNkSWB0PjzZHwZ0BkXZZ\n❔ Questions? Maybe I answered it in my FAQ\n🔗 https://savilltech.com/faq\n👕 Cure Childhood Cancer Charity T-Shirt Channel Store\n🔗 https://johns-t-shirts-store.creator-spring.com/\n\n👂  Enable the subtitles and from there you can translate to your native language via the auto-translate feature in settings! https://youtu.be/v5b53-PgEmI for a demo of using this feature.\n\nSUBSCRIBE  ✅  https://www.youtube.com/channel/UCpIn7ox7j7bH_OFj7tYouOQ?sub_confirmation=1\n\n#microsoft #AI #johnsavillstechnicaltraining",
+  "chaptersSource": "description",
+  "chapters": [
+    {
+      "endTime": 44,
+      "title": "Introduction",
+      "timestamp": "00:00",
+      "level": 1,
+      "isSection": false,
+      "startTime": 0,
+      "children": []
+    },
+    {
+      "endTime": 148,
+      "title": "Preparation materials",
+      "timestamp": "00:44",
+      "level": 1,
+      "isSection": false,
+      "startTime": 44,
+      "children": []
+    },
+    {
+      "endTime": 278,
+      "title": "What is AI",
+      "timestamp": "02:28",
+      "level": 1,
+      "isSection": false,
+      "startTime": 148,
+      "children": []
+    },
+    {
+      "endTime": 322,
+      "title": "Machine learning",
+      "timestamp": "04:38",
+      "level": 1,
+      "isSection": false,
+      "startTime": 278,
+      "children": []
+    },
+    {
+      "endTime": 573,
+      "title": "Training process",
+      "timestamp": "05:22",
+      "level": 1,
+      "isSection": false,
+      "startTime": 322,
+      "children": []
+    },
+    {
+      "endTime": 820,
+      "title": "Training data types",
+      "timestamp": "09:33",
+      "level": 1,
+      "isSection": false,
+      "startTime": 573,
+      "children": []
+    },
+    {
+      "endTime": 877,
+      "title": "Azure Machine Learning Studio",
+      "timestamp": "13:40",
+      "level": 1,
+      "isSection": false,
+      "startTime": 820,
+      "children": []
+    },
+    {
+      "endTime": 1352,
+      "title": "Deep learning",
+      "timestamp": "14:37",
+      "level": 1,
+      "isSection": false,
+      "startTime": 877,
+      "children": []
+    },
+    {
+      "endTime": 1387,
+      "title": "Type summary",
+      "timestamp": "22:32",
+      "level": 1,
+      "isSection": false,
+      "startTime": 1352,
+      "children": []
+    },
+    {
+      "endTime": 1847,
+      "title": "Provided solutions",
+      "timestamp": "23:07",
+      "level": 1,
+      "isSection": false,
+      "startTime": 1387,
+      "children": []
+    },
+    {
+      "endTime": 2012,
+      "title": "Endpoints and keys",
+      "timestamp": "30:47",
+      "level": 1,
+      "isSection": false,
+      "startTime": 1847,
+      "children": []
+    },
+    {
+      "endTime": 2344,
+      "title": "Responsible AI",
+      "timestamp": "33:32",
+      "level": 1,
+      "isSection": false,
+      "startTime": 2012,
+      "children": []
+    },
+    {
+      "endTime": 2515,
+      "title": "Computer vision",
+      "timestamp": "39:04",
+      "level": 1,
+      "isSection": false,
+      "startTime": 2344,
+      "children": []
+    },
+    {
+      "endTime": 2828,
+      "title": "Vision services",
+      "timestamp": "41:55",
+      "level": 1,
+      "isSection": false,
+      "startTime": 2515,
+      "children": []
+    },
+    {
+      "endTime": 3124,
+      "title": "Face",
+      "timestamp": "47:08",
+      "level": 1,
+      "isSection": false,
+      "startTime": 2828,
+      "children": []
+    },
+    {
+      "endTime": 3573,
+      "title": "Natural Language",
+      "timestamp": "52:04",
+      "level": 1,
+      "isSection": false,
+      "startTime": 3124,
+      "children": []
+    },
+    {
+      "endTime": 3673,
+      "title": "Speech",
+      "timestamp": "59:33",
+      "level": 1,
+      "isSection": false,
+      "startTime": 3573,
+      "children": []
+    },
+    {
+      "endTime": 3751,
+      "title": "Translation",
+      "timestamp": "1:01:13",
+      "level": 1,
+      "isSection": false,
+      "startTime": 3673,
+      "children": []
+    },
+    {
+      "endTime": 3965,
+      "title": "Document intelligence",
+      "timestamp": "1:02:31",
+      "level": 1,
+      "isSection": false,
+      "startTime": 3751,
+      "children": []
+    },
+    {
+      "endTime": 4179,
+      "title": "Knowledge mining",
+      "timestamp": "1:06:05",
+      "level": 1,
+      "isSection": false,
+      "startTime": 3965,
+      "children": []
+    },
+    {
+      "endTime": 4526,
+      "title": "Review",
+      "timestamp": "1:09:39",
+      "level": 1,
+      "isSection": false,
+      "startTime": 4179,
+      "children": []
+    },
+    {
+      "endTime": 4596,
+      "title": "Exam tips",
+      "timestamp": "1:15:26",
+      "level": 1,
+      "isSection": false,
+      "startTime": 4526,
+      "children": []
+    },
+    {
+      "endTime": null,
+      "title": "Close",
+      "timestamp": "1:16:36",
+      "level": 1,
+      "isSection": false,
+      "startTime": 4596,
+      "children": []
+    }
+  ],
+  "duration": 4619,
+  "uploadDate": "20240701",
+  "channel": "John Savill's Technical Training",
+  "url": "https://www.youtube.com/watch?v=bTkUTkXrqOQ"
+}

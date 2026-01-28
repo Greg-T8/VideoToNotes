@@ -61,7 +61,7 @@
       "id": "transcriptFile",
       "type": "promptString",
       "description": "Path to the transcript file to process",
-      "default": "data/samples/Transcript - FreeCodeCamp.txt"
+      "default": "staging/samples/Transcript - FreeCodeCamp.txt"
     }
   ]
 }

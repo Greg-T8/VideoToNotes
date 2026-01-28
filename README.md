@@ -25,8 +25,8 @@ This tool transforms video transcripts into comprehensive markdown notes by:
 
 ```powershell
 # Generate notes from pre-existing index and transcript files
-.\New-VideoNotes.ps1 -Index "data\video_title\contents.md" `
-                     -Transcript "data\video_title\transcript.srt"
+.\New-VideoNotes.ps1 -Index "staging\video_title\contents.md" `
+                     -Transcript "staging\video_title\transcript.srt"
 ```
 
 ## Project Structure
@@ -35,8 +35,8 @@ This tool transforms video transcripts into comprehensive markdown notes by:
 VideoToNotes/
 ├── New-VideoNotes.ps1           # Main entry point (PowerShell wrapper)
 ├── requirements.txt             # Python dependencies
-├── data/
-│   └── <video_title>/           # Video-specific data folders
+├── staging/
+│   └── <video_title>/           # Video-specific working folders
 │       ├── contents.json        # Extracted video chapters (JSON)
 │       ├── contents.md          # Extracted video chapters (Markdown)
 │       ├── transcript.srt       # Transcribed audio (SRT format)

@@ -1,0 +1,347 @@
+1
+00:00:00,480 --> 00:00:00,960
+Hi, everyone.
+
+2
+00:00:00,960 --> 00:00:02,800
+Welcome to this week's Azure update.
+
+3
+00:00:02,800 --> 00:00:04,200
+It's the 23rd of January.
+
+4
+00:00:04,200 --> 00:00:08,960
+As always, we have the chapters, so you can jump to any new update you care about the most.
+
+5
+00:00:09,600 --> 00:00:14,720
+New videos this week, so I did a deep dive into the new Foundry IQ.
+
+6
+00:00:15,360 --> 00:00:27,200
+So if you think about the existing Azure AI search we're used to, how does this build on top of that to give our AI apps and agents the ability to really interact with knowledge,
+
+7
+00:00:27,720 --> 00:00:30,000
+and help accelerate everything we're doing.
+
+8
+00:00:30,160 --> 00:00:34,080
+Then how does this relate a little bit to the Fabric IQ and the Work IQ?
+
+9
+00:00:34,720 --> 00:00:37,280
+Only one video this week because then I was in New York.
+
+10
+00:00:38,000 --> 00:00:42,320
+I did the security part of the keynote, which was a lot of fun.
+
+11
+00:00:42,600 --> 00:00:46,400
+And hopefully you get to go and see an AI tour in your location.
+
+12
+00:00:47,040 --> 00:00:48,960
+So on to what's new on the compute side.
+
+13
+00:00:49,760 --> 00:00:57,280
+So AKS now has these deployment safeguards in GA, and specifically, there are new pod security standards.
+
+14
+00:00:57,520 --> 00:01:09,360
+So again, this is part of this all-up deployment safeguard, but it lets me centrally manage a number of different profiles for baseline, restricted, and privileged standards that you have.
+
+15
+00:01:10,080 --> 00:01:19,160
+Now, these cover all of the namespaces, privileged containers, capabilities exposed, types of mount, volume, use of routes.
+
+16
+00:01:19,160 --> 00:01:26,080
+So a whole bunch of different configurations and capabilities you can control via these standards.
+
+17
+00:01:26,480 --> 00:01:29,120
+And I can enable it on new, on existing clusters.
+
+18
+00:01:29,480 --> 00:01:34,560
+And if there's certain special namespaces that you need to exclude, you can do that as well.
+
+19
+00:01:35,760 --> 00:01:36,800
+On the network side,
+
+20
+00:01:37,920 --> 00:01:42,320
+So the standard V2 NAT gateway has gone GA.
+
+21
+00:01:42,320 --> 00:01:44,080
+So this is a huge deal.
+
+22
+00:01:44,800 --> 00:01:54,400
+So the V2 version of NAT gateway and its associated public IP, remember, NAT gateway is all about, hey, I've got resources that live within a virtual network.
+
+23
+00:01:55,040 --> 00:01:59,680
+It's a managed way to give them outbound access to the internet.
+
+24
+00:01:59,680 --> 00:02:03,760
+Because remember, the default just internet egress,
+
+25
+00:02:04,320 --> 00:02:05,040
+goes away.
+
+26
+00:02:05,040 --> 00:02:09,200
+You need to have a specific version that you're implementing.
+
+27
+00:02:09,840 --> 00:02:20,160
+Before, it was kind of regional or zonal, but many of our architectures will use zone redundant configurations, which NAT gateway did not support.
+
+28
+00:02:20,400 --> 00:02:21,600
+The V2 does.
+
+29
+00:02:22,080 --> 00:02:26,960
+I can deploy a zone-redundant version, so it makes a huge difference to my architecture.
+
+30
+00:02:26,960 --> 00:02:39,320
+I don't have to now try and deal with zonal instances and line up my architecture to particular subnets where a NAT gateway is associated to, which didn't really logically flow because subnets are cross-zone.
+
+31
+00:02:40,320 --> 00:02:45,360
+I can have 100 gigabits per second of throughput, 10 million packets per second.
+
+32
+00:02:45,680 --> 00:02:46,880
+I have dual stack support.
+
+33
+00:02:47,040 --> 00:02:54,320
+So I can attach, I think it's up to 16 IPv4, IPv6 addresses through which the outbound traffic will flow.
+
+34
+00:02:54,600 --> 00:02:59,600
+And that would be their source address for the receiving systems if I maybe wanted to restrict it based on IP.
+
+35
+00:03:00,160 --> 00:03:02,840
+I can enable flow logs so I can get great traffic insights.
+
+36
+00:03:02,840 --> 00:03:04,320
+So this is a really big deal.
+
+37
+00:03:05,520 --> 00:03:08,320
+On the storage side, so
+
+38
+00:03:08,560 --> 00:03:15,440
+User-delegated shared access signatures, SaaS, is now available for tables, files, and queues.
+
+39
+00:03:15,440 --> 00:03:22,720
+Now, we had this for BLOB already, and basically, based on this, you can see it's bringing it to the other services that make up a storage account.
+
+40
+00:03:23,640 --> 00:03:39,040
+And the whole goal of the user delegation SAS is it's more secure than the other account or service SAS because both the user, sorry, the account and service SAS, remember that's signed by the storage account keys, which are these all powerful.
+
+41
+00:03:39,840 --> 00:03:46,480
+With the user delegated SAS, it's being signed by the delegated identity, i.e.
+
+42
+00:03:46,480 --> 00:03:49,920
+the entra ID account that is creating it.
+
+43
+00:03:50,960 --> 00:03:53,120
+So that means it can never have more permissions.
+
+44
+00:03:53,520 --> 00:03:55,520
+than the identity creating that delegation.
+
+45
+00:03:55,680 --> 00:03:58,760
+It can be less, and it can only be valid for up to seven days.
+
+46
+00:03:58,760 --> 00:04:00,720
+So it's a more secure version of that.
+
+47
+00:04:02,560 --> 00:04:05,480
+Azure File Sync is now available in Israel Central.
+
+48
+00:04:05,480 --> 00:04:13,040
+Remember, Azure File Sync is providing the service that my Windows File Servers have SMB shares.
+
+49
+00:04:13,600 --> 00:04:17,200
+Well, they can synchronize to each other via the cloud shares.
+
+50
+00:04:17,200 --> 00:04:21,840
+So an Azure File Share, I have the content stored in that Azure File Share.
+
+51
+00:04:22,400 --> 00:04:28,000
+If I'm running out a capacity on my SMB share, it can tear content off.
+
+52
+00:04:28,000 --> 00:04:31,800
+So it will still look like it's there, but it's actually not storing it locally anymore.
+
+53
+00:04:31,800 --> 00:04:34,080
+If someone tries to access it, then it's going to pull it down.
+
+54
+00:04:34,080 --> 00:04:40,160
+There'll be an increased latency as it pulls it back down, but it essentially gives me this near infinite looking set of shares.
+
+55
+00:04:40,640 --> 00:04:52,000
+By having the sync service in different locations, we will reduce the lag of those services, and also maybe I need to meet certain data residency requirements.
+
+56
+00:04:53,560 --> 00:05:00,920
+And then for Azure NetApp Files, the app volume group for Oracle now has data protection volume support.
+
+57
+00:05:00,920 --> 00:05:07,160
+Now remember, the whole goal of the app volume groups for Oracle is, well, a database typically is not just one volume.
+
+58
+00:05:07,160 --> 00:05:14,800
+You're going to have a whole series of different volumes from kind of 2 to 12, depending on the size, the configurations of the database.
+
+59
+00:05:15,280 --> 00:05:20,240
+So with the app volume groups, it creates all of those volumes following best practices.
+
+60
+00:05:21,040 --> 00:05:27,320
+now I can configure both cross-zone and cross-region replication when I'm using this.
+
+61
+00:05:27,320 --> 00:05:31,120
+And it's only going to send the change blocks as part of that replication.
+
+62
+00:05:31,360 --> 00:05:33,600
+Today I have to enable it by the REST API.
+
+63
+00:05:34,240 --> 00:05:45,120
+But the whole goal of this is now customers can safeguard your data against potential threats and disruptions, just helping you ensure your continuous availability.
+
+64
+00:05:46,680 --> 00:05:47,680
+On the miscellaneous side,
+
+65
+00:05:48,800 --> 00:05:52,640
+So Azure load testing is in a new region, so Switzerland North.
+
+66
+00:05:53,200 --> 00:05:59,600
+This is the managed service that lets me perform potentially very high scale load testing, because it's using the cloud as that engine.
+
+67
+00:05:59,920 --> 00:06:06,880
+I can use Apache JMeter, local scripts, or I can even use a web experience, which will then go and generate the script for me.
+
+68
+00:06:07,680 --> 00:06:09,120
+It gives me a lot of analytics.
+
+69
+00:06:09,120 --> 00:06:20,600
+So not only stress testing it, it's going to give me the analytics of how the components behaved under that stress so I can easily go and identify, for example, potential bottlenecks, know where I need to go and focus.
+
+70
+00:06:20,600 --> 00:06:23,680
+And there's kind of an extension to that.
+
+71
+00:06:24,720 --> 00:06:27,920
+App testing has a reporting update in GA.
+
+72
+00:06:27,920 --> 00:06:36,240
+So Azure App Testing includes features around the load testing, but also more specific testing of my end-to-end flows.
+
+73
+00:06:36,880 --> 00:06:44,720
+So, it now includes Playwright Workspaces reporting that, again, I use for that cloud-scale web testing.
+
+74
+00:06:44,720 --> 00:06:51,920
+It has this enhanced reporting, so for my debugging cases, it's going to be easier and faster.
+
+75
+00:06:52,400 --> 00:06:55,840
+So, what I can do is, when I turn the debugging on, you specify a storage account.
+
+76
+00:06:56,760 --> 00:07:00,320
+And then once I have that data in the storage account, yes, I can go and interact with it.
+
+77
+00:07:00,560 --> 00:07:07,720
+But through the portal, I can actually go and use a trace viewer for deeper analysis and just go and view the all out reporting of what is going on.
+
+78
+00:07:07,720 --> 00:07:11,760
+And then GitHub Copilot now has an SDK.
+
+79
+00:07:12,720 --> 00:07:19,360
+So the same agentic GitHub Copilot CLI we're used to, we might use it integrated with VS Code.
+
+80
+00:07:19,920 --> 00:07:23,200
+Well, now I can use it within my own apps, my own experiences.
+
+81
+00:07:23,440 --> 00:07:24,400
+I still get
+
+82
+00:07:24,680 --> 00:07:28,640
+all the advanced capabilities, not just sort of ask response.
+
+83
+00:07:28,880 --> 00:07:35,520
+I can still do multi-step planning, I can use multiple models, I can leverage MCP servers, I can build custom agents, all of the great capabilities.
+
+84
+00:07:36,280 --> 00:07:40,720
+I can just now trigger it through an SDK so I can use it in whatever way I want.
+
+85
+00:07:41,120 --> 00:07:43,280
+And that was it.
+
+86
+00:07:43,760 --> 00:07:44,760
+So I hope that was useful.
+
+87
+00:07:44,760 --> 00:07:46,160
+Until next video, take care.

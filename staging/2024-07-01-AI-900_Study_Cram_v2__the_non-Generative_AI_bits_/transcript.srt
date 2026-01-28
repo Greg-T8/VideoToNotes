@@ -1,0 +1,2939 @@
+1
+00:00:00,480 --> 00:00:06,240
+Hi everyone, welcome to our AI 900 study cram V2, new and improved.
+
+2
+00:00:07,360 --> 00:00:14,800
+It's been a while since I created the AI 900 study cram and that was before the big explosion of generative AI.
+
+3
+00:00:15,000 --> 00:00:20,240
+There's a lot more interest these days in artificial intelligence and taking the AI exams.
+
+4
+00:00:20,720 --> 00:00:25,360
+So I wanted to update the study cram with the latest information, go in a little bit more detail.
+
+5
+00:00:25,840 --> 00:00:31,880
+I am not covering the generative AI portion because I did a separate study cram for the generative AI piece.
+
+6
+00:00:31,880 --> 00:00:42,320
+So watch this for the general non-generative AI, Azure AI information, and then go and watch the generative AI study cram after that to give you the complete view.
+
+7
+00:00:43,560 --> 00:00:50,160
+As always, when you're preparing for your exams, I would start with the Microsoft Learn page.
+
+8
+00:00:51,360 --> 00:00:53,280
+So go and check out the learn page.
+
+9
+00:00:53,280 --> 00:01:06,080
+It gives you updated on when things were updated, gives you information about preparing and practicing for the exam, talks about the skills measured and go through the Microsoft Azure AI Fundamentals course.
+
+10
+00:01:06,240 --> 00:01:07,280
+It's fantastic.
+
+11
+00:01:07,560 --> 00:01:09,280
+It's got lots of great information.
+
+12
+00:01:09,440 --> 00:01:10,800
+They keep it up to date.
+
+13
+00:01:10,800 --> 00:01:13,120
+So everyone should go through that.
+
+14
+00:01:13,520 --> 00:01:15,360
+There's even practice assessments.
+
+15
+00:01:15,360 --> 00:01:18,400
+You can experience the sandbox, which is the environment
+
+16
+00:01:18,800 --> 00:01:22,880
+of the exam so you don't panic and wonder, well, what buttons are they going to be?
+
+17
+00:01:22,880 --> 00:01:24,280
+What are the questions going to look like?
+
+18
+00:01:24,280 --> 00:01:26,040
+That sandbox walks through all of that.
+
+19
+00:01:26,040 --> 00:01:28,960
+It tells you it's a 45-minute exam.
+
+20
+00:01:28,960 --> 00:01:30,720
+This is fundamental.
+
+21
+00:01:30,720 --> 00:01:32,240
+So it's a basic exam.
+
+22
+00:01:32,480 --> 00:01:35,920
+You're not going to have to write code or deploy anything.
+
+23
+00:01:36,400 --> 00:01:41,600
+It's very much understandable, which technology would I potentially need to use?
+
+24
+00:01:42,480 --> 00:01:45,920
+And it does break down the exact skills you'd need to know.
+
+25
+00:01:45,920 --> 00:01:53,760
+So if we go and look at the specific skills measured, it breaks it down into the key main areas.
+
+26
+00:01:56,520 --> 00:02:02,640
+And then for each of these, it goes into what are the specific skills that you need to understand.
+
+27
+00:02:03,120 --> 00:02:12,320
+So you want to just be able to go through this and kind of tick off each one and say, yep, I'm pretty confident that I would be able to go through and understand those.
+
+28
+00:02:13,120 --> 00:02:15,520
+So then watch this study cram.
+
+29
+00:02:15,520 --> 00:02:25,040
+So just before you're going to take the exam, that's generally what I create these as is a, hey, you've learned the material, you're just quickly refreshing it before the exam.
+
+30
+00:02:25,520 --> 00:02:27,200
+So you can do as well as you can.
+
+31
+00:02:28,880 --> 00:02:30,160
+So let's dive in.
+
+32
+00:02:31,280 --> 00:02:41,360
+So if we think about what we are actually talking about as part of these all-up solutions, if I think about, well, okay, what is artificial intelligence?
+
+33
+00:02:43,280 --> 00:02:52,880
+So if I think about what is intelligence, I as a human being, I have different capabilities.
+
+34
+00:02:53,280 --> 00:02:55,760
+I can see things and tell you what it is.
+
+35
+00:02:56,080 --> 00:03:00,160
+I could look at a picture and tell you, well, where in the picture, where are the different objects?
+
+36
+00:03:00,160 --> 00:03:02,720
+I could give very detailed captions.
+
+37
+00:03:02,720 --> 00:03:04,400
+I could read text from an images.
+
+38
+00:03:05,040 --> 00:03:06,160
+I can talk.
+
+39
+00:03:06,240 --> 00:03:07,920
+I could take text and read it to you.
+
+40
+00:03:08,320 --> 00:03:10,560
+I could hear something and transpose it to text.
+
+41
+00:03:10,880 --> 00:03:12,560
+I maybe could do translation.
+
+42
+00:03:12,560 --> 00:03:17,200
+I personally couldn't unless it's, what time is the next train to bomb in German?
+
+43
+00:03:17,200 --> 00:03:17,840
+That's it.
+
+44
+00:03:18,320 --> 00:03:20,560
+But apart from that, I could do translation.
+
+45
+00:03:21,840 --> 00:03:23,200
+I can make decisions.
+
+46
+00:03:23,200 --> 00:03:30,400
+You could give me facts and I could then predict something based on the historical information I have been given.
+
+47
+00:03:31,520 --> 00:03:48,320
+And so when I think of artificial intelligence, well, artificial intelligence is simply a computer that is able to fundamentally imitate some aspect of that human behavior.
+
+48
+00:03:48,320 --> 00:03:50,640
+So it's the ability for a computer
+
+49
+00:03:51,840 --> 00:03:56,760
+To imitate the capabilities that I would have as a human.
+
+50
+00:03:56,760 --> 00:03:59,760
+So it's software imitating human capabilities.
+
+51
+00:04:01,120 --> 00:04:01,440
+Now the.
+
+52
+00:04:02,240 --> 00:04:05,800
+Part of this what gets interesting is that one way to achieve this.
+
+53
+00:04:05,800 --> 00:04:09,760
+So if I just think of this as AI in general, so this is like a massive bucket.
+
+54
+00:04:09,760 --> 00:04:12,560
+Of different capabilities.
+
+55
+00:04:13,440 --> 00:04:14,640
+I could write code.
+
+56
+00:04:15,040 --> 00:04:18,880
+I could write code that tells it every single.
+
+57
+00:04:19,520 --> 00:04:21,520
+bit of processing to do.
+
+58
+00:04:21,600 --> 00:04:28,320
+If I'm trying to do number recognition, okay, well, we're looking for a little bit going across and then down, that would be a #1.
+
+59
+00:04:28,320 --> 00:04:34,440
+And I have to work out all the different types of #1 there could possibly be, which would be a huge amount of work.
+
+60
+00:04:34,440 --> 00:04:36,160
+So we really don't want to have to do that.
+
+61
+00:04:37,120 --> 00:04:44,080
+What's more interesting is the ability that I don't want to have to write every bit of logic.
+
+62
+00:04:44,800 --> 00:04:57,840
+Instead, I would like the computer to be able to train itself based on past data and then use that past data to train a model to be able to make future predictions.
+
+63
+00:04:58,560 --> 00:05:03,440
+And so when we think of that branch, so it's a subset of artificial intelligence.
+
+64
+00:05:03,800 --> 00:05:13,040
+And so this subset, you'll hear it called machine learning.
+
+65
+00:05:16,160 --> 00:05:24,560
+So machine learning is all about the idea that at a very high level, we have some kind of training data.
+
+66
+00:05:25,760 --> 00:05:34,320
+So I could think about when I have a whole set of training data, so I've got a whole bunch of different values, and I've got lots of these.
+
+67
+00:05:34,960 --> 00:05:36,640
+And so these would be called features.
+
+68
+00:05:36,720 --> 00:05:41,440
+So think of this as this is the data that I have about some aspect.
+
+69
+00:05:41,440 --> 00:05:42,000
+This could be
+
+70
+00:05:42,400 --> 00:05:43,680
+pictures of numbers.
+
+71
+00:05:43,840 --> 00:05:53,600
+So I've got picture of #1, got picture #2, three, four, and lots of different pictures of #1, lots of pictures of oranges or lots of historical data on the temperature of engines, whatever that is.
+
+72
+00:05:53,600 --> 00:06:00,400
+But then in my training data, what I then have is what the correct answer is, i.e.
+
+73
+00:06:00,400 --> 00:06:01,120
+the label.
+
+74
+00:06:02,080 --> 00:06:05,200
+So it's an orange, it's an apple, it's a #1.
+
+75
+00:06:05,520 --> 00:06:08,400
+So this huge amount of training data.
+
+76
+00:06:09,280 --> 00:06:11,600
+So it's data that's been labeled.
+
+77
+00:06:12,560 --> 00:06:14,880
+And what we do is we take this data.
+
+78
+00:06:16,800 --> 00:06:18,400
+And we send it into an algorithm.
+
+79
+00:06:22,240 --> 00:06:35,280
+Now there are many different types of algorithm, but the whole point of these algorithms is trying to find a relationship between the feature data and the label kind of what we want to predict.
+
+80
+00:06:35,600 --> 00:06:47,120
+in some generalized way so that if it can find that relationship, then I could pass in new data and it would be able to give us the predicted label based on the model it trains.
+
+81
+00:06:48,080 --> 00:06:49,920
+Now there are many different types of algorithm.
+
+82
+00:06:50,160 --> 00:06:54,080
+You'll hear things like decision trees where it can branch off.
+
+83
+00:06:54,080 --> 00:06:56,720
+It's asking some aspect of something.
+
+84
+00:06:56,760 --> 00:07:01,840
+And then once it gets an answer, then it goes to the next decision tree.
+
+85
+00:07:03,040 --> 00:07:07,440
+Until, so it's got these leaf nodes that don't split, that would be an outcome.
+
+86
+00:07:07,600 --> 00:07:11,280
+So at the end of these different branches would be just the leaf nodes.
+
+87
+00:07:11,440 --> 00:07:12,600
+Well, that's your answer.
+
+88
+00:07:13,680 --> 00:07:16,400
+It might be I have some set of data.
+
+89
+00:07:19,600 --> 00:07:21,440
+Well, I can use linear regression.
+
+90
+00:07:21,440 --> 00:07:24,880
+There's some straight line that goes through them.
+
+91
+00:07:29,520 --> 00:07:33,680
+This could be something like square footage of a house and its value.
+
+92
+00:07:34,480 --> 00:07:36,640
+So the bigger the square footage, the more the house is worth.
+
+93
+00:07:36,640 --> 00:07:38,560
+Now we know there would be other dimensions.
+
+94
+00:07:38,800 --> 00:07:40,040
+There would be locations.
+
+95
+00:07:40,040 --> 00:07:49,920
+Maybe this is a three-dimensional, but still there's some kind of straight line that you can put through this based on the data that would give you the house value.
+
+96
+00:07:51,920 --> 00:07:54,320
+We hear about support vector machines.
+
+97
+00:07:54,320 --> 00:07:59,560
+So here the goal is it looks a little bit similar, but you have these clusters of data.
+
+98
+00:07:59,560 --> 00:08:08,480
+And what you're looking for now is some kind of line that separates them, that gives you the biggest possible gap between them.
+
+99
+00:08:10,320 --> 00:08:12,960
+Because then in the future, again, I could pass in other data.
+
+100
+00:08:13,200 --> 00:08:14,240
+Oh, it's in this clump.
+
+101
+00:08:14,240 --> 00:08:16,960
+Well, that means it's this label it would be able to use.
+
+102
+00:08:17,360 --> 00:08:18,400
+There's other ones.
+
+103
+00:08:18,400 --> 00:08:19,040
+There's
+
+104
+00:08:19,520 --> 00:08:35,080
+It's just a massive number of different algorithms that I can use, but all of them, the goal is to be able to take these features, this input data that has been labeled correctly to find some generalization that fits into one of these.
+
+105
+00:08:35,080 --> 00:08:39,560
+And depending on the type of data, different algorithms will work better.
+
+106
+00:08:39,560 --> 00:08:43,160
+But the output of this will be the model.
+
+107
+00:08:44,640 --> 00:08:53,360
+So the output will be my trained model into which I can then pass in new data and it will make its prediction.
+
+108
+00:08:53,440 --> 00:08:55,360
+So this output could be a label.
+
+109
+00:08:57,280 --> 00:09:00,640
+Now note, this is normally an iterative process.
+
+110
+00:09:01,280 --> 00:09:05,680
+So we have a certain amount of training data that we use to train the model.
+
+111
+00:09:06,480 --> 00:09:08,320
+But then what we'll have is testing data.
+
+112
+00:09:08,400 --> 00:09:15,040
+So it'll be another set of data that we also know the label for, but we'll just send in the data.
+
+113
+00:09:15,360 --> 00:09:19,040
+We'll let it give us our label and we'll compare it to what we think it should be.
+
+114
+00:09:19,600 --> 00:09:24,360
+Based on that, we either release the models, it's good to go, or we need some more training.
+
+115
+00:09:24,360 --> 00:09:31,760
+We need to tweak certain parameters until we get it into a state that we believe it's good enough to use in the real world.
+
+116
+00:09:34,800 --> 00:09:45,280
+Now, just with this alone, I talked about the training data, but realize there's actually different types of training that we can leverage.
+
+117
+00:09:46,240 --> 00:09:53,280
+So if I think of this, so all of this was my training data.
+
+118
+00:09:58,880 --> 00:10:01,200
+Now, in reality, there's two different types of this.
+
+119
+00:10:01,920 --> 00:10:03,200
+We have supervised.
+
+120
+00:10:05,120 --> 00:10:14,640
+Now with the supervised learning, this is where I've got a set of data and I have the correct label.
+
+121
+00:10:14,640 --> 00:10:18,160
+So supervised learning basically means has labels.
+
+122
+00:10:20,880 --> 00:10:25,120
+And then from this, there's different types.
+
+123
+00:10:25,760 --> 00:10:27,840
+of learning we want to enable.
+
+124
+00:10:28,160 --> 00:10:33,600
+So if it was numeric, for example, so if it's numeric, we're going to have regression.
+
+125
+00:10:39,280 --> 00:10:41,280
+So that could be that house example I talked about.
+
+126
+00:10:41,280 --> 00:10:44,720
+So that would be a good example of using regression.
+
+127
+00:10:45,440 --> 00:10:46,880
+Or it could be classification.
+
+128
+00:10:51,280 --> 00:10:53,360
+And very often with classification,
+
+129
+00:10:53,920 --> 00:10:55,440
+we have a choice.
+
+130
+00:10:56,480 --> 00:10:58,160
+It's either, is it something?
+
+131
+00:10:58,560 --> 00:10:59,920
+So then it's binary.
+
+132
+00:11:02,640 --> 00:11:04,240
+Is it this thing?
+
+133
+00:11:05,120 --> 00:11:09,280
+So is it, is it not?
+
+134
+00:11:10,720 --> 00:11:13,760
+We want to understand, is it this particular thing?
+
+135
+00:11:14,800 --> 00:11:16,880
+So will a viewer like this video?
+
+136
+00:11:17,840 --> 00:11:19,560
+Then, or will they not like the video?
+
+137
+00:11:19,560 --> 00:11:20,880
+It's mutually exclusive.
+
+138
+00:11:21,840 --> 00:11:23,520
+And then we also have multiclass.
+
+139
+00:11:27,680 --> 00:11:32,480
+So multiclass is simply, there's different maybe genres of video.
+
+140
+00:11:32,800 --> 00:11:35,360
+It's horror, it's fiction, it's learning.
+
+141
+00:11:35,360 --> 00:11:37,040
+This video could be all three of those.
+
+142
+00:11:38,320 --> 00:11:44,000
+But it's a certain class and there's multiple of these classes available to you.
+
+143
+00:11:46,000 --> 00:11:47,760
+And then also we have unsupervised.
+
+144
+00:11:54,080 --> 00:11:55,520
+So this is where there were no labels.
+
+145
+00:11:56,000 --> 00:12:01,760
+This is where I'm taking some very broad set of data and what it's really looking for is clustering.
+
+146
+00:12:04,720 --> 00:12:12,240
+It's looking for groups within the data given that it can kind of put things into.
+
+147
+00:12:13,040 --> 00:12:17,120
+So it's grouping based on some similarity in the data that it finds.
+
+148
+00:12:17,920 --> 00:12:21,760
+And so we have these different types of training data available to us.
+
+149
+00:12:22,880 --> 00:12:32,080
+And just for sort of our understanding of what happens here is we can see and use a lot of this in the Azure Machine Learning Studio.
+
+150
+00:12:32,480 --> 00:12:47,200
+So if I jumped over for a second and I go to the Azure Machine Learning Studio, so this is the ML, so just understand this, ml.azure.com, that's the Azure Machine Learning Studio.
+
+151
+00:12:47,840 --> 00:12:51,600
+And what you would do in here is you would go ahead
+
+152
+00:12:52,080 --> 00:12:54,960
+And you can create a new custom model.
+
+153
+00:12:55,600 --> 00:12:57,760
+So I could go ahead and create a new model.
+
+154
+00:12:59,440 --> 00:13:02,400
+And then once you've created a model, you can create data sets.
+
+155
+00:13:02,880 --> 00:13:07,120
+Now with the data set, you'll import some amount of data, maybe read it from BLOB storage.
+
+156
+00:13:07,680 --> 00:13:09,840
+You can label it within the studio.
+
+157
+00:13:09,840 --> 00:13:10,720
+This is an apple.
+
+158
+00:13:10,720 --> 00:13:11,920
+This is an orange.
+
+159
+00:13:13,000 --> 00:13:19,040
+Where required, it will generate the required output file, like a Cocoa file if I was doing certain types of learning.
+
+160
+00:13:20,080 --> 00:13:26,960
+And then it would train the model, it will help you test the performance of the model, and then I can just access it via the normal APIs.
+
+161
+00:13:27,920 --> 00:13:39,360
+So the Azure Machine Learning Studio is really powerful to help you do all of these different types of training that I might want given on my various customized scenarios.
+
+162
+00:13:40,080 --> 00:13:43,040
+And then once I've got the model, I can also deploy it then potentially to containers.
+
+163
+00:13:43,040 --> 00:13:44,880
+I don't have to only host it in the cloud.
+
+164
+00:13:45,200 --> 00:13:48,720
+With many of the AI solutions, including your custom models,
+
+165
+00:13:49,280 --> 00:13:51,160
+I can run it in a container.
+
+166
+00:13:51,680 --> 00:13:53,760
+Now, it could be a container on-premises.
+
+167
+00:13:53,840 --> 00:13:57,600
+It could be an Azure Kubernetes services.
+
+168
+00:13:57,920 --> 00:14:00,040
+It could be an Azure container instances.
+
+169
+00:14:00,040 --> 00:14:01,760
+There's different ways you can run it.
+
+170
+00:14:02,360 --> 00:14:10,400
+But the whole point is Azure Machine Learning Studio is an Azure cloud service to help you perform your own custom training.
+
+171
+00:14:10,400 --> 00:14:12,160
+Now, you won't always need to do custom training.
+
+172
+00:14:12,560 --> 00:14:15,520
+There's a lot of pre-built models for you, which we'll see.
+
+173
+00:14:16,080 --> 00:14:16,480
+But
+
+174
+00:14:17,080 --> 00:14:21,920
+When you do have those requirements, that's where you would use Azure Machine Learning Studio.
+
+175
+00:14:22,400 --> 00:14:32,240
+So we're just saying kind of this is Azure Machine Learning Studio.
+
+176
+00:14:35,600 --> 00:14:36,320
+Fantastic.
+
+177
+00:14:37,760 --> 00:14:39,760
+There's another layer on top of this now.
+
+178
+00:14:40,400 --> 00:14:44,160
+So if we think about these had some fairly basic algorithms.
+
+179
+00:14:45,600 --> 00:14:46,800
+you've heard of generative AI.
+
+180
+00:14:47,440 --> 00:14:50,160
+Everyone is very big on these.
+
+181
+00:14:50,160 --> 00:14:54,520
+You hear about GPT and co-pilots and the creativity.
+
+182
+00:14:54,520 --> 00:15:00,160
+And although I'm not going to cover generative AI in detail in this video, that's the follow-on study cram.
+
+183
+00:15:00,560 --> 00:15:03,760
+I do want to talk about kind of what's different about it.
+
+184
+00:15:04,080 --> 00:15:08,720
+So machine learning is you give it data and it has these different algorithms.
+
+185
+00:15:09,040 --> 00:15:15,520
+that enable it to then generalize that data that I can then use once it's trained to predict something off new data.
+
+186
+00:15:16,000 --> 00:15:16,720
+Fantastic.
+
+187
+00:15:17,920 --> 00:15:20,720
+So now what is deep learning?
+
+188
+00:15:21,280 --> 00:15:24,960
+So deep learning is a subset of machine learning.
+
+189
+00:15:25,440 --> 00:15:29,360
+So now I can think about deep learning.
+
+190
+00:15:34,560 --> 00:15:37,600
+And this is where those algorithms are just not going to work.
+
+191
+00:15:38,800 --> 00:15:44,640
+The relationships are too complex to be expressed in those more basic algorithms.
+
+192
+00:15:45,120 --> 00:15:48,120
+And so this is powering all of those cool large language models we see.
+
+193
+00:15:48,120 --> 00:15:51,760
+And what we're going to have is a neural network.
+
+194
+00:15:52,320 --> 00:15:54,080
+And you've probably seen these drawings.
+
+195
+00:15:54,080 --> 00:15:55,720
+You'll see these whole bunch of neural ones.
+
+196
+00:15:55,720 --> 00:15:57,680
+Now I'm going to be lazy and not draw very many.
+
+197
+00:16:00,800 --> 00:16:02,080
+But even this is going to be a lot.
+
+198
+00:16:06,880 --> 00:16:13,760
+So these are all neurons and then every neuron connects to every other neuron in the next layer.
+
+199
+00:16:14,000 --> 00:16:15,440
+Kind of imagine this.
+
+200
+00:16:16,000 --> 00:16:17,600
+So lots and lots of lines to draw.
+
+201
+00:16:18,080 --> 00:16:21,880
+And if this next one I'm just going to draw a couple of them, just you get the idea.
+
+202
+00:16:21,880 --> 00:16:26,080
+Everything connects to everything else, blah, blah, blah, blah, blah.
+
+203
+00:16:26,080 --> 00:16:29,120
+Now each of these neurons is called an activation function.
+
+204
+00:16:29,760 --> 00:16:33,280
+It gets some value in and then it's running
+
+205
+00:16:34,360 --> 00:16:41,160
+a function that decides does it pass a value on to all of its connected neurons, or does it essentially pass 0?
+
+206
+00:16:41,160 --> 00:16:42,160
+It doesn't activate.
+
+207
+00:16:42,240 --> 00:16:44,760
+It's just going to pass in zero.
+
+208
+00:16:46,400 --> 00:16:51,840
+So the key aspect of this is there's multiple layers.
+
+209
+00:16:52,160 --> 00:16:54,400
+We have these multiple layers of neurons.
+
+210
+00:16:54,960 --> 00:17:00,720
+And what we see is we have this idea of an input layer that I can see.
+
+211
+00:17:04,000 --> 00:17:07,760
+We have an output layer that is our result.
+
+212
+00:17:10,080 --> 00:17:14,160
+Then we have a whole set of hidden layers.
+
+213
+00:17:19,610 --> 00:17:25,050
+We don't interact with those, but all of them are running some activation function.
+
+214
+00:17:25,530 --> 00:17:28,170
+And there's a bunch of different ones that are used.
+
+215
+00:17:29,530 --> 00:17:32,250
+You'll hear about things like relu.
+
+216
+00:17:32,810 --> 00:17:36,610
+So relu, for example, if I, let's make this one a bit bigger.
+
+217
+00:17:37,920 --> 00:17:39,120
+Let's make this giant.
+
+218
+00:17:40,240 --> 00:17:42,080
+So just a slightly bigger.
+
+219
+00:17:42,480 --> 00:17:47,760
+So rel U would maybe it has to reach a certain value before it activates.
+
+220
+00:17:48,200 --> 00:17:49,920
+So that's the whole point of rel U.
+
+221
+00:17:50,720 --> 00:17:51,920
+But there are many, many others.
+
+222
+00:17:52,800 --> 00:17:54,800
+So value is rectified linear unit.
+
+223
+00:17:55,040 --> 00:17:59,200
+There's sigmoid, which looks more like an S for the activation.
+
+224
+00:17:59,760 --> 00:18:02,000
+There's Gaussian error linear unit.
+
+225
+00:18:02,000 --> 00:18:05,840
+There's all different ones in there, but all of them are about the idea
+
+226
+00:18:06,320 --> 00:18:14,960
+that we're going to take these values coming in and it has to reach some threshold before it activates and actually it starts to output a value.
+
+227
+00:18:15,360 --> 00:18:18,800
+Otherwise, it's just going to spit out zero to all of its connected neurons.
+
+228
+00:18:19,680 --> 00:18:24,880
+So the input layer, they're the input values we're passing into this neural network.
+
+229
+00:18:25,120 --> 00:18:31,760
+The output layer are our results, obviously, which could be many different things.
+
+230
+00:18:32,360 --> 00:18:34,880
+Could be the tokens for the next word we want to say.
+
+231
+00:18:35,200 --> 00:18:37,120
+Could be classifications of something.
+
+232
+00:18:37,840 --> 00:18:46,960
+But in addition to just running these functions, what we actually do is every single one of these connections, I'm going to have trouble drawing this, has a weight.
+
+233
+00:18:47,680 --> 00:18:51,840
+So I could think about, well, this has a weight one.
+
+234
+00:18:52,480 --> 00:18:55,440
+That would be weight 2, weight 3, weight 4, weight 5.
+
+235
+00:18:55,600 --> 00:18:59,040
+So this line would be weight 6.
+
+236
+00:19:00,120 --> 00:19:06,000
+And then it has another one from this one, weight 11, for that one.
+
+237
+00:19:06,640 --> 00:19:07,960
+And it's kind of carry on.
+
+238
+00:19:07,960 --> 00:19:14,480
+So we've got lots of weights coming in, which is applied to the value that it got from the neuron that's connected to.
+
+239
+00:19:15,120 --> 00:19:23,040
+And then you also have a bias on the neuron as well, some value added or removed if it was positive or negative.
+
+240
+00:19:23,880 --> 00:19:28,400
+And the reason we have these is think about what these parameters are doing, the weights.
+
+241
+00:19:28,720 --> 00:19:29,040
+So
+
+242
+00:19:29,600 --> 00:19:38,160
+by multiplying it by some value, if you think of it getting some value coming in that it applies the function to it, can stretch and compress it.
+
+243
+00:19:38,720 --> 00:19:45,200
+And then by applying a bias, well, it can shift where it activates or doesn't activate.
+
+244
+00:19:46,800 --> 00:19:55,600
+Now I've drawn, well, what is this kind of 10 neurons in my inner layers, some of the parameters
+
+245
+00:19:56,160 --> 00:20:04,800
+available in the bigger models, there are trillions of parameters, trillions of parameters over all these weights and biases.
+
+246
+00:20:05,200 --> 00:20:20,320
+So now consider if we have that many neurons with all these complicated weights and biases stretching and compressing these activation functions, well, I can model amazing things, really complicated things.
+
+247
+00:20:20,720 --> 00:20:24,000
+And that's how these generative AI large language models work.
+
+248
+00:20:24,480 --> 00:20:25,120
+It's these
+
+249
+00:20:25,600 --> 00:20:32,880
+massive neural networks with 10s of hidden layers that are super, super deep.
+
+250
+00:20:34,480 --> 00:20:49,920
+And they're able to, by going through the training process, nudge these weights and biases over and under whatever it is to represent the ability to predict the next most probable token from a probability distribution of the next word.
+
+251
+00:20:50,560 --> 00:20:52,000
+based on the text that came before.
+
+252
+00:20:52,000 --> 00:20:55,720
+That's all these are doing, but it really is so powerful.
+
+253
+00:20:55,720 --> 00:21:08,640
+But it takes months and 10,000 super powerful GPUs to train these, to go through those algorithms that push these weights and biases a little bit over as it absorbs the training data.
+
+254
+00:21:09,920 --> 00:21:11,200
+But this is what it does.
+
+255
+00:21:11,840 --> 00:21:19,120
+At the end, you have a softmax very commonly, and softmax merely takes all the different values and makes them sum up to one.
+
+256
+00:21:19,760 --> 00:21:21,840
+because then I get a very nice probability distribution.
+
+257
+00:21:21,840 --> 00:21:25,440
+I can go and pick the next most probable token from very, very easily.
+
+258
+00:21:26,800 --> 00:21:38,000
+And so with these abilities, I can make decisions, I can recognize things, I can see abnormalities, I can look at past results and learn the patterns and detect deviations from that.
+
+259
+00:21:38,880 --> 00:21:40,080
+Hey, someone's wearing a mask.
+
+260
+00:21:40,080 --> 00:21:41,280
+They're not wearing a mask.
+
+261
+00:21:41,280 --> 00:21:43,280
+Temperatures rising predicted failure.
+
+262
+00:21:43,440 --> 00:21:45,120
+What is the next most likely token?
+
+263
+00:21:45,360 --> 00:21:50,640
+There's just a huge number of capabilities we can do with these deep learning capabilities.
+
+264
+00:21:50,880 --> 00:21:53,440
+But they can be very complex to train.
+
+265
+00:21:54,400 --> 00:21:59,680
+And that's why these bigger GPT models, we tend not to train them ourselves.
+
+266
+00:22:00,000 --> 00:22:05,360
+We leverage things like prompt engineering and RAG to change their behavior.
+
+267
+00:22:06,640 --> 00:22:10,160
+because retraining it for most of us is just not practical.
+
+268
+00:22:10,960 --> 00:22:21,920
+But certainly for smaller case scenarios, I'm not trying to create a GPT, then training a neural network can be very powerful based on what I need it to do.
+
+269
+00:22:22,160 --> 00:22:30,720
+I can tend to have less training data and get a better model than some of the more traditional approaches we may have used.
+
+270
+00:22:32,800 --> 00:22:37,040
+Okay, so that was just quickly talking about the different types of machine learning.
+
+271
+00:22:37,760 --> 00:22:41,600
+So we have artificial intelligence where maybe I could actually go and write how it does something.
+
+272
+00:22:41,600 --> 00:22:44,160
+Early chess computers maybe would have been similar to that.
+
+273
+00:22:44,720 --> 00:22:56,800
+Machine learning, we have labeled data that we can feed into maybe more basic algorithms that we can then use to predict, label, classify based on new data.
+
+274
+00:22:58,320 --> 00:23:00,000
+And then deep learning,
+
+275
+00:23:00,960 --> 00:23:04,480
+Hey, we have these amazing neural networks that we can leverage.
+
+276
+00:23:06,880 --> 00:23:13,680
+But as I mentioned, there are a number of provided solutions that have been trained for very specific purposes.
+
+277
+00:23:14,800 --> 00:23:22,240
+I can think of, if I think about my AI bot here, some of the things I might want to be able to do with our vision capabilities.
+
+278
+00:23:24,680 --> 00:23:29,920
+And those vision capabilities can be from reading text from images, so optical character recognition, OCR.
+
+279
+00:23:30,240 --> 00:23:33,120
+It could be applying tags to an overall image.
+
+280
+00:23:33,520 --> 00:23:37,600
+It could be detecting objects in an image, so it tells you where it is in that image.
+
+281
+00:23:37,840 --> 00:23:40,160
+It could give me a rich description.
+
+282
+00:23:40,640 --> 00:23:42,320
+It could interact with video.
+
+283
+00:23:42,560 --> 00:23:43,800
+I could detect faces.
+
+284
+00:23:43,800 --> 00:23:45,520
+I could even detect if that face is alive.
+
+285
+00:23:45,600 --> 00:23:48,960
+So I'm sort of checking someone's not just showing me a picture to try and trick me.
+
+286
+00:23:50,320 --> 00:23:52,640
+I can think about the idea of natural language.
+
+287
+00:23:53,920 --> 00:24:02,160
+So I have the ability here to interact.
+
+288
+00:24:02,160 --> 00:24:05,880
+I could think about a chatbot with a customer.
+
+289
+00:24:06,400 --> 00:24:18,560
+It might be getting a body of text and summarizing it, question answering, speech, text to speech, speech to text, maybe or even translating.
+
+290
+00:24:23,440 --> 00:24:24,720
+Document intelligence.
+
+291
+00:24:26,160 --> 00:24:32,000
+You can show me a form, and I would be able to understand on that form, well, that's an address.
+
+292
+00:24:32,080 --> 00:24:33,360
+That's a phone number.
+
+293
+00:24:34,080 --> 00:24:35,760
+These are the items in an invoice.
+
+294
+00:24:36,960 --> 00:24:37,840
+This is what this can do.
+
+295
+00:24:37,840 --> 00:24:39,800
+It can process documents.
+
+296
+00:24:39,800 --> 00:24:42,160
+It can take large amounts of text from documents.
+
+297
+00:24:42,480 --> 00:24:44,880
+It can recognize certain types of forms.
+
+298
+00:24:45,360 --> 00:24:46,480
+There's knowledge mining.
+
+299
+00:24:53,040 --> 00:25:01,920
+So knowledge mining is all about extracting information and making it available to other applications from other things.
+
+300
+00:25:02,240 --> 00:25:07,280
+This could be from structured data, semi-structured, unstructured.
+
+301
+00:25:07,680 --> 00:25:11,120
+It makes it searchable and then it can enrich it.
+
+302
+00:25:11,120 --> 00:25:13,520
+So I could even, for example, take text from images.
+
+303
+00:25:13,520 --> 00:25:15,120
+I can call other services.
+
+304
+00:25:15,280 --> 00:25:19,200
+So I might go and hook into the vision service, say, hey, I've got a picture.
+
+305
+00:25:19,440 --> 00:25:20,880
+Vision service, find me
+
+306
+00:25:21,520 --> 00:25:27,040
+the text in this and give it back to me so I can then index these images or a PDF file that had an image in it.
+
+307
+00:25:27,360 --> 00:25:37,360
+Or maybe I'm hearing something, so I want to call the speech to say, hey, give me the text transcription of this audio so I can now go and index it and make it available.
+
+308
+00:25:38,200 --> 00:25:42,320
+And of course, as we talked about, what's amazing here is I can go and create custom solutions.
+
+309
+00:25:43,680 --> 00:25:47,920
+I can use these models to really do anything I want to.
+
+310
+00:25:49,200 --> 00:26:02,400
+And so if we quickly just go and look at this for a second, so if we jump over just to the Azure portal, so if I look at Azure AI services, we'll see there's a huge number of these.
+
+311
+00:26:02,400 --> 00:26:12,000
+Now, the Azure Open AI, this is kind of a special type to use the various Open AI models that are available, like the GPT, the DALL-E, Whisper.
+
+312
+00:26:13,440 --> 00:26:15,040
+But I can see there's AI search.
+
+313
+00:26:15,040 --> 00:26:16,800
+So Azure AI search
+
+314
+00:26:17,680 --> 00:26:26,160
+That's where we think about that option to have the indexing of our data to make it easily available.
+
+315
+00:26:27,360 --> 00:26:39,600
+Then we see all these other services, computer vision, face API, custom vision for my own training, speech service, language service, translators, document intelligence, box service, anomaly detectors, the list goes on and on.
+
+316
+00:26:40,000 --> 00:26:43,240
+So you have all of these different services available.
+
+317
+00:26:43,240 --> 00:26:58,400
+And note, when I create a resource that's of a specific type, so it's just computer vision, it's just face API, what we often have the option of is when we go and look at my pricing tier, we have a free option.
+
+318
+00:26:59,680 --> 00:27:01,920
+So we get a certain number of free calls.
+
+319
+00:27:01,920 --> 00:27:08,720
+If I just want to learn this and experiment, this is available for nearly every type of these single service types.
+
+320
+00:27:09,120 --> 00:27:15,120
+So it's just computer vision, it's just face, it's just documents, whatever that is.
+
+321
+00:27:15,680 --> 00:27:22,680
+If I go and create an instance of just that particular type, then very often we have a free instance.
+
+322
+00:27:22,680 --> 00:27:28,400
+There is not a free instance of Azure Open AI nor actually Azure AI search may have a free one.
+
+323
+00:27:28,760 --> 00:27:30,880
+Let's have a quick look, but I think it's very basic.
+
+324
+00:27:36,000 --> 00:27:37,280
+OK, so yeah, there is a free.
+
+325
+00:27:37,840 --> 00:27:43,760
+It doesn't have some of the functionalities like the semantic re-ranker, et cetera, but there's even a free one there.
+
+326
+00:27:45,600 --> 00:27:52,080
+So we have all these different types of resource that are specific to one type.
+
+327
+00:27:52,960 --> 00:28:00,800
+So if I look at all my Azure AI services, you can see I've got a whole bunch of different ones, computer vision, speech services, text analysis, et cetera.
+
+328
+00:28:01,920 --> 00:28:06,160
+Now also note we have this.
+
+329
+00:28:07,120 --> 00:28:09,760
+Azure AI services multi-service account.
+
+330
+00:28:11,280 --> 00:28:19,160
+As the name suggests, if I create one of these, well, I can actually use nearly all of the different types of service.
+
+331
+00:28:19,160 --> 00:28:21,280
+I cannot use the open AI services.
+
+332
+00:28:21,840 --> 00:28:23,360
+I cannot use AI search.
+
+333
+00:28:24,080 --> 00:28:30,320
+But most of the other types of capability are included in this multi-service type of resource.
+
+334
+00:28:31,920 --> 00:28:35,040
+So it's just important to understand the distinction between these.
+
+335
+00:28:35,040 --> 00:28:36,320
+So if I think about
+
+336
+00:28:37,520 --> 00:28:45,040
+My Azure AI services that are available to me.
+
+337
+00:28:46,880 --> 00:28:49,120
+Well, we have a single service type.
+
+338
+00:28:51,840 --> 00:28:58,000
+So I can do vision with it, or I can do speech with it, or I can do whatever.
+
+339
+00:28:59,520 --> 00:29:04,560
+Nice thing about these is often, nearly always, there is a free option available to me.
+
+340
+00:29:08,240 --> 00:29:14,800
+And if it's the paid one, well, I'll be able to very granularly see what costs were associated with that particular resource.
+
+341
+00:29:14,800 --> 00:29:19,640
+And because the resource is only one type, I know, oh, these costs were for vision solutions.
+
+342
+00:29:19,640 --> 00:29:21,760
+These costs were for tech solutions.
+
+343
+00:29:22,960 --> 00:29:24,880
+Each of these has their own endpoint.
+
+344
+00:29:25,040 --> 00:29:30,080
+The application will go and talk to leverage it, its own key, its own role-based access control.
+
+345
+00:29:30,840 --> 00:29:33,480
+Then we also have the idea of multi.
+
+346
+00:29:35,280 --> 00:29:35,920
+service.
+
+347
+00:29:37,600 --> 00:29:40,080
+So multi-service, there is no free option.
+
+348
+00:29:41,600 --> 00:29:57,520
+And it will be a shared endpoint to consume all of the different types of services available to it, which means it will be a little harder to know, well, what money was spent on vision, what money was spent on text, what knowledge was spent on knowledge mining, because it's a single resource.
+
+349
+00:29:57,600 --> 00:29:58,160
+But
+
+350
+00:29:58,800 --> 00:30:01,680
+For a developer, now it's just one endpoint I talk to.
+
+351
+00:30:02,000 --> 00:30:03,920
+It might be less work for me to manage.
+
+352
+00:30:04,000 --> 00:30:06,000
+So I want to do a whole bunch of different AI services.
+
+353
+00:30:06,000 --> 00:30:09,840
+And I don't care about being able to see that granularity of the pricing.
+
+354
+00:30:10,400 --> 00:30:14,000
+And then there's the open AI type of resource.
+
+355
+00:30:14,040 --> 00:30:15,600
+And there's also AI search.
+
+356
+00:30:16,000 --> 00:30:17,520
+But that's really a single service.
+
+357
+00:30:17,520 --> 00:30:19,200
+But I'm going to call it out anyway.
+
+358
+00:30:20,720 --> 00:30:24,160
+So these different types of resource
+
+359
+00:30:24,960 --> 00:30:25,480
+available.
+
+360
+00:30:25,480 --> 00:30:31,280
+And again, if you're learning, it's really nice to use the single service ones because you get that free ability to interact.
+
+361
+00:30:31,520 --> 00:30:36,160
+And it's actually quite a generous allotment you can do to just play around, which you want to do.
+
+362
+00:30:36,160 --> 00:30:40,800
+You want to get a little bit of hands-on, play around in the different environments just to get some idea.
+
+363
+00:30:43,040 --> 00:30:45,120
+Okay, so those are the types of resource.
+
+364
+00:30:45,120 --> 00:30:48,800
+Now, I did mention the idea of an endpoint.
+
+365
+00:30:48,880 --> 00:30:50,720
+So what was I talking about when we talked about an endpoint?
+
+366
+00:30:52,000 --> 00:31:12,280
+So, each of these will expose an endpoint things like a URL, it's an address, and the way I'm going to use that is my application that I want to use an AI service with will speak to that endpoint.
+
+367
+00:31:12,880 --> 00:31:15,560
+Now the application, this endpoint is a REST endpoint.
+
+368
+00:31:15,680 --> 00:31:21,360
+So it's all HTTP based interactions and it's going to get like JSON responses.
+
+369
+00:31:21,680 --> 00:31:24,320
+So I'm talking REST to it.
+
+370
+00:31:24,640 --> 00:31:28,160
+Or very often there's going to be a software development kit.
+
+371
+00:31:29,600 --> 00:31:38,320
+So now my application can actually talk to something more language friendly with nice libraries available and the SDK will then go and do the REST for you.
+
+372
+00:31:38,880 --> 00:31:41,440
+But that's how you're talking to the endpoint.
+
+373
+00:31:42,160 --> 00:31:47,920
+Now, each endpoint will have a key that you can use to authenticate.
+
+374
+00:31:48,160 --> 00:31:50,160
+That means I have to store the key in the app.
+
+375
+00:31:50,160 --> 00:31:55,760
+Now, if you don't want to put it in a config file or anywhere written down, you might use an Azure Key Vault to store the key.
+
+376
+00:31:55,760 --> 00:31:58,960
+You always want it secure, not put in a Git repo or something.
+
+377
+00:31:59,360 --> 00:32:06,720
+But also for many of them, these services, they support Entra ID integrated auth.
+
+378
+00:32:07,560 --> 00:32:12,800
+And what's nice there is then I use role-based access control to give an identity permission on the resource.
+
+379
+00:32:12,800 --> 00:32:14,560
+I don't have to store a key.
+
+380
+00:32:14,960 --> 00:32:19,280
+I'm just, as a resource, I have a service principle, I have a managed identity.
+
+381
+00:32:19,600 --> 00:32:24,880
+Managed identity is an automatic identity for resources that are in Azure.
+
+382
+00:32:25,680 --> 00:32:29,120
+And I can just give that identity permission to consume it.
+
+383
+00:32:29,120 --> 00:32:33,680
+So then I don't have to worry about storing a key and rotating the key periodically.
+
+384
+00:32:34,160 --> 00:32:35,840
+If I was to quickly jump over,
+
+385
+00:32:36,840 --> 00:32:38,720
+Let me just look at a resource.
+
+386
+00:32:39,840 --> 00:32:41,680
+Let's just go and look.
+
+387
+00:32:42,440 --> 00:32:44,080
+And I've got a bunch of vision ones.
+
+388
+00:32:48,320 --> 00:32:52,040
+Notice I have here my keys and endpoint.
+
+389
+00:32:53,680 --> 00:32:55,840
+So my endpoint is this URL.
+
+390
+00:32:55,840 --> 00:32:58,800
+So that's what I would connect to.
+
+391
+00:32:59,680 --> 00:33:02,880
+And then I would either pass in one of the two keys.
+
+392
+00:33:02,880 --> 00:33:06,560
+So I'd have that available in my key vault that I would fetch it from.
+
+393
+00:33:07,600 --> 00:33:13,960
+Or again, potentially if it's supported it, then I would use the Entra ID integrated authentication.
+
+394
+00:33:13,960 --> 00:33:22,400
+And in that case, I would give it some role related to the service, some cognitive services role to be allowed to use it.
+
+395
+00:33:23,440 --> 00:33:28,800
+So those are my options to actually go and consume and leverage the service.
+
+396
+00:33:33,760 --> 00:33:36,720
+So AI has amazing capabilities.
+
+397
+00:33:36,720 --> 00:33:41,120
+I mean, especially with the generative AI now, it was already being used A lot.
+
+398
+00:33:41,120 --> 00:33:48,560
+Generative AI in that natural language and that creativity has just exploded where we think about using artificial intelligence.
+
+399
+00:33:48,720 --> 00:33:56,560
+But the thing we have to consider is there's risks being introduced.
+
+400
+00:33:57,440 --> 00:34:11,760
+So suddenly now we have this idea that whereas before a human may have been involved in making some decision, understanding something, checking the safety of something, now we have computer-based systems doing that.
+
+401
+00:34:11,760 --> 00:34:24,480
+Now computers can be far more dependable, and they don't go and take a break, they don't get tired, but we have to make sure that the training, the model,
+
+402
+00:34:25,200 --> 00:34:36,720
+is trustworthy, that it is safe before we have it making important decisions that impact the lives of our fleshy-based things or anything else for that matter.
+
+403
+00:34:37,560 --> 00:34:49,620
+And so we think about the idea of responsible AI because we're creating these solutions.
+
+404
+00:34:49,620 --> 00:34:51,500
+So we have a whole bunch of risks.
+
+405
+00:34:53,840 --> 00:34:55,120
+So what are some of my risks?
+
+406
+00:34:55,440 --> 00:34:56,960
+We are training the model.
+
+407
+00:34:57,440 --> 00:34:59,680
+So we give it training data that we've labeled.
+
+408
+00:35:00,000 --> 00:35:02,160
+Well, the training data could have bias.
+
+409
+00:35:04,800 --> 00:35:05,440
+That's a risk.
+
+410
+00:35:06,240 --> 00:35:07,840
+It's garbage in, garbage out.
+
+411
+00:35:07,840 --> 00:35:11,840
+If we train it on a bunch of bias, the model's going to be biased.
+
+412
+00:35:12,400 --> 00:35:13,360
+There may be errors.
+
+413
+00:35:16,800 --> 00:35:19,680
+It could literally be, hey, a self-driving car.
+
+414
+00:35:20,080 --> 00:35:23,680
+With it errors, that's a pretty bad day for the person in it.
+
+415
+00:35:24,320 --> 00:35:25,920
+Bring a bit data exposed.
+
+416
+00:35:28,560 --> 00:35:30,640
+We train it on saying we shouldn't have trained it on.
+
+417
+00:35:31,120 --> 00:35:34,960
+Well, now when it does some prediction, maybe it shares something it shouldn't do.
+
+418
+00:35:36,400 --> 00:35:37,760
+It may not work for all.
+
+419
+00:35:42,320 --> 00:35:52,400
+I have something that doesn't work for a certain percentage of the population based on race, based on gender, based on all these different things, but it doesn't work for everyone.
+
+420
+00:35:53,040 --> 00:35:53,920
+Can I trust it?
+
+421
+00:35:55,200 --> 00:35:58,000
+How do I know I can trust what it's doing?
+
+422
+00:35:58,320 --> 00:35:59,920
+And who's responsible for it?
+
+423
+00:36:00,480 --> 00:36:10,560
+This is an interesting one because if it's artificial intelligence and it does something wrong, who is responsible?
+
+424
+00:36:10,800 --> 00:36:16,640
+So this is why we have these six key principles when we think about artificial intelligence.
+
+425
+00:36:17,440 --> 00:36:23,200
+So when I think about bias, the key thing we have to make sure is we have fairness.
+
+426
+00:36:25,840 --> 00:36:30,400
+We need to ensure that all people are treated fairly.
+
+427
+00:36:31,120 --> 00:36:34,160
+we haven't introduced some bias from that training data.
+
+428
+00:36:34,160 --> 00:36:43,760
+So we have to do very comprehensive testing and consider where those risks could be to assess is that actually present and then how do we mitigate it.
+
+429
+00:36:45,600 --> 00:36:52,320
+For errors, I want to think about reliability and safety.
+
+430
+00:36:54,160 --> 00:36:58,400
+We need to have very rigorous testing and a good deployment process.
+
+431
+00:36:59,280 --> 00:37:02,400
+I, again, would think about self-driving cars.
+
+432
+00:37:02,640 --> 00:37:05,040
+I want to be pretty confident that that's doing it correctly.
+
+433
+00:37:05,280 --> 00:37:07,120
+We may have things start to do surgery.
+
+434
+00:37:07,360 --> 00:37:11,120
+We have things monitoring the temperatures of reactors or something.
+
+435
+00:37:11,120 --> 00:37:13,600
+Like, I need to make sure they're reliable.
+
+436
+00:37:13,600 --> 00:37:15,600
+They're very, very well tested.
+
+437
+00:37:16,560 --> 00:37:26,240
+When I think about data exposed for privacy and security, that's critical.
+
+438
+00:37:27,600 --> 00:37:31,520
+If I'm using data used to train a model, am I allowed to use that data?
+
+439
+00:37:31,520 --> 00:37:32,240
+Should it be?
+
+440
+00:37:33,000 --> 00:37:34,880
+Has it been sufficiently scrubbed?
+
+441
+00:37:35,360 --> 00:37:37,280
+Have I got it from a legitimate source?
+
+442
+00:37:37,280 --> 00:37:38,960
+Am I allowed to use it for training?
+
+443
+00:37:39,760 --> 00:37:44,400
+I have to consider the privacy of the data and make sure it's kept private.
+
+444
+00:37:46,000 --> 00:37:47,120
+Does it work for all?
+
+445
+00:37:47,120 --> 00:37:49,200
+So here I have to think about inclusiveness.
+
+446
+00:37:56,680 --> 00:38:03,080
+It should include everyone from all parts of society, gender, race, it doesn't matter.
+
+447
+00:38:04,640 --> 00:38:07,080
+Everyone should be able to leverage the technology.
+
+448
+00:38:07,080 --> 00:38:14,800
+And if you think about trust, well, it's transparency.
+
+449
+00:38:15,040 --> 00:38:16,640
+We should understand how it's working.
+
+450
+00:38:17,120 --> 00:38:18,200
+What are its limitations?
+
+451
+00:38:18,200 --> 00:38:19,360
+What is its purpose?
+
+452
+00:38:20,400 --> 00:38:22,720
+And from responsibility, well, who's accountable?
+
+453
+00:38:26,560 --> 00:38:29,600
+I mean, who's accountable should be the developers.
+
+454
+00:38:30,040 --> 00:38:31,760
+It should be the company.
+
+455
+00:38:31,760 --> 00:38:33,680
+It should be the directors of the company.
+
+456
+00:38:34,880 --> 00:38:38,400
+Are they ensuring it meets good ethical and legal standards?
+
+457
+00:38:41,040 --> 00:38:42,480
+Think of facial recognition.
+
+458
+00:38:42,480 --> 00:38:43,840
+You see this in the news A lot.
+
+459
+00:38:44,320 --> 00:38:46,240
+Well, there's ways that could be abused.
+
+460
+00:38:46,640 --> 00:38:56,480
+So we need to make sure we are having people held accountable for these systems and ensure they are following these principles of responsible AI.
+
+461
+00:38:56,480 --> 00:38:58,640
+Or we can get into a really bad situation.
+
+462
+00:39:00,720 --> 00:39:01,360
+overall.
+
+463
+00:39:01,840 --> 00:39:04,160
+So it's critical we understand those things.
+
+464
+00:39:05,520 --> 00:39:12,160
+Okay, so with that, let's go into a little bit more detail about some of the different solutions that we have available.
+
+465
+00:39:12,560 --> 00:39:16,160
+So I want to start with computer vision.
+
+466
+00:39:16,640 --> 00:39:17,440
+That's a different color.
+
+467
+00:39:24,630 --> 00:39:28,230
+Then when we think about computer vision, we're dealing with images.
+
+468
+00:39:29,110 --> 00:39:30,710
+Realize what is an image?
+
+469
+00:39:30,950 --> 00:39:33,030
+An image is fundamentally
+
+470
+00:39:33,600 --> 00:39:34,800
+Just a bunch of pixels.
+
+471
+00:39:38,640 --> 00:39:40,480
+So it's made-up of a whole bunch of pixels.
+
+472
+00:39:40,480 --> 00:39:41,600
+So that's my image.
+
+473
+00:39:42,880 --> 00:39:44,880
+And each of these pixels has a value.
+
+474
+00:39:48,000 --> 00:39:52,240
+Now, if it was grayscale, then maybe it's from zero to 255.
+
+475
+00:39:52,480 --> 00:39:59,440
+So if this was the number 7, so maybe that is 255, 255, 255.
+
+476
+00:40:01,480 --> 00:40:29,440
+Probably can't draw a 7 very well. And all the rest are zeros. So it's the pixels. Now, in a real image, JPEG, they compress things. They make it a lot more efficient than this. If it was color, there'd be multiple values to define each pixel. But at a very, very basic level, an image is made up of pixels that have some value.
+
+477
+00:40:31,560 --> 00:40:59,040
+When I think about images and models, you may actually hear the term multimodal. So if you hear the term multimodal, that means it supports multiple modalities, i.e. it could maybe understand images, it can understand language, it could maybe understand video, the list goes on, audio.
+
+478
+00:40:59,760 --> 00:41:25,920
+But I can interact with it in different ways. And a big one of these is you've probably heard about GPT-4O, Omni. The big deal here was it was multimodal. I can interact with it in many different ways. Also, Microsoft has a Florence model. This is a foundational model. Foundational means it's fairly broad in its set of capabilities. Then I would typically build on top of that something more specific to my particular use case.
+
+479
+00:41:27,240 --> 00:41:57,040
+But if you hear the term multimodal, it simply means it works across different modalities. So I can interact with it in different ways. And then for that large, broad foundational model, I could then interact with it in more detail. I could tune it to something more within a particular use case. So if I'm in computer vision, what are some of the solutions that we have around it? And we can just start with vision services.
+
+480
+00:41:58,320 --> 00:42:30,290
+So if we start with vision, the most obvious one here is image analysis. So in this world, I have some image. That's a cow under the tree. AI probably wouldn't get cow under a tree from this. And so the capabilities here, it could give a caption.
+
+481
+00:42:32,880 --> 00:42:58,240
+This is a very poor picture of a cow under a tree drawn by a two-year-old. It could give tags. So tags would say, oh, cow and tree. It might also do object detection. So object detection would say, oh, cow,
+
+482
+00:42:59,520 --> 00:43:27,120
+And the cow is at, I don't know, 10 by 20 to 15 by 25. Oh, there's also a tree, blah, blah. So basically it's giving you the bounding boxes for the objects. So that's what object detection can do. We can do cool things like remove backgrounds. This is in some of the newer the image analysis 4.0.
+
+483
+00:43:27,760 --> 00:43:56,400
+So it can detect what's the foreground, what's the background. It can do smart cropping. Think I want to create a thumbnail so it would understand what is the key object in this picture and create me another image just based off of what I think or what it thinks is the most relevant piece of information. I can do things like optical character recognition. Now realize with optical character recognition, there are different solutions for this.
+
+484
+00:43:56,880 --> 00:44:26,280
+If it's a small amount of text in an image format, then I can use image analysis. And basically what I'm doing is it's just a feature that I'm going to specify. When I call the image analysis API, I'm going to say I want to use the read feature, just like all the other features to do tagging or captions or anything else.
+
+485
+00:44:26,720 --> 00:44:51,040
+If it's a large document, and we'll come back to this, it's a lot of text, then I want to use document intelligence. So there is a line between which service we want to use. So if you saw a question of, hey, I've got many, many books to read in the text from, which service should I use? It's not going to be image analysis. That's designed to pick out words or sentences from an image. Whereas
+
+486
+00:44:51,760 --> 00:45:18,480
+Document intelligence actually works with documents. It returns pages, lines, words. It supports document formats, whereas this doesn't. It only supports those images. So we have these different capabilities in image analysis. And if we go and look for a second. So remember, we have our computer vision resource types. I've created a number of them. But from here, I can go to Vision Studio. And we can see examples of these things.
+
+487
+00:45:18,960 --> 00:45:48,560
+So it's telling us recognize products on shelves. That's a part of the four O. I can customize models, add dense captions to images. That's a very descriptive caption. Remove background, add captions, detect common objects. Let's try that one. But also extract text, extract common tags, detect faces. We'll come back to that. Create a smart cropped image. If I do this detect here, I can just pick an image.
+
+488
+00:45:49,920 --> 00:46:17,120
+And notice it's returned me the objects and it's doing those bounding boxes around them. And if I looked at the JSON, it actually gives me the bounding box for each of the objects. So that's how it's actually returning it. So you can go and play with this yourself. Go and create a free resource. You can play and you can see these in action. Likewise, if I was to go and do some of that OCR,
+
+489
+00:46:18,280 --> 00:46:50,590
+It says extract text from an image. So we've got an identification card, and once again, you can see it's extracted different data, and the JSON would be particular bits of text and that bounding box where those words were. It's a really great capability. So imagine I was writing some solution, and I needed some ability to take an image and extract, either say what's in the image,
+
+490
+00:46:50,960 --> 00:47:15,360
+or read text from it. Image analysis V 4.0 is the latest one at time of recording. It has great capabilities. Hey, I want to remove the background. Hey, I want to get the tags. I want to find out where the objects are. Image analysis 4.0 does all of that for you. Now the next type of vision service is face. And
+
+491
+00:47:16,160 --> 00:47:44,240
+This obviously is an important one when I think about the possibility of abuse. So we have to be onboarded. We fill out a form to leverage some of the face services that are used to detect people, identify characteristics around them. And the first one is detect. So find faces. And then what it can also do is do a liveness check.
+
+492
+00:47:45,920 --> 00:48:14,400
+So is it not just a 3D print of a face? Is it not just a picture of a face? And what we do here is we can create a database of people and then it can go and compare against that database to do exactly that. And so with that, I can then do identification and I can also do verification all from those things.
+
+493
+00:48:15,920 --> 00:48:38,000
+Now, when I think of the face detection, it can do certain things. It can detect the head pose, if a mask is present, if glasses are present, where my facial landmarks are. So my eyes, my nose, my ears, and parts of my lip, it can detect if the face is blurred, the exposure, any occlusion.
+
+494
+00:48:38,680 --> 00:49:01,360
+What it doesn't do anymore is emotional state, my gender, my emotions, because honestly, in this day and age, that's open to abuse. And so those things are not supported anymore. It works on many different image formats, JPEG, PNG, the first frame in a GIF, a bitmap, shouldn't be larger than 6 megabytes.
+
+495
+00:49:02,160 --> 00:49:27,120
+And any face outside the range of 36 by 36, so tiny, up to 4096 by 4096, depending on the size of the image, will fail to be detected. But it's a pretty flexible capability from there. Now, the other thing that we can do is when I think about customized vision,
+
+496
+00:49:29,360 --> 00:49:52,320
+I have my own set of training I want to do, we can use this same image analysis v4.0. So I'm actually going to do kind of the v4. Because in the past we had a completely separate resource to do our own customized image training. With the image analysis v.4, we can just use that because this is a transformer based. So that
+
+497
+00:49:53,120 --> 00:50:19,600
+that very fancy neural network that we drew at the top. It's based on a transformer architecture of that neural network instead of the older convolutional neural network, which applies filters to the image to try and identify certain features to it or certain parts of the shape. The transformer takes longer to train. So my process will take longer, but I can do it with less images. If we look at the documentation,
+
+498
+00:50:21,360 --> 00:50:49,200
+It actually talks through custom vision. And here it stresses this point. So yes, we still have the custom vision service, which uses that older style convolutional neural network, whereas the image analysis 4.0 is based on the newer transformer model. And the older one required about 15 images per category. So 15 images of an orange, 15 images of an apple.
+
+499
+00:50:49,680 --> 00:51:19,200
+The newer works with two to five images. Now, that's not saying that's recommended. If you read through the recommendations, you still ideally want 50 or 60 images to get the very best quality. I want those images from different angles, different sizes, different coloring, different shading, like different backgrounds. You still want richer quality for the best model, but from a minimum possible, the transformer model requires a lot less information.
+
+500
+00:51:21,200 --> 00:51:48,400
+And then it sort of goes through how well they perform based on 2, 3, 5, 10, and full shot. Remember, this is the number of examples. When it says shot, it's the number of examples in that training. So here it's showing you, well, with just three examples, this was only a 56% accuracy compared to the newer model, 75%. So the whole point about this is these newer transformer models
+
+501
+00:51:49,600 --> 00:52:17,360
+actually give me a higher performance with a lot less training data, but it does take longer to train. And obviously you pay for that training time. So just keep that in mind. Okay, great. So this was all about images. The next big type of solution we're going to use is natural language.
+
+502
+00:52:18,800 --> 00:52:45,280
+So if I think about, that was my computer vision, just give myself some space, where am I? I'm going to come over here. Now I want to think natural language, which is obviously one of the key things around the generative AI is natural language, but I'm not focusing on that aspect. I'm going to focus more on some of the more traditional services we have with natural language.
+
+503
+00:52:50,280 --> 00:53:08,680
+When I think about computers interacting with language, they generally do not understand language. So we have some text. And what it does is it converts it into tokens, which it can then feed into our language model.
+
+504
+00:53:13,040 --> 00:53:38,880
+Different schemes will use different tokens. So a token could be a whole word, could be a part of a word, it could be a semicolon, it could be emojis. And the benefit here, of course, as well, if it's tokens, I can do multiple languages, English, French, German, whatever. I just define and break those up into different tokens. We can see an example of this. So if I look at the OpenAI actually has a tokenizer available.
+
+505
+00:53:40,920 --> 00:54:08,560
+And I can see it's a GPT-35, GP-4. And this is my AI-900 study cram. You can see it broke it up into 8 tokens. So it's like, well, AI was a token, 900 was a token. Study, the dash was a separate token. So one, two, three, 4, 5, 6, 8 tokens represented that sentence.
+
+506
+00:54:08,880 --> 00:54:38,400
+And that's something computers can then understand those tokens. And that's what the models would be. If we think back a second where I talked about that deep neural network, way back up here, the input layer would be the tokens. The output layer for GPT would be the tokens. It's being fed in the text prompt. It's spitting out in the text mode, the tokens that's the next most probable token. So all of the possible tokens, 10s of thousands of tokens,
+
+507
+00:54:39,280 --> 00:55:05,200
+there'd be a probability distribution for all of them, and one of them would have the highest, that would be the token it would spit out. So that's where those tokens can be used as part of our solutions here. So if I then think about, well, the actual capabilities that we want for those natural language, we can start off with language. So if I think of language,
+
+508
+00:55:07,640 --> 00:55:35,920
+What are some of the obvious things I would want it to be able to do? Well, I won't be able to analyze text. So if I give it a body of text, well, maybe it's going to tell me what is the predominant language in that text. It might be able to say the sentiment. So we can classify as it positive or negative. It might be able to point out key phrases.
+
+509
+00:55:37,320 --> 00:56:00,480
+that it found within the text. It might be able to identify the entities that were described inside that text. I could get summarization. Hey, here's a 10 page document. Summarize this into one paragraph for me. So a large volume of text, get out those key points from it.
+
+510
+00:56:02,560 --> 00:56:31,200
+I might have question and answering capabilities. So when I think about question and answers, what I'm really doing here is I define a knowledge base. So I define this knowledge base of questions and answers. Now I could provide those as question and answers. I could import an existing FAQ. I could bring in a chit chat source. And then what I want to do with this Q&A is very typically, I'm going to consume it by some type of bot service. So Azure has a bot service.
+
+511
+00:56:31,520 --> 00:57:00,320
+that would talk to the knowledge base that I define inside there. And then that Azure Bot Service provides the framework to develop, publish and manage those bots on Azure. And what's nice about the Azure Bot Service is I can then make it available on many different channels. And by channels, it could be Teams, it could be web chat, it could be a custom web application.
+
+512
+00:57:01,280 --> 00:57:16,000
+It could be e-mail, but it's really just a way to interact with the knowledge base I'm creating in that Q&A service. I might also have language understanding.
+
+513
+00:57:24,480 --> 00:57:50,880
+So the whole point of language understanding is we have this language understanding intelligence service, LUIS. Now it can be both an authoring or prediction resource. And so there's an endpoint as always and a key to consume it. And it helps detect the intent of an utterance that I give. So I might say turn on the lights.
+
+514
+00:57:52,920 --> 00:58:21,680
+So that's my utterance. So this is what I said. And what it will then do from that utterance is it will break it down and it will detect what is the intent. So the intent was to turn this thing on and then what is the entity? Well, lights. So think of this in some sort of automation scenario. This would be really useful.
+
+515
+00:58:22,320 --> 00:58:48,560
+And I can provide these via the machine learning. What are the entities? I could actually give it a regex expression. So I could say a pattern for a phone number. So we'll be able to detect what the phone number is. And so it's a very flexible capability around that. But they are all my language capabilities. And once again, we could see these. So if we jump over and look at my language studio,
+
+516
+00:58:51,960 --> 00:59:19,680
+We can see we have summarization information, post call transcription, extract information, extract PII, extract key phrases, find linked entities, extract named entities, and extract key phrases. And it's got example bits of text. Yeah. And it found us the key phrases from that body of text.
+
+517
+00:59:21,680 --> 00:59:49,040
+So there's different capabilities I need, again, based on my different scenarios and what my app needs to do. Then we move into speech. So for speech, it's, as the name suggests, I'm interacting in different ways, typically between text and then the speech equivalent of that. And it works in both directions.
+
+518
+00:59:49,680 --> 01:00:15,360
+So when I look at my speech capabilities, we're dealing with text wanting to go to speech. So we're going to synthesize it in many different voices. But then also I want speech to go to text. So I hear something and I want to understand what was said. I want to get a transcription of it.
+
+519
+01:00:17,960 --> 01:00:21,680
+What this enables me to also do is recognize the language again.
+
+520
+01:00:23,040 --> 01:00:28,400
+There's a bunch of different voices it supports, but it can also do speech translation.
+
+521
+01:00:33,440 --> 01:00:36,560
+Now there's two different things I can do with the translation.
+
+522
+01:00:36,800 --> 01:00:40,000
+So there's 60 different languages supported, I think, at time of recording.
+
+523
+01:00:40,640 --> 01:00:45,520
+So one of the things I can do is I can specify the specific.
+
+524
+01:00:46,800 --> 01:00:50,880
+language I want it to detect and output the text of something it's hearing.
+
+525
+01:00:51,040 --> 01:00:54,000
+So I can actually translate to text.
+
+526
+01:00:54,800 --> 01:01:02,000
+So someone's speaking one language and it outputs the text to a target language, or it can actually do to another language of speech.
+
+527
+01:01:03,200 --> 01:01:11,040
+So someone's speaking one language, it's hearing that, and it will output speech of the translated language that I have specified.
+
+528
+01:01:12,280 --> 01:01:16,800
+And then speaking of translation, we have the translation service itself.
+
+529
+01:01:23,020 --> 01:01:27,260
+Now the translation service, this works with text, so small amounts of text.
+
+530
+01:01:27,580 --> 01:01:32,940
+It works with documents, and it works with custom...
+
+531
+01:01:34,160 --> 01:01:36,560
+So I can have custom languages.
+
+532
+01:01:36,560 --> 01:01:42,720
+So think if I'm in a certain industry, I have customized phrases we use or words we use.
+
+533
+01:01:43,040 --> 01:01:52,800
+I can define my own domain and industry specific language in a dictionary that it can then use as part of the translation services.
+
+534
+01:01:54,320 --> 01:01:56,080
+So it can convert between language.
+
+535
+01:01:56,400 --> 01:01:57,600
+I can have filters.
+
+536
+01:01:57,600 --> 01:01:59,160
+So I can have a profanity filter.
+
+537
+01:01:59,760 --> 01:02:03,440
+I could have selected translation.
+
+538
+01:02:03,760 --> 01:02:06,160
+So this would say is, hey, some words don't translate.
+
+539
+01:02:06,560 --> 01:02:10,680
+Maybe the words Azure, maybe Azure in, I don't want to translate it.
+
+540
+01:02:10,680 --> 01:02:15,600
+It's actually, yes, it might mean different things in other languages, but I don't want it to translate it.
+
+541
+01:02:15,840 --> 01:02:20,080
+So I can have those capabilities as part of my translation service.
+
+542
+01:02:21,120 --> 01:02:22,880
+So those are very useful.
+
+543
+01:02:24,600 --> 01:02:29,840
+when I'm dealing maybe with larger amounts of text that I want to translate between different things.
+
+544
+01:02:32,080 --> 01:02:35,440
+Then we get into document intelligence and knowledge mining.
+
+545
+01:02:35,440 --> 01:02:41,440
+Now, these seem to have been reduced in how much you need to know about these.
+
+546
+01:02:41,440 --> 01:02:46,960
+We won't go into a super high amount of detail, but I think it's important to just understand what they are.
+
+547
+01:02:49,040 --> 01:02:52,640
+So if now we think about our document intelligence,
+
+548
+01:03:01,120 --> 01:03:03,840
+So document intelligence, I have a document.
+
+549
+01:03:04,720 --> 01:03:08,400
+Now that document could be loads of bodies of text.
+
+550
+01:03:08,880 --> 01:03:12,320
+It could be form-based.
+
+551
+01:03:12,320 --> 01:03:13,600
+It could be a receipt.
+
+552
+01:03:13,600 --> 01:03:14,600
+It could be an invoice.
+
+553
+01:03:14,600 --> 01:03:16,640
+There's many different things we have there.
+
+554
+01:03:18,080 --> 01:03:23,320
+And what we have here is, it's actually used to be called, formerly known as forms recognizer.
+
+555
+01:03:24,160 --> 01:03:24,640
+But
+
+556
+01:03:24,960 --> 01:03:30,320
+Because of the emphasis more on artificial intelligence coming in and being used, it was renamed document intelligence.
+
+557
+01:03:30,800 --> 01:03:35,600
+So one of the things here I can do is document analysis.
+
+558
+01:03:38,080 --> 01:03:44,720
+So document analysis, I give it this document and it's going to provide the structured data version of it.
+
+559
+01:03:45,160 --> 01:03:46,560
+And there's pre-built models.
+
+560
+01:03:46,880 --> 01:03:51,360
+So for this, we have these pre-built models.
+
+561
+01:03:52,880 --> 01:03:57,920
+that can handle things like receipts, invoices.
+
+562
+01:03:59,920 --> 01:04:04,320
+And it's smart enough to understand the semantic meaning of what is in the document.
+
+563
+01:04:04,480 --> 01:04:06,400
+Like it will recognize, oh, that's an address.
+
+564
+01:04:07,000 --> 01:04:10,240
+Okay, well, I'll store it in something that makes sense for that address.
+
+565
+01:04:10,400 --> 01:04:11,760
+That's a phone number.
+
+566
+01:04:11,760 --> 01:04:14,680
+So it's not just basic OCR where it looks at the text.
+
+567
+01:04:14,880 --> 01:04:18,080
+It understands what that text actually is.
+
+568
+01:04:18,720 --> 01:04:21,200
+It will extract key value pairs.
+
+569
+01:04:21,520 --> 01:04:27,440
+If it sees those in the document, it's going to give me JSON as an output for this.
+
+570
+01:04:27,600 --> 01:04:29,760
+And it works with PDF and images.
+
+571
+01:04:29,760 --> 01:04:33,040
+So that's what's really nice about these sets of capabilities.
+
+572
+01:04:34,000 --> 01:04:41,520
+So yes, it can import huge amounts of text from books, et cetera, but it's also going to understand those more structured types of forms you may have.
+
+573
+01:04:41,840 --> 01:04:43,600
+And I can create a custom model.
+
+574
+01:04:47,760 --> 01:04:50,000
+I only need 5 examples.
+
+575
+01:04:50,560 --> 01:04:56,640
+and I can just give it the sample forms and it will work out what the different parts of the form are.
+
+576
+01:04:57,120 --> 01:04:58,720
+Now I just have an Azure Storage account.
+
+577
+01:04:59,200 --> 01:05:02,560
+I can customize what it spits out as that model.
+
+578
+01:05:03,200 --> 01:05:10,480
+But it really does give me a nice no-code way to create my own custom models now using the Document Intelligence Studio.
+
+579
+01:05:10,800 --> 01:05:20,560
+So I can just go through, give it the forms, and it will spit out this great model that I can then feed in new forms into, and it will go and extract the relevant parts of that.
+
+580
+01:05:20,920 --> 01:05:22,640
+And I think if we go and jump over.
+
+581
+01:05:26,080 --> 01:05:30,800
+So I did have the Speech Studio as well as this is where you could play around.
+
+582
+01:05:31,760 --> 01:05:34,800
+some of those types of speech to text, text to speech as well.
+
+583
+01:05:36,360 --> 01:05:53,880
+And then if we look at the document intelligence, we can see here, hey, there's document analysis for general documents, there's pre-built models for invoices, for receipts, identity, health insurance cards, tax forms, it's the whole thing.
+
+584
+01:05:53,880 --> 01:05:58,640
+And then the custom models, you can just go ahead and create your own ones.
+
+585
+01:05:59,280 --> 01:06:01,200
+Very simply, no code,
+
+586
+01:06:01,520 --> 01:06:02,600
+just available to you.
+
+587
+01:06:02,600 --> 01:06:08,080
+And then finally, we have knowledge mining.
+
+588
+01:06:16,900 --> 01:06:21,060
+So knowledge mining is all about the idea that I just have a mass of data.
+
+589
+01:06:24,540 --> 01:06:31,060
+And I need to be able to get insight and find what I care about within that data.
+
+590
+01:06:31,380 --> 01:06:32,900
+So this is Azure AI Search.
+
+591
+01:06:32,900 --> 01:06:36,260
+This formerly was Azure Cognitive Search, but it's now Azure AI Search.
+
+592
+01:06:36,720 --> 01:06:42,560
+Now this is its own type of resource, which is why I'm trying to call it out separately.
+
+593
+01:06:43,120 --> 01:06:49,680
+So this is an Azure AI search resource.
+
+594
+01:06:49,760 --> 01:06:53,920
+It is not available as part of that multi service account type.
+
+595
+01:06:54,880 --> 01:06:57,440
+So what we have here is we have the resource, we have our data.
+
+596
+01:06:57,440 --> 01:07:02,480
+This could be BLOB in a data lake, in a database, in table storage.
+
+597
+01:07:02,480 --> 01:07:05,280
+There's plugins for huge amounts of different types of stuff.
+
+598
+01:07:06,120 --> 01:07:11,440
+And what I have to be able to do is extract information from the data.
+
+599
+01:07:11,760 --> 01:07:14,080
+So what we have defined are skill sets.
+
+600
+01:07:17,200 --> 01:07:19,200
+Now imagine the data was a huge document.
+
+601
+01:07:19,680 --> 01:07:25,320
+Well, the document is too big to just read in all the text at once and maybe come up with a semantic, i.e.
+
+602
+01:07:25,320 --> 01:07:26,240
+what it means.
+
+603
+01:07:26,560 --> 01:07:28,400
+I want to break it into smaller bits.
+
+604
+01:07:28,720 --> 01:07:30,720
+So one of the skill sets is chunking.
+
+605
+01:07:30,960 --> 01:07:35,680
+It will break data down into smaller component parts, a certain amount of overlap.
+
+606
+01:07:36,640 --> 01:07:41,600
+And then what it could go and do is, well, okay, I'll go and create the chunks of the data.
+
+607
+01:07:42,160 --> 01:07:50,880
+I'll then send it to an embedding model that creates A high dimensional vector representation of what that bit of data means, what that chunk actually means.
+
+608
+01:07:51,200 --> 01:07:54,800
+It's related to a dog going to the park.
+
+609
+01:07:55,760 --> 01:07:56,960
+So it would go and get that.
+
+610
+01:07:57,480 --> 01:08:06,560
+And then what it does after it breaks that down and it does enrichment on it, and it can also do things like call a vision service to say get the text from this image that was in a PDF document.
+
+611
+01:08:07,200 --> 01:08:10,960
+Well, it can store the chunks of data it goes and creates.
+
+612
+01:08:11,680 --> 01:08:13,440
+Into its own knowledge store.
+
+613
+01:08:15,840 --> 01:08:20,800
+That I could go and interact with, but also what it does, it creates indexes.
+
+614
+01:08:23,640 --> 01:08:28,480
+And what's powerful about this is it creates both the more traditional exact text type index.
+
+615
+01:08:29,040 --> 01:08:34,320
+This phrase matches this phrase, but it also creates a vector index.
+
+616
+01:08:34,800 --> 01:08:37,520
+And that's where we talk about the semantic meaning.
+
+617
+01:08:38,160 --> 01:08:42,000
+And that's very useful for these natural language models like GPT.
+
+618
+01:08:42,000 --> 01:08:47,520
+And you'll hear about retrieved augmented generation, which we'll cover in the next video, the covers of generative AI.
+
+619
+01:08:48,000 --> 01:08:53,680
+But then also it can run both of these and combine the results and re-rank them using a hybrid search.
+
+620
+01:08:54,400 --> 01:08:59,600
+And so now the way we can leverage this is my little application over here.
+
+621
+01:09:00,640 --> 01:09:01,760
+I just make a call.
+
+622
+01:09:02,160 --> 01:09:04,240
+I just send it some query.
+
+623
+01:09:04,240 --> 01:09:07,360
+Hey, I'm trying to find information about dogs going to the park.
+
+624
+01:09:08,320 --> 01:09:09,840
+And I might use different language.
+
+625
+01:09:09,840 --> 01:09:17,280
+I might say, hey, I'm trying to find information about puppies going to public green areas.
+
+626
+01:09:17,520 --> 01:09:19,120
+That's terrible for a park.
+
+627
+01:09:19,520 --> 01:09:31,760
+Anyway, but it would go and find because of this vector base that's doing the hybrid search and it's chunked the data, it would find that document about a dog going to a park and it would return it to me based on the natural language.
+
+628
+01:09:32,720 --> 01:09:35,600
+So those are really powerful capabilities.
+
+629
+01:09:37,760 --> 01:09:38,560
+And that was it.
+
+630
+01:09:38,720 --> 01:09:45,920
+So that's the super high level for the AI 900 information.
+
+631
+01:09:46,320 --> 01:09:59,200
+So just understand artificial intelligence, well, that's something mimicking a capability that we have as humans, be it vision or speech or natural language, document intelligence, knowledge.
+
+632
+01:10:00,240 --> 01:10:06,000
+Then we have a subset of that which is machine learning, where I don't have to tell the computer how to perform the task.
+
+633
+01:10:06,480 --> 01:10:18,880
+Instead, I give it labeled data that it can generalize into some algorithm, decision tree, linear regression, the SVM, to output a model.
+
+634
+01:10:18,960 --> 01:10:20,000
+This may be iterative.
+
+635
+01:10:20,160 --> 01:10:25,680
+I would then do test data, and then maybe I have to tweak some things, add in some more training data.
+
+636
+01:10:25,920 --> 01:10:30,000
+But eventually I get the model that I can deploy, feed new data,
+
+637
+01:10:30,200 --> 01:10:31,680
+and I'll get the prediction from it.
+
+638
+01:10:33,000 --> 01:10:37,840
+And then we can have, when we think about the training data, we have numeric, which is regression.
+
+639
+01:10:38,080 --> 01:10:43,280
+We have classification, which could be it is or it isn't binary, and then multiclass.
+
+640
+01:10:43,720 --> 01:10:48,240
+And then there's unsupervised, where it didn't have labels, and it just tries to find some grouping.
+
+641
+01:10:49,040 --> 01:10:52,240
+Then we have deep learning that uses the neural networks.
+
+642
+01:10:52,720 --> 01:10:58,240
+This is where we have these neurons that each run an activation function.
+
+643
+01:10:58,800 --> 01:11:12,320
+Every connection in has some weight, and then the neuron itself has a bias, and we have to hit some value before it activates, so it doesn't return zero to the connected neurons on its right-hand side.
+
+644
+01:11:13,680 --> 01:11:14,880
+And there's different ways we do that.
+
+645
+01:11:14,880 --> 01:11:18,160
+You don't have to know that, but that's what the activation function is.
+
+646
+01:11:18,160 --> 01:11:22,000
+It has to reach a certain point before it activates and actually starts giving values out.
+
+647
+01:11:22,480 --> 01:11:26,600
+We have an input and an output layer that are visible, and there's a whole bunch of hidden layers.
+
+648
+01:11:26,600 --> 01:11:28,000
+And this is what powers
+
+649
+01:11:28,560 --> 01:11:31,360
+all of these advanced generative AI capabilities.
+
+650
+01:11:33,720 --> 01:11:35,840
+There's different Azure AI services.
+
+651
+01:11:36,400 --> 01:11:39,200
+Remember, we have single service options that does one type of thing.
+
+652
+01:11:39,200 --> 01:11:42,080
+It does vision, it does text, it does translation.
+
+653
+01:11:42,400 --> 01:11:44,160
+There are free options available for those.
+
+654
+01:11:44,160 --> 01:11:45,680
+They would have their own endpoint.
+
+655
+01:11:45,680 --> 01:11:47,440
+And then we have the multi-service.
+
+656
+01:11:47,440 --> 01:11:50,040
+There's no free SKU for multi-service.
+
+657
+01:11:50,040 --> 01:11:54,080
+You could have a single endpoint where I could consume all the different types of services.
+
+658
+01:11:54,400 --> 01:11:58,640
+Then we have the Azure OpenAI resource types and the Azure AI search resource types.
+
+659
+01:11:59,280 --> 01:12:05,040
+When we think about those endpoints, that's a URL I would connect to from my application.
+
+660
+01:12:05,440 --> 01:12:12,720
+I can authenticate using a key, or for many of them I can use Entra ID integrated authentication.
+
+661
+01:12:13,280 --> 01:12:22,880
+And that integration is via REST, but for some languages there's a software development kit available which abstracts the REST, makes it easier for me to consume from my language.
+
+662
+01:12:23,680 --> 01:12:25,200
+Responsible AI is critical.
+
+663
+01:12:26,320 --> 01:12:29,280
+We have to think about there are different risks.
+
+664
+01:12:29,520 --> 01:12:31,360
+So we need to ensure fairness.
+
+665
+01:12:31,760 --> 01:12:32,800
+There's no bias.
+
+666
+01:12:33,440 --> 01:12:35,600
+The reliability and safety of our models.
+
+667
+01:12:35,760 --> 01:12:38,160
+We focus on privacy and security.
+
+668
+01:12:38,560 --> 01:12:40,800
+Everyone is supported by the model.
+
+669
+01:12:40,800 --> 01:12:42,000
+We have inclusivity.
+
+670
+01:12:42,960 --> 01:12:46,320
+There's transparency in how it's doing what it's doing so we can trust it.
+
+671
+01:12:46,320 --> 01:12:48,240
+And we have people that are accountable.
+
+672
+01:12:49,760 --> 01:12:53,840
+For the individual solutions for vision, we have the image analysis V4.
+
+673
+01:12:54,080 --> 01:12:57,200
+We can give it a picture and we can ask for what we want it to do.
+
+674
+01:12:57,200 --> 01:12:59,120
+So we can get captions, describe it.
+
+675
+01:12:59,600 --> 01:13:02,560
+We can get deep captions, which are very descriptive terms.
+
+676
+01:13:02,720 --> 01:13:04,560
+I can get tags, what's in it.
+
+677
+01:13:04,800 --> 01:13:08,000
+I can get object detection, what's in it and whereabouts is it.
+
+678
+01:13:08,560 --> 01:13:09,800
+I can remove the background.
+
+679
+01:13:09,800 --> 01:13:12,480
+I can create nice thumbnails with smart cropping.
+
+680
+01:13:12,960 --> 01:13:15,040
+I can abstract small amounts of text.
+
+681
+01:13:15,360 --> 01:13:16,480
+using the read feature.
+
+682
+01:13:16,640 --> 01:13:19,920
+But if it was a large document, we would use document intelligence instead.
+
+683
+01:13:20,320 --> 01:13:23,120
+And then for the face, we can detect faces in it.
+
+684
+01:13:23,120 --> 01:13:26,880
+We can understand which direction it's facing, where my ears are.
+
+685
+01:13:29,120 --> 01:13:35,840
+I can identify specific people that we can train into groups and then also verify that is a certain person.
+
+686
+01:13:36,080 --> 01:13:37,560
+We can also do liveness detection.
+
+687
+01:13:37,560 --> 01:13:39,920
+It's not just a picture or some 3D print.
+
+688
+01:13:41,680 --> 01:13:42,880
+For natural language,
+
+689
+01:13:44,000 --> 01:13:45,760
+We think about analyzing the text.
+
+690
+01:13:45,800 --> 01:13:48,480
+What is the language, the predominant language of the text?
+
+691
+01:13:48,480 --> 01:13:49,360
+What is the sentiment?
+
+692
+01:13:49,360 --> 01:13:49,880
+Is it positive?
+
+693
+01:13:49,880 --> 01:13:50,640
+Is it negative?
+
+694
+01:13:50,880 --> 01:13:52,000
+What are key phrases?
+
+695
+01:13:52,000 --> 01:13:53,480
+What are the entities within there?
+
+696
+01:13:53,840 --> 01:13:56,160
+We can summarize a body of text.
+
+697
+01:13:56,960 --> 01:13:59,280
+I can create a knowledge base of question and answers.
+
+698
+01:14:00,080 --> 01:14:05,520
+Then I could hook into that with a bot service, which can then make that available through many different channels.
+
+699
+01:14:06,040 --> 01:14:10,560
+Then we have language understanding, which takes an utterance that we give.
+
+700
+01:14:10,960 --> 01:14:15,440
+And from that, it can detect what is the intent and what is the entity that it wants to act on.
+
+701
+01:14:16,400 --> 01:14:18,560
+For speech, we go both of the ways.
+
+702
+01:14:18,560 --> 01:14:21,440
+We can do text to speech.
+
+703
+01:14:21,440 --> 01:14:24,080
+So we synthesize the voice, many different voices available.
+
+704
+01:14:24,400 --> 01:14:27,440
+Or we can take speech and understand what the text is.
+
+705
+01:14:27,920 --> 01:14:29,680
+And we can do basic translation.
+
+706
+01:14:30,160 --> 01:14:33,360
+We hear something, we can translate it and output to text or to speech.
+
+707
+01:14:33,600 --> 01:14:44,560
+Then there's a specific translation service which can translate bits of text, entire documents, and I can also train custom domain or industry-specific terms.
+
+708
+01:14:45,960 --> 01:14:50,800
+In document intelligence, that's large-scale document analysis.
+
+709
+01:14:51,280 --> 01:14:56,080
+There's pre-built types of forms it understands like receipts and invoices.
+
+710
+01:14:56,480 --> 01:15:00,160
+And with as few as five examples, I can train my own custom one.
+
+711
+01:15:00,160 --> 01:15:05,360
+And then knowledge mining, Azure AI Search, formerly Azure Cognitive Search.
+
+712
+01:15:05,920 --> 01:15:08,240
+Lots of different data sources supported.
+
+713
+01:15:08,800 --> 01:15:15,920
+It can then go and perform skills against them, like chunking it into smaller bits to go and enrich the data.
+
+714
+01:15:16,800 --> 01:15:22,280
+to give me text and vector-based indexes that I can then query and get my results for.
+
+715
+01:15:22,280 --> 01:15:29,920
+So just make sure you've got a pretty good idea of those key types available to you.
+
+716
+01:15:31,280 --> 01:15:32,960
+This is a very high-level overview.
+
+717
+01:15:34,880 --> 01:15:39,520
+Play around with those free SKUs so you can see the different capabilities of them.
+
+718
+01:15:40,160 --> 01:15:42,240
+Make sure you've gone through the Microsoft Learn.
+
+719
+01:15:42,480 --> 01:15:49,840
+Make sure you've gone through the sandbox if you've never taken a Microsoft exam before so you're not surprised on the day by what the experience looks like.
+
+720
+01:15:50,560 --> 01:15:55,480
+Pay attention to the amount of time you have and the number of questions there are and try and break it down.
+
+721
+01:15:55,800 --> 01:15:57,480
+Don't spend too long on any one question.
+
+722
+01:15:57,480 --> 01:15:59,040
+You can always come back to questions.
+
+723
+01:15:59,600 --> 01:16:03,040
+If you don't know the answer, eliminate the obvious wrong things.
+
+724
+01:16:03,520 --> 01:16:05,320
+It's not going to be cheese as an answer.
+
+725
+01:16:05,320 --> 01:16:07,840
+I hope there's never a question where the answer is cheese.
+
+726
+01:16:08,600 --> 01:16:10,400
+And then make an educated guess.
+
+727
+01:16:10,480 --> 01:16:13,840
+The services are not designed to be confusing to you.
+
+728
+01:16:13,840 --> 01:16:15,600
+They want it to be very intuitive.
+
+729
+01:16:15,920 --> 01:16:22,400
+So make a educated guess on what would make the most sense to be the answer and pick that.
+
+730
+01:16:23,440 --> 01:16:25,440
+If you don't pass the first time, don't worry.
+
+731
+01:16:26,480 --> 01:16:27,280
+It happens.
+
+732
+01:16:27,600 --> 01:16:30,400
+At the end, it will show you how you did in each of the sections.
+
+733
+01:16:31,040 --> 01:16:35,520
+Redouble your efforts on where you're weakest and you're crushed the next time.
+
+734
+01:16:36,480 --> 01:16:36,960
+So that was it.
+
+735
+01:16:36,960 --> 01:16:41,360
+Now you need to go and watch the generative AI study cram video and good luck.

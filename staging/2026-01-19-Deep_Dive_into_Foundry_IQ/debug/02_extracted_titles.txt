@@ -1,0 +1,22 @@
+AI models and their knowledge
+Adding knowledge sources
+Agentic RAG
+Azure AI Search
+Close
+Collections of knowledge sources
+Foundry IQ
+How the IQs work together
+Importance of good descriptions and instructions
+Introduction
+Knowledge bases and use of Azure AI Search resource
+Multiple knowledge sources
+New types of knowledge source
+Output modes
+Peeking inside its thinking
+RAG to the rescue
+Reasoning effort
+Remote knowledge sources
+SKU limits
+Seeing the output modes in action
+Self-reflection
+Summary

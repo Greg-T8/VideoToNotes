@@ -1,0 +1,592 @@
+{
+  "title": "AZ-104 Administrator Associate Study Cram v2",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:00:44"
+    },
+    {
+      "title": "Materials to prepare",
+      "timestamp": "00:00:44",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:02:20"
+    },
+    {
+      "title": "Entra ID",
+      "timestamp": "00:02:20",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:05:01"
+    },
+    {
+      "title": "ADDS to Entra Sync",
+      "timestamp": "00:05:01",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:07:59"
+    },
+    {
+      "title": "Tenant",
+      "timestamp": "00:07:59",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:10:21"
+    },
+    {
+      "title": "Branding",
+      "timestamp": "00:10:21",
+      "level": 2,
+      "order": 6,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:11:08"
+    },
+    {
+      "title": "Users",
+      "timestamp": "00:11:08",
+      "level": 2,
+      "order": 7,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:15:51"
+    },
+    {
+      "title": "Groups",
+      "timestamp": "00:15:51",
+      "level": 2,
+      "order": 8,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:18:57"
+    },
+    {
+      "title": "Devices",
+      "timestamp": "00:18:57",
+      "level": 2,
+      "order": 9,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:20:48"
+    },
+    {
+      "title": "Licenses",
+      "timestamp": "00:20:48",
+      "level": 2,
+      "order": 10,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:23:27"
+    },
+    {
+      "title": "SSPR",
+      "timestamp": "00:23:27",
+      "level": 2,
+      "order": 11,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:25:00"
+    },
+    {
+      "title": "Roles",
+      "timestamp": "00:25:00",
+      "level": 2,
+      "order": 12,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:27:23"
+    },
+    {
+      "title": "Clouds and regions",
+      "timestamp": "00:27:23",
+      "level": 2,
+      "order": 13,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:34:48"
+    },
+    {
+      "title": "Subscriptions and Management Groups",
+      "timestamp": "00:34:48",
+      "level": 2,
+      "order": 14,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:39:14"
+    },
+    {
+      "title": "Cost analysis and budgets",
+      "timestamp": "00:39:14",
+      "level": 2,
+      "order": 15,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:43:31"
+    },
+    {
+      "title": "Resource Groups",
+      "timestamp": "00:43:31",
+      "level": 2,
+      "order": 16,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:45:39"
+    },
+    {
+      "title": "Cost saving mechanisms",
+      "timestamp": "00:45:39",
+      "level": 2,
+      "order": 17,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:51:20"
+    },
+    {
+      "title": "Tags",
+      "timestamp": "00:51:20",
+      "level": 2,
+      "order": 18,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:54:35"
+    },
+    {
+      "title": "Azure Policy",
+      "timestamp": "00:54:35",
+      "level": 2,
+      "order": 19,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:59:09"
+    },
+    {
+      "title": "RBAC",
+      "timestamp": "00:59:09",
+      "level": 2,
+      "order": 20,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:06:56"
+    },
+    {
+      "title": "Resource locking",
+      "timestamp": "01:06:56",
+      "level": 2,
+      "order": 21,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:09:28"
+    },
+    {
+      "title": "Networking",
+      "timestamp": "01:09:28",
+      "level": 2,
+      "order": 22,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:10:15"
+    },
+    {
+      "title": "Virtual network",
+      "timestamp": "01:10:15",
+      "level": 2,
+      "order": 23,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:20:00"
+    },
+    {
+      "title": "Peering",
+      "timestamp": "01:20:00",
+      "level": 2,
+      "order": 24,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:24:36"
+    },
+    {
+      "title": "Azure Virtual Network Manager",
+      "timestamp": "01:24:36",
+      "level": 2,
+      "order": 25,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:28:47"
+    },
+    {
+      "title": "Network Security Group",
+      "timestamp": "01:28:47",
+      "level": 2,
+      "order": 26,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:36:27"
+    },
+    {
+      "title": "Azure Firewall",
+      "timestamp": "01:36:27",
+      "level": 2,
+      "order": 27,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:38:41"
+    },
+    {
+      "title": "Azure DNS",
+      "timestamp": "01:38:41",
+      "level": 2,
+      "order": 28,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:41:35"
+    },
+    {
+      "title": "Azure Private DNS",
+      "timestamp": "01:41:35",
+      "level": 2,
+      "order": 29,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:46:51"
+    },
+    {
+      "title": "Connectivity",
+      "timestamp": "01:46:51",
+      "level": 2,
+      "order": 30,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:47:52"
+    },
+    {
+      "title": "S2S VPN",
+      "timestamp": "01:47:52",
+      "level": 2,
+      "order": 31,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:50:34"
+    },
+    {
+      "title": "ExpressRoute",
+      "timestamp": "01:50:34",
+      "level": 2,
+      "order": 32,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:56:09"
+    },
+    {
+      "title": "Azure Virtual WAN",
+      "timestamp": "01:56:09",
+      "level": 2,
+      "order": 33,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:58:36"
+    },
+    {
+      "title": "User Defined Routes",
+      "timestamp": "01:58:36",
+      "level": 2,
+      "order": 34,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "01:59:55"
+    },
+    {
+      "title": "Service endpoints",
+      "timestamp": "01:59:55",
+      "level": 2,
+      "order": 35,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:04:50"
+    },
+    {
+      "title": "Private endpoints",
+      "timestamp": "02:04:50",
+      "level": 2,
+      "order": 36,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:08:03"
+    },
+    {
+      "title": "Azure Bastion",
+      "timestamp": "02:08:03",
+      "level": 2,
+      "order": 37,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:10:24"
+    },
+    {
+      "title": "Load balancing",
+      "timestamp": "02:10:24",
+      "level": 2,
+      "order": 38,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:12:03"
+    },
+    {
+      "title": "Azure Load Balancer",
+      "timestamp": "02:12:03",
+      "level": 2,
+      "order": 39,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:18:13"
+    },
+    {
+      "title": "Azure App Gateway",
+      "timestamp": "02:18:13",
+      "level": 2,
+      "order": 40,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:25:01"
+    },
+    {
+      "title": "Azure Traffic Manager",
+      "timestamp": "02:25:01",
+      "level": 2,
+      "order": 41,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:26:51"
+    },
+    {
+      "title": "Azure Cross Region Load Balancer",
+      "timestamp": "02:26:51",
+      "level": 2,
+      "order": 42,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:28:09"
+    },
+    {
+      "title": "Azure Front Door",
+      "timestamp": "02:28:09",
+      "level": 2,
+      "order": 43,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:31:50"
+    },
+    {
+      "title": "Storage accounts",
+      "timestamp": "02:31:50",
+      "level": 2,
+      "order": 44,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:42:07"
+    },
+    {
+      "title": "Storage tools",
+      "timestamp": "02:42:07",
+      "level": 2,
+      "order": 45,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:44:20"
+    },
+    {
+      "title": "Blob tiering",
+      "timestamp": "02:44:20",
+      "level": 2,
+      "order": 46,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:49:05"
+    },
+    {
+      "title": "Lifecycle management",
+      "timestamp": "02:49:05",
+      "level": 2,
+      "order": 47,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:50:22"
+    },
+    {
+      "title": "Object replication",
+      "timestamp": "02:50:22",
+      "level": 2,
+      "order": 48,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:52:45"
+    },
+    {
+      "title": "Azure Files",
+      "timestamp": "02:52:45",
+      "level": 2,
+      "order": 49,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "02:56:41"
+    },
+    {
+      "title": "Access",
+      "timestamp": "02:56:41",
+      "level": 2,
+      "order": 50,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:00:30"
+    },
+    {
+      "title": "Encryption",
+      "timestamp": "03:00:30",
+      "level": 2,
+      "order": 51,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:02:54"
+    },
+    {
+      "title": "Managed disks",
+      "timestamp": "03:02:54",
+      "level": 2,
+      "order": 52,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:10:21"
+    },
+    {
+      "title": "Provisioning resources",
+      "timestamp": "03:10:21",
+      "level": 2,
+      "order": 53,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:15:07"
+    },
+    {
+      "title": "Types of service",
+      "timestamp": "03:15:07",
+      "level": 2,
+      "order": 54,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:19:05"
+    },
+    {
+      "title": "Virtual machines",
+      "timestamp": "03:19:05",
+      "level": 2,
+      "order": 55,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:28:11"
+    },
+    {
+      "title": "Availability Set and Zones",
+      "timestamp": "03:28:11",
+      "level": 2,
+      "order": 56,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:30:54"
+    },
+    {
+      "title": "VMSS",
+      "timestamp": "03:30:54",
+      "level": 2,
+      "order": 57,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:34:35"
+    },
+    {
+      "title": "Containers",
+      "timestamp": "03:34:35",
+      "level": 2,
+      "order": 58,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:37:25"
+    },
+    {
+      "title": "AKS",
+      "timestamp": "03:37:25",
+      "level": 2,
+      "order": 59,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:42:34"
+    },
+    {
+      "title": "App Service Plan",
+      "timestamp": "03:42:34",
+      "level": 2,
+      "order": 60,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:45:25"
+    },
+    {
+      "title": "Monitoring",
+      "timestamp": "03:45:25",
+      "level": 2,
+      "order": 61,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:50:48"
+    },
+    {
+      "title": "Alerting",
+      "timestamp": "03:50:48",
+      "level": 2,
+      "order": 62,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:54:57"
+    },
+    {
+      "title": "Log Analytics Workspace",
+      "timestamp": "03:54:57",
+      "level": 2,
+      "order": 63,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "03:59:05"
+    },
+    {
+      "title": "Network watcher",
+      "timestamp": "03:59:05",
+      "level": 2,
+      "order": 64,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "04:00:16"
+    },
+    {
+      "title": "Summary and close",
+      "timestamp": "04:00:16",
+      "level": 2,
+      "order": 65,
+      "parent": null,
+      "children": [],
+      "end_timestamp": null
+    }
+  ],
+  "url": "https://www.youtube.com/watch?v=0Knf9nub4-k",
+  "upload_date": "2024-02-12"
+}

@@ -1,0 +1,205 @@
+{
+  "title": "Deep Dive into Foundry IQ",
+  "sections": [
+    {
+      "title": "Introduction",
+      "timestamp": "00:00:00",
+      "level": 2,
+      "order": 1,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:00:15"
+    },
+    {
+      "title": "AI models and their knowledge",
+      "timestamp": "00:00:15",
+      "level": 2,
+      "order": 2,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:01:31"
+    },
+    {
+      "title": "RAG to the rescue",
+      "timestamp": "00:01:31",
+      "level": 2,
+      "order": 3,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:03:12"
+    },
+    {
+      "title": "Azure AI Search",
+      "timestamp": "00:03:12",
+      "level": 2,
+      "order": 4,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:08:24"
+    },
+    {
+      "title": "Foundry IQ",
+      "timestamp": "00:08:24",
+      "level": 2,
+      "order": 5,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:09:03"
+    },
+    {
+      "title": "Agentic RAG",
+      "timestamp": "00:09:03",
+      "level": 2,
+      "order": 6,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:09:32"
+    },
+    {
+      "title": "Multiple knowledge sources",
+      "timestamp": "00:09:32",
+      "level": 2,
+      "order": 7,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:10:18"
+    },
+    {
+      "title": "New types of knowledge source",
+      "timestamp": "00:10:18",
+      "level": 2,
+      "order": 8,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:11:55"
+    },
+    {
+      "title": "Remote knowledge sources",
+      "timestamp": "00:11:55",
+      "level": 2,
+      "order": 9,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:14:22"
+    },
+    {
+      "title": "Knowledge bases and use of Azure AI Search resource",
+      "timestamp": "00:14:22",
+      "level": 2,
+      "order": 10,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:15:44"
+    },
+    {
+      "title": "Adding knowledge sources",
+      "timestamp": "00:15:44",
+      "level": 2,
+      "order": 11,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:17:09"
+    },
+    {
+      "title": "SKU limits",
+      "timestamp": "00:17:09",
+      "level": 2,
+      "order": 12,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:17:46"
+    },
+    {
+      "title": "Collections of knowledge sources",
+      "timestamp": "00:17:46",
+      "level": 2,
+      "order": 13,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:18:49"
+    },
+    {
+      "title": "Reasoning effort",
+      "timestamp": "00:18:49",
+      "level": 2,
+      "order": 14,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:22:31"
+    },
+    {
+      "title": "Importance of good descriptions and instructions",
+      "timestamp": "00:22:31",
+      "level": 2,
+      "order": 15,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:23:51"
+    },
+    {
+      "title": "Self-reflection",
+      "timestamp": "00:23:51",
+      "level": 2,
+      "order": 16,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:25:39"
+    },
+    {
+      "title": "Output modes",
+      "timestamp": "00:25:39",
+      "level": 2,
+      "order": 17,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:28:31"
+    },
+    {
+      "title": "Seeing the output modes in action",
+      "timestamp": "00:28:31",
+      "level": 2,
+      "order": 18,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:33:11"
+    },
+    {
+      "title": "Peeking inside its thinking",
+      "timestamp": "00:33:11",
+      "level": 2,
+      "order": 19,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:34:37"
+    },
+    {
+      "title": "Summary",
+      "timestamp": "00:34:37",
+      "level": 2,
+      "order": 20,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:35:15"
+    },
+    {
+      "title": "How the IQs work together",
+      "timestamp": "00:35:15",
+      "level": 2,
+      "order": 21,
+      "parent": null,
+      "children": [],
+      "end_timestamp": "00:37:43"
+    },
+    {
+      "title": "Close",
+      "timestamp": "00:37:43",
+      "level": 2,
+      "order": 22,
+      "parent": null,
+      "children": [],
+      "end_timestamp": null
+    }
+  ],
+  "url": "https://www.youtube.com/watch?v=uDVkcZwB0EU",
+  "upload_date": "2026-01-19"
+}
