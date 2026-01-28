@@ -121,12 +121,16 @@ $Helpers = {
 		<#
 		.SYNOPSIS
 			Converts a string to a safe file/folder name by removing invalid characters.
+			Also removes parentheses which cause issues with SPX CLI.
 		#>
 		param([string]$Name)
 
 		# Replace invalid file name characters with underscores
 		$invalidChars = [System.IO.Path]::GetInvalidFileNameChars() -join ''
 		$safeName = $Name -replace "[$([regex]::Escape($invalidChars))]", '_'
+
+		# Also replace parentheses (cause issues with SPX CLI transcription)
+		$safeName = $safeName -replace '[()]', '_'
 
 		# Replace multiple underscores/spaces with single underscore
 		$safeName = $safeName -replace '[\s_]+', '_'

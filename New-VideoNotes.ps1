@@ -209,7 +209,7 @@ $Helpers = {
 
 		# Get video title and upload date from contents
 		$contentsJson = Get-Content $contentsJsonPath | ConvertFrom-Json
-		$rawTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+		$rawTitle = $contentsJson.title -replace '[\\/:*?"<>|()]', '_' -replace '\s+', '_'
 		$uploadDate = $contentsResult.UploadDate
 
 		# Format upload date for folder name (YYYYMMDD -> YYYY-MM-DD)
@@ -475,11 +475,11 @@ $Helpers = {
 					else {
 						$uploadDate
 					}
-					$safeTitle = $contents.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+					$safeTitle = $contents.title -replace '[\\/:*?"<>|()]', '_' -replace '\s+', '_'
 					return "$formattedDate-$safeTitle"
 				}
 				elseif ($contents.title) {
-					return $contents.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+					return $contents.title -replace '[\\/:*?"<>|()]', '_' -replace '\s+', '_'
 				}
 			}
 			catch {
