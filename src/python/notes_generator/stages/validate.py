@@ -25,6 +25,7 @@ from notes_generator.models import (
     SectionPartial
 )
 from notes_generator.stages.normalize import index_to_toc_string
+from notes_generator.prompt_loader import get_targeted_extract_prompt
 
 
 def get_leaf_sections(index: NormalizedIndex) -> List[IndexSection]:
@@ -149,63 +150,6 @@ def find_chunks_for_section(
     return matching_chunks
 
 
-# Prompt for targeted re-extraction of a specific section
-TARGETED_EXTRACT_PROMPT = '''# Targeted Section Extraction
-
-Extract notes for ONE SPECIFIC SECTION from this transcript chunk.
-
-## Target Section
-**Section**: {section_title}
-**Time Range**: {section_start} – {section_end}
-
-## Transcript Chunk
-This chunk covers: {chunk_start} – {chunk_end}
-
-```
-{chunk_text}
-```
-
-## Instructions
-
-Find content in the transcript that falls within the time range {section_start} – {section_end} and create notes for the section "{section_title}".
-
-Look for transcript entries with timestamps between {section_start} and {section_end}. The content may discuss topics like:
-- {topic_hints}
-
-## Output Format
-
-### 🎤 [{section_start} – {section_end}] {section_name}
-**Timestamp**: [first mention] – [last mention]
-
-**Key Concepts**
-- [main concepts as bullet points]
-
-**Definitions**
-- **[Term]**: [definition]
-
-**Key Facts**
-- [important facts, numbers, specifications]
-
-**Examples**
-- [concrete examples or "None in this chunk"]
-
-**Key Takeaways 🎯**
-- [focus points]
-
----
-
-If no relevant content is found for this section in the given time range, output:
-
-### 🎤 [{section_start} – {section_end}] {section_name}
-**Timestamp**: {section_start}
-
-**Key Concepts**
-- [Brief summary based on section title]
-
----
-'''
-
-
 async def extract_single_section(
     section: IndexSection,
     chunks: List[TranscriptChunk],
@@ -237,10 +181,11 @@ async def extract_single_section(
     title_words = section.title.lower().split()
     topic_hints = ', '.join(word for word in title_words if len(word) > 3)
 
-    # Build the prompt
+    # Build the prompt from external template
     section_end = section.end_timestamp if hasattr(section, 'end_timestamp') and section.end_timestamp else "unknown"
 
-    prompt = TARGETED_EXTRACT_PROMPT.format(
+    prompt_template = get_targeted_extract_prompt()
+    prompt = prompt_template.format(
         section_title=section.title,
         section_start=section.timestamp or "00:00:00",
         section_end=section_end,

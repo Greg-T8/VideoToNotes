@@ -1,4 +1,4 @@
-# Normalize Prompt
+# Index Normalization
 
 Convert this index/table of contents into a structured JSON format.
 
@@ -10,11 +10,10 @@ Convert this index/table of contents into a structured JSON format.
 
 ## Instructions
 
-1. **Preserve the source structure EXACTLY**:
-   - CRITICAL: If all items in the source are at the same indentation level (like a flat list), they must ALL be level 2 with parent=null and children=[]
-   - Only create parent-child relationships if there is EXPLICIT indentation or nesting in the source
-   - Do NOT group items under a parent based on topic similarity or semantic meaning
-   - A flat list of chapters with timestamps should remain flat (all level 2)
+1. **Identify the hierarchy**: Detect parent-child relationships between sections.
+   - Look for visual groupings (icons, indentation, heading markers)
+   - Parent sections typically have no timestamp or a broader scope
+   - Child sections have specific timestamps and detailed topics
 
 2. **Extract timestamps**: Find all timestamps and normalize to HH:MM:SS format.
    - MM:SS → 00:MM:SS
@@ -34,29 +33,27 @@ Convert this index/table of contents into a structured JSON format.
 
 Return ONLY valid JSON (no markdown code fences, no explanation):
 
-```json
-{
+{{
   "title": "Video or Course Title",
   "sections": [
-    {
+    {{
       "title": "Section Name",
       "timestamp": "00:00:00",
       "level": 2,
       "order": 1,
       "parent": null,
       "children": ["Child Section 1", "Child Section 2"]
-    },
-    {
+    }},
+    {{
       "title": "Child Section 1",
       "timestamp": "00:12:51",
       "level": 3,
       "order": 2,
       "parent": "Section Name",
       "children": []
-    }
+    }}
   ]
-}
-```
+}}
 
 ## Rules
 

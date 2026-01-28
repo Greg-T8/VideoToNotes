@@ -44,11 +44,13 @@ VideoToNotes/
 ├── input/                       # Manual input files
 ├── output/                      # Generated notes
 │   └── debug/                   # Debug output for file-based runs
-├── prompts/                     # LLM prompt templates
-│   ├── normalize.md             # Index → JSON conversion
-│   ├── extract.md               # Section → notes extraction
-│   └── merge.md                 # Partials → merged section
 ├── src/
+│   ├── prompts/                 # LLM prompt templates
+│   │   ├── normalize.md         # Index → JSON conversion
+│   │   ├── extract.md           # Section → notes extraction
+│   │   ├── merge.md             # Partials → merged section
+│   │   ├── section_extract.md   # Per-section extraction
+│   │   └── targeted_extract.md  # Targeted re-extraction
 │   ├── powershell/
 │   │   ├── transcript_chunker.ps1       # Transcript splitting utility
 │   │   ├── Get-YouTubeContents.ps1      # Extract video chapters/TOC
@@ -59,6 +61,7 @@ VideoToNotes/
 │           ├── main.py              # Python CLI (called by wrapper)
 │           ├── llm_client.py        # LLM API client (GitHub Models)
 │           ├── models.py            # Data classes
+│           ├── prompt_loader.py     # Load prompts from .md files
 │           └── stages/
 │               ├── __init__.py
 │               ├── normalize.py         # Stage 0: Index normalization

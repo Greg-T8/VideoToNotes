@@ -29,61 +29,7 @@ from notes_generator.models import (
     TranscriptChunk,
     MergedSection
 )
-
-
-# Prompt for section-specific extraction
-SECTION_EXTRACT_PROMPT = '''# Section Notes Extraction
-
-Extract structured study notes for ONE SPECIFIC SECTION from the transcript content below.
-
-## Target Section
-**Title**: {section_title}
-**Time Range**: {section_start} – {section_end}
-
-## Transcript Content
-This content covers the time range for this section:
-
-```
-{transcript_content}
-```
-
-## Instructions
-
-Create comprehensive notes for the section "{section_title}" based on the transcript content above.
-
-Focus on:
-- Key concepts and definitions
-- Important facts, numbers, and specifications
-- Practical examples mentioned
-- Key takeaways and things to remember
-
-## Output Format
-
-### {section_header}
-**Timestamp**: {section_start} – {section_end}
-
-**Key Concepts**
-- [main concepts as bullet points]
-
-**Definitions**
-- **[Term]**: [definition]
-
-**Key Facts**
-- [important facts, numbers, specifications]
-
-**Examples**
-- [concrete examples mentioned, or "None mentioned"]
-
-**Key Takeaways 🎯**
-- [focus points and things to remember]
-
----
-
-IMPORTANT:
-- Only include content that was actually discussed in the transcript
-- Do not invent information not present in the transcript
-- If the transcript content is sparse, create concise notes accordingly
-'''
+from notes_generator.prompt_loader import get_section_extract_prompt
 
 
 def timestamp_to_seconds(ts: str) -> int:
@@ -359,8 +305,9 @@ async def extract_section_notes(
     clean_title = re.sub(r'[☁️🎤]+\s*', '', section.title).strip()
     section_header = f"🎤 [{section.timestamp} – {section.end_timestamp or '??:??:??'}] {clean_title}"
 
-    # Build the prompt
-    prompt = SECTION_EXTRACT_PROMPT.format(
+    # Build the prompt from external template
+    prompt_template = get_section_extract_prompt()
+    prompt = prompt_template.format(
         section_title=section.title,
         section_start=section.timestamp or "00:00:00",
         section_end=section.end_timestamp or "unknown",
