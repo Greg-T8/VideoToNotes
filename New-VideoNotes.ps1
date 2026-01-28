@@ -209,7 +209,7 @@ $Helpers = {
 
 		# Get video title and upload date from contents
 		$contentsJson = Get-Content $contentsJsonPath | ConvertFrom-Json
-		$videoTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
+		$rawTitle = $contentsJson.title -replace '[\\/:*?"<>|]', '_' -replace '\s+', '_'
 		$uploadDate = $contentsResult.UploadDate
 
 		# Format upload date for folder name (YYYYMMDD -> YYYY-MM-DD)
@@ -220,8 +220,11 @@ $Helpers = {
 			$uploadDate
 		}
 
+		# Video title includes the date prefix for output naming
+		$videoTitle = "$formattedDate-$rawTitle"
+
 		# Create the final data folder named with date and video title
-		$dataFolderName = "$formattedDate-$videoTitle"
+		$dataFolderName = "$formattedDate-$rawTitle"
 		$dataFolder = Join-Path $PSScriptRoot "data\$dataFolderName"
 		if (Test-Path $dataFolder) {
 			Write-Host "  Removing existing data folder..." -ForegroundColor DarkGray

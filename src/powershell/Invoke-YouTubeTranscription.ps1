@@ -158,12 +158,14 @@ $Helpers = {
 
 		# Get video metadata as JSON (suppress warnings to avoid polluting JSON)
 		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
+		# Use --no-playlist to ensure only the single video is processed (not entire playlist)
 		$browser = Get-BrowserCookiesArg
 		$jsonOutput = & yt-dlp `
 			--cookies-from-browser $browser `
 			--dump-json `
 			--no-download `
 			--no-warnings `
+			--no-playlist `
 			$Url
 
 		if ($LASTEXITCODE -ne 0) {
