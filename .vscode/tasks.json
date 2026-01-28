@@ -25,7 +25,7 @@
     {
       "label": "PowerShell: Run Chunker",
       "type": "shell",
-      "command": "pwsh -File src/powershell/transcript_chunker.ps1 -InputFile '${input:transcriptFile}'",
+      "command": "pwsh -File src/powershell/Split-Transcript.ps1 -InputFile '${input:transcriptFile}'",
       "group": "build",
       "problemMatcher": []
     },

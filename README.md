@@ -52,7 +52,7 @@ VideoToNotes/
 │   │   ├── section_extract.md   # Per-section extraction
 │   │   └── targeted_extract.md  # Targeted re-extraction
 │   ├── powershell/
-│   │   ├── transcript_chunker.ps1       # Transcript splitting utility
+│   │   ├── Split-Transcript.ps1         # Transcript splitting utility
 │   │   ├── Get-YouTubeContents.ps1      # Extract video chapters/TOC
 │   │   └── Invoke-YouTubeTranscription.ps1  # Download & transcribe audio
 │   └── python/

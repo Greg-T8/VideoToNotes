@@ -8,10 +8,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "PowerShell: Transcript Chunker",
+      "name": "PowerShell: Split Transcript",
       "type": "PowerShell",
       "request": "launch",
-      "script": "${workspaceFolder}/src/powershell/transcript_chunker.ps1",
+      "script": "${workspaceFolder}/src/powershell/Split-Transcript.ps1",
       "args": [
         "-InputFile",
         "${workspaceFolder}/data/samples/Transcript - FreeCodeCamp.txt"

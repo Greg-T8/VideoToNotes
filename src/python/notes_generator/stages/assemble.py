@@ -384,13 +384,13 @@ def build_document_structure(
     lines.append(f"# {index.title} - Exam Notes")
     lines.append("")
 
-    # Video link and publish date
+    # Video link and publish date (two trailing spaces for markdown line breaks)
     if index.url:
-        lines.append(f"**Video:** [{index.url}]({index.url})")
+        lines.append(f"**Video:** [{index.url}]({index.url})  ")
     if index.upload_date:
-        lines.append(f"**Published:** {index.upload_date}")
+        lines.append(f"**Published:** {index.upload_date}  ")
     if index.duration:
-        lines.append(f"**Duration:** {format_duration(index.duration)}")
+        lines.append(f"**Duration:** {format_duration(index.duration)}  ")
 
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
     lines.append("")
@@ -617,13 +617,13 @@ def assemble_from_sections(
     lines.append(f"# {index.title} - Exam Notes")
     lines.append("")
 
-    # Video link and publish date
+    # Video link and publish date (two trailing spaces for markdown line breaks)
     if index.url:
-        lines.append(f"**Video:** [{index.url}]({index.url})")
+        lines.append(f"**Video:** [{index.url}]({index.url})  ")
     if index.upload_date:
-        lines.append(f"**Published:** {index.upload_date}")
+        lines.append(f"**Published:** {index.upload_date}  ")
     if index.duration:
-        lines.append(f"**Duration:** {format_duration(index.duration)}")
+        lines.append(f"**Duration:** {format_duration(index.duration)}  ")
 
     lines.append("")
     lines.append(f"*Generated on {datetime.now().strftime('%Y-%m-%d %H:%M')}*")

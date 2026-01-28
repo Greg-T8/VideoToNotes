@@ -8,7 +8,7 @@
 """
 Chunk Stage
 
-Wraps the PowerShell transcript_chunker.ps1 script to split transcripts
+Wraps the PowerShell Split-Transcript.ps1 script to split transcripts
 into ~20KB chunks suitable for LLM processing.
 
 The PowerShell script handles:
@@ -43,7 +43,7 @@ def chunk_transcript(
         output_dir: Directory for output (default: temp directory)
         max_chars: Maximum characters per chunk (default: 20000)
         period_seconds: Consolidation period in seconds (default: 20)
-        chunker_script: Path to transcript_chunker.ps1 (auto-detected if None)
+        chunker_script: Path to Split-Transcript.ps1 (auto-detected if None)
 
     Returns:
         Path to the ZIP file containing chunks
@@ -52,7 +52,7 @@ def chunk_transcript(
     if chunker_script is None:
         # Look relative to this file
         this_dir = Path(__file__).parent.parent.parent.parent  # src/python/notes_generator/stages -> src
-        chunker_script = this_dir / "powershell" / "transcript_chunker.ps1"
+        chunker_script = this_dir / "powershell" / "Split-Transcript.ps1"
 
     if not chunker_script.exists():
         raise FileNotFoundError(f"Chunker script not found: {chunker_script}")
