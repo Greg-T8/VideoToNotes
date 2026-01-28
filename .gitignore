@@ -13,7 +13,6 @@ ENV/
 
 # Data and output folders
 staging/
-output/
 
 # Temporary files
 *.tmp
