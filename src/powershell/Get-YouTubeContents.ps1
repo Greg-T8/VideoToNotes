@@ -167,6 +167,7 @@ $Helpers = {
 		else {
 			Write-Host "No timestamps found in description" -ForegroundColor Yellow
 			$contents.chaptersSource = "none"
+			$contents.chapters = @()
 		}
 
 		return $contents
@@ -305,7 +306,7 @@ $Helpers = {
 
 		# Post-process: set section start times from first child
 		foreach ($chapter in $chapters) {
-			if ($chapter.isSection -and $chapter.children.Count -gt 0) {
+			if ($chapter.isSection -and $chapter.children -and @($chapter.children).Count -gt 0) {
 				$firstChild = $chapter.children | Sort-Object { $_.startTime } | Select-Object -First 1
 				$chapter.startTime = $firstChild.startTime
 				$chapter.timestamp = $firstChild.timestamp
@@ -317,7 +318,7 @@ $Helpers = {
 
 		# Sort children within each section
 		foreach ($chapter in $chapters) {
-			if ($chapter.children -and $chapter.children.Count -gt 0) {
+			if ($chapter.children -and @($chapter.children).Count -gt 0) {
 				$chapter.children = $chapter.children | Sort-Object { $_.startTime }
 			}
 		}
@@ -330,7 +331,7 @@ $Helpers = {
 				$allItems += $chapter.children
 			}
 		}
-		$allItems = $allItems | Sort-Object { $_.startTime }
+		$allItems = @($allItems | Sort-Object { $_.startTime })
 
 		for ($i = 0; $i -lt $allItems.Count; $i++) {
 			if ($i -lt $allItems.Count - 1) {
@@ -412,7 +413,7 @@ $Helpers = {
 		[void]$sb.AppendLine()
 
 		# Table of Contents
-		if ($Contents.chapters.Count -gt 0) {
+		if ($Contents.chapters -and @($Contents.chapters).Count -gt 0) {
 			[void]$sb.AppendLine("## Table of Contents")
 			[void]$sb.AppendLine()
 			[void]$sb.AppendLine("*Source: $($Contents.chaptersSource)*")
@@ -442,7 +443,7 @@ $Helpers = {
 		[void]$StringBuilder.AppendLine("$prefix$bullet **[$($Chapter.timestamp)]** $($Chapter.title)")
 
 		# Write children
-		if ($Chapter.children -and $Chapter.children.Count -gt 0) {
+		if ($Chapter.children -and @($Chapter.children).Count -gt 0) {
 			foreach ($child in $Chapter.children) {
 				Write-ChapterMarkdown -StringBuilder $StringBuilder -Chapter $child -Indent ($Indent + 1)
 			}

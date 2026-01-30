@@ -126,6 +126,25 @@ $Main = {
 		$script:TranscriptPath = $transcriptionResult.TranscriptPath
 		$script:DataFolder = $transcriptionResult.DataFolder
 		$videoTitle = $transcriptionResult.VideoTitle
+		$contentsJson = $transcriptionResult.ContentsJson
+
+		# Check if contents need to be generated from transcript
+		# This happens when YouTube description has no chapters
+		if ($contentsJson.chaptersSource -eq "none" -or
+			-not $contentsJson.chapters -or
+			@($contentsJson.chapters).Count -eq 0) {
+
+			Show-Phase "PHASE 2.5: Contents Generation" "Generate table of contents from transcript"
+
+			# Need Python environment to generate contents
+			$pythonExe = Confirm-PythonEnvironment
+
+			$contentsJson = Invoke-GenerateContents `
+				-TranscriptPath $script:TranscriptPath `
+				-DataFolder $script:DataFolder `
+				-ContentsJson $contentsJson `
+				-PythonExe $pythonExe
+		}
 	}
 	else {
 		# Use provided files
@@ -277,7 +296,117 @@ $Helpers = {
 			TranscriptPath = $transcriptFile
 			VideoTitle     = $videoTitle
 			DataFolder     = $dataFolder
+			ContentsJson   = $contentsJson
 		}
+	}
+
+	function Invoke-GenerateContents {
+		<#
+		.SYNOPSIS
+			Generates table of contents from transcript using LLM.
+		.DESCRIPTION
+			When a video has no chapters in its description, this function
+			analyzes the transcript and generates a structured table of contents.
+		#>
+		param(
+			[string]$TranscriptPath,
+			[string]$DataFolder,
+			[PSCustomObject]$ContentsJson,
+			[string]$PythonExe
+		)
+
+		Show-Stage "Generate" "Creating table of contents from transcript..."
+
+		# Build paths
+		$contentsJsonPath = Join-Path $DataFolder "contents.json"
+		$contentsMdPath = Join-Path $DataFolder "contents.md"
+
+		# Call Python script to generate contents
+		$generateScript = "notes_generator.generate_contents"
+
+		$generateArgs = @(
+			"-m", $generateScript,
+			"--transcript", $TranscriptPath,
+			"--title", $ContentsJson.title,
+			"--channel", $ContentsJson.channel,
+			"--duration", $ContentsJson.duration,
+			"--url", $ContentsJson.url,
+			"--output", $contentsJsonPath
+		)
+
+		# Set PYTHONPATH to include the src/python directory
+		$env:PYTHONPATH = Join-Path $PSScriptRoot "src\python"
+
+		& $PythonExe @generateArgs
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Failed to generate table of contents from transcript"
+		}
+
+		# Re-read the generated contents.json
+		$newContentsJson = Get-Content $contentsJsonPath | ConvertFrom-Json
+
+		# Regenerate the markdown file
+		$contentsMarkdown = Convert-ContentsJsonToMarkdown -Contents $newContentsJson
+		Set-Content -Path $contentsMdPath -Value $contentsMarkdown -Encoding UTF8
+
+		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host "Generated $($newContentsJson.chapters.Count) sections from transcript"
+
+		return $newContentsJson
+	}
+
+	function Convert-ContentsJsonToMarkdown {
+		<#
+		.SYNOPSIS
+			Converts contents JSON to markdown format.
+		#>
+		param([PSCustomObject]$Contents)
+
+		$sb = [System.Text.StringBuilder]::new()
+
+		# Header
+		[void]$sb.AppendLine("# $($Contents.title)")
+		[void]$sb.AppendLine()
+		[void]$sb.AppendLine("**Channel:** $($Contents.channel)")
+		[void]$sb.AppendLine("**Duration:** $(Format-DurationSeconds -Seconds $Contents.duration)")
+		[void]$sb.AppendLine("**URL:** $($Contents.url)")
+		[void]$sb.AppendLine()
+
+		# Table of Contents
+		if ($Contents.chapters -and @($Contents.chapters).Count -gt 0) {
+			[void]$sb.AppendLine("## Table of Contents")
+			[void]$sb.AppendLine()
+			[void]$sb.AppendLine("*Source: $($Contents.chaptersSource)*")
+			[void]$sb.AppendLine()
+
+			foreach ($chapter in $Contents.chapters) {
+				$timestamp = $chapter.timestamp
+				if (-not $timestamp) {
+					$timestamp = Format-DurationSeconds -Seconds $chapter.startTime
+				}
+				[void]$sb.AppendLine("- **[$timestamp]** $($chapter.title)")
+			}
+		}
+		else {
+			[void]$sb.AppendLine("*No chapters or timestamps found*")
+		}
+
+		return $sb.ToString()
+	}
+
+	function Format-DurationSeconds {
+		<#
+		.SYNOPSIS
+			Formats seconds to HH:MM:SS or MM:SS format.
+		#>
+		param([int]$Seconds)
+
+		$ts = [TimeSpan]::FromSeconds($Seconds)
+		if ($ts.Hours -gt 0) {
+			return "{0}:{1:D2}:{2:D2}" -f $ts.Hours, $ts.Minutes, $ts.Seconds
+		}
+		return "{0}:{1:D2}" -f $ts.Minutes, $ts.Seconds
 	}
 
 	function Confirm-GitHubAuth {
