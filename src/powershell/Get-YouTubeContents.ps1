@@ -157,7 +157,7 @@ $Helpers = {
 		# Always parse chapters from description to capture full detail
 		Write-Host "  [Step 2/2] " -ForegroundColor DarkCyan -NoNewline
 		Write-Host "Parsing timestamps from description..." -ForegroundColor Cyan
-		$parsedChapters = Get-ChapterFromDescription -Description $Metadata.description
+		$parsedChapters = @(Get-ChapterFromDescription -Description $Metadata.description)
 
 		if ($parsedChapters.Count -gt 0) {
 			Write-Host "Found $($parsedChapters.Count) timestamps in description" -ForegroundColor Green
