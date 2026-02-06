@@ -13,10 +13,10 @@ param(
 	[string]$YouTubeUrl,
 
 	[Parameter()]
-	[string]$OutputPath = ".\data",
+	[string]$OutputPath = '.\data',
 
 	[Parameter()]
-	[string]$Language = "en-US",
+	[string]$Language = 'en-US',
 
 	[Parameter()]
 	[switch]$ForceBatch,
@@ -24,7 +24,7 @@ param(
 	[Parameter()]
 	[switch]$KeepIntermediateFiles,
 
-	[Parameter(HelpMessage = "Output files directly to OutputPath without creating a subfolder")]
+	[Parameter(HelpMessage = 'Output files directly to OutputPath without creating a subfolder')]
 	[switch]$FlatOutput
 )
 
@@ -131,16 +131,16 @@ $Helpers = {
 		}
 
 		# Try Chrome first
-		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 2>&1
+		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' 2>&1
 		if ($LASTEXITCODE -eq 0) {
-			$script:BrowserCookiesArg = "chrome"
-			Write-Verbose "Using Chrome for YouTube cookies"
+			$script:BrowserCookiesArg = 'chrome'
+			Write-Verbose 'Using Chrome for YouTube cookies'
 			return $script:BrowserCookiesArg
 		}
 
 		# Fall back to Firefox
-		$script:BrowserCookiesArg = "firefox"
-		Write-Verbose "Using Firefox for YouTube cookies (Chrome failed)"
+		$script:BrowserCookiesArg = 'firefox'
+		Write-Verbose 'Using Firefox for YouTube cookies (Chrome failed)'
 		return $script:BrowserCookiesArg
 	}
 
@@ -154,14 +154,11 @@ $Helpers = {
 			[string]$Url
 		)
 
-		Write-Host "Fetching video information..." -ForegroundColor Cyan
+		Write-Host 'Fetching video information...' -ForegroundColor Cyan
 
 		# Get video metadata as JSON (suppress warnings to avoid polluting JSON)
-		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
 		# Use --no-playlist to ensure only the single video is processed (not entire playlist)
-		$browser = Get-BrowserCookiesArg
 		$jsonOutput = & yt-dlp `
-			--cookies-from-browser $browser `
 			--dump-json `
 			--no-download `
 			--no-warnings `
@@ -228,21 +225,20 @@ $Helpers = {
 			[string]$OutputFolder
 		)
 
-		Write-Host "  [Step 1/3] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Downloading audio from YouTube..." -ForegroundColor Cyan
+		Write-Host '  [Step 1/3] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Downloading audio from YouTube...' -ForegroundColor Cyan
 
-		$outputTemplate = Join-Path $OutputFolder "source_audio.%(ext)s"
+		$outputTemplate = Join-Path $OutputFolder 'source_audio.%(ext)s'
 
 		# Try audio-only formats first, fall back to format 18 (360p with audio)
 		# Format 18 uses progressive streaming which bypasses SABR restrictions
 		# See: https://github.com/yt-dlp/yt-dlp/issues/12482
 		# Use --progress to show single-line progress, --quiet to suppress other noise
 		# Then filter to show only key status lines
-		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
-		$browser = Get-BrowserCookiesArg
+		# Use oauth=nocookie to bypass YouTube's JavaScript challenge
 		$ytOutput = yt-dlp `
-			--cookies-from-browser $browser `
-			-f "140/251/bestaudio/18" `
+			--extractor-args youtube:player_client=android `
+			-f '140/251/bestaudio/18' `
 			--extract-audio `
 			--audio-format wav `
 			--output $outputTemplate `
@@ -260,15 +256,15 @@ $Helpers = {
 		}
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "yt-dlp failed to download audio."
+			throw 'yt-dlp failed to download audio.'
 		}
 
 		# Find the downloaded file
-		$audioFile = Get-ChildItem -Path $OutputFolder -Filter "source_audio.*" |
-		Select-Object -First 1
+		$audioFile = Get-ChildItem -Path $OutputFolder -Filter 'source_audio.*' |
+			Select-Object -First 1
 
 		if (-not $audioFile) {
-			throw "Audio file not found after download."
+			throw 'Audio file not found after download.'
 		}
 
 		$audioPath = $audioFile.FullName
@@ -290,10 +286,10 @@ $Helpers = {
 			[string]$OutputFolder
 		)
 
-		Write-Host "  [Step 2/3] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Optimizing audio for speech recognition..." -ForegroundColor Cyan
+		Write-Host '  [Step 2/3] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Optimizing audio for speech recognition...' -ForegroundColor Cyan
 
-		$outputFile = Join-Path $OutputFolder "audio_optimized.wav"
+		$outputFile = Join-Path $OutputFolder 'audio_optimized.wav'
 
 		# Convert to 16kHz mono WAV
 		ffmpeg `
@@ -305,7 +301,7 @@ $Helpers = {
 			$outputFile 2>&1 | Out-Null
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "ffmpeg failed to convert audio."
+			throw 'ffmpeg failed to convert audio.'
 		}
 
 		Write-Host "Optimized audio: $outputFile" -ForegroundColor Green
@@ -348,13 +344,13 @@ $Helpers = {
 			[string]$OutputFolder,
 
 			[Parameter()]
-			[string]$Language = "en-US"
+			[string]$Language = 'en-US'
 		)
 
-		Write-Host "  [Step 3/3] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Starting fast transcription..." -ForegroundColor Cyan
+		Write-Host '  [Step 3/3] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Starting fast transcription...' -ForegroundColor Cyan
 
-		$srtFile = Join-Path $OutputFolder "transcript.srt"
+		$srtFile = Join-Path $OutputFolder 'transcript.srt'
 
 		# Capture output and show only header lines (not the full transcript text)
 		$spxOutput = spx transcribe `
@@ -373,10 +369,10 @@ $Helpers = {
 				$headerLines++
 			}
 		}
-		Write-Host "  ...transcribing..." -ForegroundColor DarkGray
+		Write-Host '  ...transcribing...' -ForegroundColor DarkGray
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "spx transcribe failed."
+			throw 'spx transcribe failed.'
 		}
 
 		Write-Host "Fast transcription complete: $srtFile" -ForegroundColor Green
@@ -397,14 +393,14 @@ $Helpers = {
 			[string]$OutputFolder,
 
 			[Parameter()]
-			[string]$Language = "en-US",
+			[string]$Language = 'en-US',
 
 			[Parameter()]
 			[double]$DurationSeconds
 		)
 
-		Write-Host "  [Step 3/3] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Starting batch transcription..." -ForegroundColor Cyan
+		Write-Host '  [Step 3/3] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Starting batch transcription...' -ForegroundColor Cyan
 
 		# Split into 1-hour chunks
 		$chunkDurationSeconds = 3600
@@ -443,7 +439,7 @@ $Helpers = {
 		}
 
 		# Merge all SRT files into one
-		$finalSrt = Join-Path $OutputFolder "transcript.srt"
+		$finalSrt = Join-Path $OutputFolder 'transcript.srt'
 		Merge-SrtFile -SrtFiles $srtFiles -OutputFile $finalSrt
 
 		Write-Host "Batch transcription complete: $finalSrt" -ForegroundColor Green
@@ -466,14 +462,14 @@ $Helpers = {
 			[int]$ChunkDurationSeconds = 3600
 		)
 
-		Write-Host "Splitting audio into chunks..." -ForegroundColor Cyan
+		Write-Host 'Splitting audio into chunks...' -ForegroundColor Cyan
 
-		$chunkFolder = Join-Path $OutputFolder "chunks"
+		$chunkFolder = Join-Path $OutputFolder 'chunks'
 		if (-not (Test-Path $chunkFolder)) {
 			New-Item -ItemType Directory -Path $chunkFolder -Force | Out-Null
 		}
 
-		$chunkPattern = Join-Path $chunkFolder "chunk_%03d.wav"
+		$chunkPattern = Join-Path $chunkFolder 'chunk_%03d.wav'
 
 		# Split audio into segments
 		ffmpeg `
@@ -485,11 +481,11 @@ $Helpers = {
 			$chunkPattern 2>&1 | Out-Null
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "ffmpeg failed to split audio into chunks."
+			throw 'ffmpeg failed to split audio into chunks.'
 		}
 
-		$chunks = Get-ChildItem -Path $chunkFolder -Filter "chunk_*.wav" |
-		Sort-Object Name
+		$chunks = Get-ChildItem -Path $chunkFolder -Filter 'chunk_*.wav' |
+			Sort-Object Name
 
 		Write-Host "Created $($chunks.Count) audio chunks" -ForegroundColor Green
 		return $chunks
@@ -508,7 +504,7 @@ $Helpers = {
 			[string]$OutputFile
 		)
 
-		Write-Host "Merging SRT files..." -ForegroundColor Cyan
+		Write-Host 'Merging SRT files...' -ForegroundColor Cyan
 
 		$subtitleIndex = 1
 		$mergedContent = @()
@@ -594,7 +590,7 @@ $Helpers = {
 		$seconds = [int][math]::Floor($remaining / 1000)
 		$ms = [int]($remaining % 1000)
 
-		return "{0:D2}:{1:D2}:{2:D2},{3:D3}" -f $hours, $minutes, $seconds, $ms
+		return '{0:D2}:{1:D2}:{2:D2},{3:D3}' -f $hours, $minutes, $seconds, $ms
 	}
 
 	function Remove-IntermediateFile {
@@ -610,21 +606,21 @@ $Helpers = {
 			[bool]$KeepSrt = $true
 		)
 
-		Write-Host "Cleaning up intermediate files..." -ForegroundColor Cyan
+		Write-Host 'Cleaning up intermediate files...' -ForegroundColor Cyan
 
 		# Remove source audio
-		Get-ChildItem -Path $Folder -Filter "source_audio.*" | Remove-Item -Force -ErrorAction SilentlyContinue
+		Get-ChildItem -Path $Folder -Filter 'source_audio.*' | Remove-Item -Force -ErrorAction SilentlyContinue
 
 		# Remove optimized audio
-		Get-ChildItem -Path $Folder -Filter "audio_optimized.*" | Remove-Item -Force -ErrorAction SilentlyContinue
+		Get-ChildItem -Path $Folder -Filter 'audio_optimized.*' | Remove-Item -Force -ErrorAction SilentlyContinue
 
 		# Remove chunks folder
-		$chunksFolder = Join-Path $Folder "chunks"
+		$chunksFolder = Join-Path $Folder 'chunks'
 		if (Test-Path $chunksFolder) {
 			Remove-Item -Path $chunksFolder -Recurse -Force -ErrorAction SilentlyContinue
 		}
 
-		Write-Verbose "Intermediate files removed"
+		Write-Verbose 'Intermediate files removed'
 	}
 
 	function Show-TranscriptionResult {
@@ -641,8 +637,8 @@ $Helpers = {
 		)
 
 		Write-Host "`n========================================" -ForegroundColor Cyan
-		Write-Host "TRANSCRIPTION COMPLETE" -ForegroundColor Green
-		Write-Host "========================================" -ForegroundColor Cyan
+		Write-Host 'TRANSCRIPTION COMPLETE' -ForegroundColor Green
+		Write-Host '========================================' -ForegroundColor Cyan
 		Write-Host "Video:    $($VideoInfo.Title)"
 		Write-Host "Channel:  $($VideoInfo.Channel)"
 		Write-Host "Duration: $([timespan]::FromSeconds($VideoInfo.Duration).ToString('hh\:mm\:ss'))"
