@@ -11,7 +11,7 @@ param(
 	[string]$YouTubeUrl,
 
 	[Parameter(Mandatory = $false)]
-	[string]$OutputPath = "."
+	[string]$OutputPath = '.'
 )
 
 $Main = {
@@ -19,7 +19,7 @@ $Main = {
 	. $Helpers
 
 	# Confirm prerequisites
-	Confirm-Prerequisite -Command "yt-dlp" -InstallHint "winget install yt-dlp"
+	Confirm-Prerequisite -Command 'yt-dlp' -InstallHint 'winget install yt-dlp'
 
 	# Get video metadata
 	$metadata = Get-VideoMetadata -Url $YouTubeUrl
@@ -47,23 +47,31 @@ $Helpers = {
 	function Get-BrowserCookiesArg {
 		<#
 		.SYNOPSIS
-			Determines which browser to use for cookies (Chrome first, then Firefox fallback).
+			Determines which browser to use for cookies (Chrome first, then Firefox fallback, then none).
 		#>
 		if ($script:BrowserCookiesArg) {
 			return $script:BrowserCookiesArg
 		}
 
 		# Try Chrome first
-		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 2>&1
+		$null = & yt-dlp --cookies-from-browser chrome --simulate --skip-download 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' 2>&1
 		if ($LASTEXITCODE -eq 0) {
-			$script:BrowserCookiesArg = "chrome"
-			Write-Verbose "Using Chrome for YouTube cookies"
+			$script:BrowserCookiesArg = 'chrome'
+			Write-Verbose 'Using Chrome for YouTube cookies'
 			return $script:BrowserCookiesArg
 		}
 
-		# Fall back to Firefox
-		$script:BrowserCookiesArg = "firefox"
-		Write-Verbose "Using Firefox for YouTube cookies (Chrome failed)"
+		# Try Firefox as fallback
+		$null = & yt-dlp --cookies-from-browser firefox --simulate --skip-download 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' 2>&1
+		if ($LASTEXITCODE -eq 0) {
+			$script:BrowserCookiesArg = 'firefox'
+			Write-Verbose 'Using Firefox for YouTube cookies (Chrome failed)'
+			return $script:BrowserCookiesArg
+		}
+
+		# No cookies available - return null
+		$script:BrowserCookiesArg = $null
+		Write-Verbose 'No browser cookies available (will try without cookies)'
 		return $script:BrowserCookiesArg
 	}
 
@@ -78,20 +86,32 @@ $Helpers = {
 	function Get-VideoMetadata {
 		param([string]$Url)
 
-		Write-Host "  [Step 1/2] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Fetching video metadata..." -ForegroundColor Cyan
+		Write-Host '  [Step 1/2] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Fetching video metadata...' -ForegroundColor Cyan
 
 		# Get JSON metadata from yt-dlp (capture stderr separately)
-		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback)
+		# Use browser cookies to bypass YouTube bot detection (Chrome preferred, Firefox fallback, or none)
 		# Use --no-playlist to ensure only the single video is processed (not entire playlist)
 		$browser = Get-BrowserCookiesArg
-		$jsonOutput = & yt-dlp `
-			--cookies-from-browser $browser `
-			--dump-json `
-			--no-download `
-			--no-warnings `
-			--no-playlist `
-			$Url
+
+		# Build yt-dlp command with or without cookies
+		if ($browser) {
+			$jsonOutput = & yt-dlp `
+				--cookies-from-browser $browser `
+				--dump-json `
+				--no-download `
+				--no-warnings `
+				--no-playlist `
+				$Url
+		}
+		else {
+			$jsonOutput = & yt-dlp `
+				--dump-json `
+				--no-download `
+				--no-warnings `
+				--no-playlist `
+				$Url
+		}
 
 		if ($LASTEXITCODE -ne 0) {
 			throw "Failed to fetch video metadata. Exit code: $LASTEXITCODE"
@@ -112,9 +132,9 @@ $Helpers = {
 
 		$ts = [TimeSpan]::FromSeconds($Seconds)
 		if ($ts.Hours -gt 0) {
-			return "{0}:{1:D2}:{2:D2}" -f $ts.Hours, $ts.Minutes, $ts.Seconds
+			return '{0}:{1:D2}:{2:D2}' -f $ts.Hours, $ts.Minutes, $ts.Seconds
 		}
-		return "{0}:{1:D2}" -f $ts.Minutes, $ts.Seconds
+		return '{0}:{1:D2}' -f $ts.Minutes, $ts.Seconds
 	}
 
 	function ConvertTo-SafeFileName {
@@ -155,18 +175,18 @@ $Helpers = {
 		}
 
 		# Always parse chapters from description to capture full detail
-		Write-Host "  [Step 2/2] " -ForegroundColor DarkCyan -NoNewline
-		Write-Host "Parsing timestamps from description..." -ForegroundColor Cyan
+		Write-Host '  [Step 2/2] ' -ForegroundColor DarkCyan -NoNewline
+		Write-Host 'Parsing timestamps from description...' -ForegroundColor Cyan
 		$parsedChapters = @(Get-ChapterFromDescription -Description $Metadata.description)
 
 		if ($parsedChapters.Count -gt 0) {
 			Write-Host "Found $($parsedChapters.Count) timestamps in description" -ForegroundColor Green
-			$contents.chaptersSource = "description"
+			$contents.chaptersSource = 'description'
 			$contents.chapters = $parsedChapters
 		}
 		else {
-			Write-Host "No timestamps found in description" -ForegroundColor Yellow
-			$contents.chaptersSource = "none"
+			Write-Host 'No timestamps found in description' -ForegroundColor Yellow
+			$contents.chaptersSource = 'none'
 			$contents.chapters = @()
 		}
 
@@ -178,9 +198,9 @@ $Helpers = {
 
 		$ts = [TimeSpan]::FromSeconds($Seconds)
 		if ($ts.Hours -gt 0) {
-			return "{0}:{1:D2}:{2:D2}" -f $ts.Hours, $ts.Minutes, $ts.Seconds
+			return '{0}:{1:D2}:{2:D2}' -f $ts.Hours, $ts.Minutes, $ts.Seconds
 		}
-		return "{0}:{1:D2}" -f $ts.Minutes, $ts.Seconds
+		return '{0}:{1:D2}' -f $ts.Minutes, $ts.Seconds
 	}
 
 	function Remove-Emoji {
@@ -382,12 +402,12 @@ $Helpers = {
 		}
 
 		# Save as JSON for structured processing
-		$jsonPath = Join-Path $datedOutputPath "contents.json"
+		$jsonPath = Join-Path $datedOutputPath 'contents.json'
 		$Contents | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonPath -Encoding UTF8
 		Write-Host "Saved: $jsonPath" -ForegroundColor Green
 
 		# Also save a human-readable markdown outline
-		$mdPath = Join-Path $datedOutputPath "contents.md"
+		$mdPath = Join-Path $datedOutputPath 'contents.md'
 		$mdContent = Convert-ContentsToMarkdown -Contents $Contents
 		$mdContent | Set-Content -Path $mdPath -Encoding UTF8
 		Write-Host "Saved: $mdPath" -ForegroundColor Green
@@ -414,7 +434,7 @@ $Helpers = {
 
 		# Table of Contents
 		if ($Contents.chapters -and @($Contents.chapters).Count -gt 0) {
-			[void]$sb.AppendLine("## Table of Contents")
+			[void]$sb.AppendLine('## Table of Contents')
 			[void]$sb.AppendLine()
 			[void]$sb.AppendLine("*Source: $($Contents.chaptersSource)*")
 			[void]$sb.AppendLine()
@@ -424,7 +444,7 @@ $Helpers = {
 			}
 		}
 		else {
-			[void]$sb.AppendLine("*No chapters or timestamps found*")
+			[void]$sb.AppendLine('*No chapters or timestamps found*')
 		}
 
 		return $sb.ToString()
@@ -437,8 +457,8 @@ $Helpers = {
 			[int]$Indent
 		)
 
-		$prefix = "  " * $Indent
-		$bullet = "-"
+		$prefix = '  ' * $Indent
+		$bullet = '-'
 
 		[void]$StringBuilder.AppendLine("$prefix$bullet **[$($Chapter.timestamp)]** $($Chapter.title)")
 
