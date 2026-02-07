@@ -34,3 +34,6 @@ Thumbs.db
 *.avi
 *.mkv
 *.pdf
+
+# Other Files
+*.srt
