@@ -54,6 +54,20 @@
       "command": ".venv/Scripts/ruff check src/python",
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": "PowerShell: Run Presentation Notes",
+      "type": "shell",
+      "command": "pwsh -File New-PresentationNotes.ps1 -PdfFile '${input:pdfFile}' -VideoFile '${input:videoFile}'",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "PowerShell: Run Presentation Notes (Existing Transcript)",
+      "type": "shell",
+      "command": "pwsh -File New-PresentationNotes.ps1 -PdfFile '${input:pdfFile}' -Transcript '${input:srtFile}'",
+      "group": "build",
+      "problemMatcher": []
     }
   ],
   "inputs": [
@@ -62,6 +76,24 @@
       "type": "promptString",
       "description": "Path to the transcript file to process",
       "default": "staging/samples/Transcript - FreeCodeCamp.txt"
+    },
+    {
+      "id": "pdfFile",
+      "type": "promptString",
+      "description": "Path to the PDF slide presentation",
+      "default": ""
+    },
+    {
+      "id": "videoFile",
+      "type": "promptString",
+      "description": "Path to the video recording of the presentation",
+      "default": ""
+    },
+    {
+      "id": "srtFile",
+      "type": "promptString",
+      "description": "Path to an existing SRT transcript file",
+      "default": ""
     }
   ]
 }

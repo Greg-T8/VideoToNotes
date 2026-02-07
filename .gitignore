@@ -26,3 +26,11 @@ transcript_chunks_*/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Binary files
+*.wav
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.pdf
