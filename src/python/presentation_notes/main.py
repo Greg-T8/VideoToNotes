@@ -99,6 +99,28 @@ def parse_args() -> argparse.Namespace:
         help="Directory for debug output (default: output/debug)"
     )
 
+    parser.add_argument(
+        "--provider",
+        type=str,
+        choices=["github", "azure"],
+        default="github",
+        help="LLM provider: github (default) or azure"
+    )
+
+    parser.add_argument(
+        "--azure-endpoint",
+        type=str,
+        default=None,
+        help="Azure OpenAI endpoint URL (required when provider is azure)"
+    )
+
+    parser.add_argument(
+        "--azure-deployment",
+        type=str,
+        default=None,
+        help="Azure OpenAI deployment name (required when provider is azure)"
+    )
+
     return parser.parse_args()
 
 
@@ -138,6 +160,14 @@ def run_pipeline(
 
     # Initialize pipeline state
     state = PresentationState(config=config)
+
+    # Create the LLM client based on the selected provider
+    from notes_generator.llm_client import create_llm_client
+    llm_client = create_llm_client(
+        provider=config.provider,
+        azure_endpoint=config.azure_endpoint,
+        azure_deployment=config.azure_deployment
+    )
 
     # Debug output directory
     if debug_dir:
@@ -205,7 +235,8 @@ def run_pipeline(
         state.alignments = align_slides_to_transcript_sync(
             slides=state.slides,
             segments=segments,
-            model=config.model
+            model=config.model,
+            llm_client=llm_client
         )
         print_success(f"Aligned {len(state.alignments)} slide-transcript pairs")
 
@@ -224,7 +255,8 @@ def run_pipeline(
         state.slide_notes = annotate_all_slides_sync(
             slides=state.slides,
             alignments=state.alignments,
-            model=config.model
+            model=config.model,
+            llm_client=llm_client
         )
         print_success(f"Generated notes for {len(state.slide_notes)} slides")
 
@@ -302,7 +334,10 @@ def main() -> int:
         slides_dir=str(slides_dir),
         title=title,
         model=args.model,
-        dpi=args.dpi
+        dpi=args.dpi,
+        provider=args.provider,
+        azure_endpoint=args.azure_endpoint,
+        azure_deployment=args.azure_deployment
     )
 
     # Display configuration
@@ -315,6 +350,10 @@ def main() -> int:
     print(f"Title:         {config.title}")
     print(f"Model:         {config.model}")
     print(f"DPI:           {config.dpi}")
+    print(f"Provider:      {config.provider}")
+    if config.provider == "azure":
+        print(f"Azure Endpoint:    {config.azure_endpoint}")
+        print(f"Azure Deployment:  {config.azure_deployment}")
     print("=" * 60)
     print()
 

@@ -38,3 +38,18 @@ Thumbs.db
 
 # Other Files
 *.srt
+
+# Ignore Terraform state and sensitive files
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+*.auto.tfvars
+crash.log
+tfplan
+
+# Ignore Terraform lock files
+.terraform.lock.hcl
+
+# Ignore Terraform override files
+override.tf

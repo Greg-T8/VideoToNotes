@@ -103,7 +103,17 @@ param(
 	[int]$Dpi = 200,
 
 	[Parameter(HelpMessage = 'Keep intermediate audio files')]
-	[switch]$KeepIntermediateFiles
+	[switch]$KeepIntermediateFiles,
+
+	[Parameter(HelpMessage = 'LLM provider: GitHub (default) or Azure')]
+	[ValidateSet('GitHub', 'Azure')]
+	[string]$Provider = 'GitHub',
+
+	[Parameter(HelpMessage = 'Azure OpenAI endpoint URL (required for Azure provider)')]
+	[string]$AzureEndpoint,
+
+	[Parameter(HelpMessage = 'Azure OpenAI deployment name (required for Azure provider)')]
+	[string]$AzureDeployment
 )
 
 Set-StrictMode -Version Latest
@@ -418,6 +428,11 @@ $Helpers = {
 		Write-Host "  Output:      $script:Output"
 		Write-Host "  Model:       $Model"
 		Write-Host "  DPI:         $Dpi"
+		Write-Host "  Provider:    $Provider"
+		if ($Provider -eq 'Azure') {
+			Write-Host "  Azure Endpoint:   $AzureEndpoint"
+			Write-Host "  Azure Deployment: $AzureDeployment"
+		}
 		Write-Host ''
 	}
 
@@ -484,6 +499,13 @@ $Helpers = {
 			'--dpi', $Dpi,
 			'--debug'
 		)
+
+		# Add Azure provider arguments if specified
+		if ($Provider -eq 'Azure') {
+			$pythonArgs += '--provider', 'azure'
+			if ($AzureEndpoint) { $pythonArgs += '--azure-endpoint', $AzureEndpoint }
+			if ($AzureDeployment) { $pythonArgs += '--azure-deployment', $AzureDeployment }
+		}
 
 		# Set debug directory in the staging folder
 		$debugDir = Join-Path $script:StagingFolder 'debug'

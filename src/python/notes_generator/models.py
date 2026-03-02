@@ -204,6 +204,9 @@ class PipelineConfig:
     prompts_dir: Optional[str] = None
     chunk_size: int = 20000  # ~20KB chunks
     chunk_period: int = 20  # Consolidate into 20-second periods
+    provider: str = "github"
+    azure_endpoint: Optional[str] = None
+    azure_deployment: Optional[str] = None
 
 
 @dataclass

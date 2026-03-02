@@ -144,6 +144,9 @@ class PresentationConfig:
     model: str = "gpt-4.1-mini"  # LLM model for alignment and annotation
     dpi: int = 200  # DPI for PDF rendering
     image_format: str = "png"  # Output image format
+    provider: str = "github"  # LLM provider: github or azure
+    azure_endpoint: Optional[str] = None  # Azure OpenAI endpoint URL
+    azure_deployment: Optional[str] = None  # Azure OpenAI deployment name
 
 
 @dataclass

@@ -20,7 +20,7 @@ the proportional time window of transcript plus overlap margins.
 import asyncio
 import json
 import re
-from typing import List
+from typing import List, Optional
 
 from presentation_notes.models import Slide, SlideTranscript
 from presentation_notes.prompt_loader import get_slide_align_prompt
@@ -124,7 +124,8 @@ async def align_slides_to_transcript(
     slides: List[Slide],
     segments: List[TranscriptSegment],
     model: str = "gpt-4.1-mini",
-    batch_size: int = 10
+    batch_size: int = 10,
+    llm_client: Optional[object] = None
 ) -> List[SlideTranscript]:
     """
     Align transcript segments to slides using an LLM.
@@ -138,12 +139,17 @@ async def align_slides_to_transcript(
         segments: Consolidated transcript segments
         model: LLM model identifier
         batch_size: Number of slides per LLM call
+        llm_client: Optional pre-configured LLM client
 
     Returns:
         List of SlideTranscript objects mapping transcript to slides
     """
 
-    client = GitHubModelsClient(timeout=180.0)
+    # Initialize LLM client if not provided
+    if llm_client is None:
+        client = GitHubModelsClient(timeout=180.0)
+    else:
+        client = llm_client
     prompt_template = get_slide_align_prompt()
     all_alignments: List[SlideTranscript] = []
     total_slides = len(slides)
@@ -210,7 +216,8 @@ def align_slides_to_transcript_sync(
     slides: List[Slide],
     segments: List[TranscriptSegment],
     model: str = "gpt-4.1-mini",
-    batch_size: int = 10
+    batch_size: int = 10,
+    llm_client: Optional[object] = None
 ) -> List[SlideTranscript]:
     """
     Synchronous wrapper for align_slides_to_transcript.
@@ -220,13 +227,14 @@ def align_slides_to_transcript_sync(
         segments: Consolidated transcript segments
         model: LLM model identifier
         batch_size: Slides per LLM call
+        llm_client: Optional pre-configured LLM client
 
     Returns:
         List of SlideTranscript objects
     """
 
     return asyncio.run(
-        align_slides_to_transcript(slides, segments, model, batch_size)
+        align_slides_to_transcript(slides, segments, model, batch_size, llm_client)
     )
 
 

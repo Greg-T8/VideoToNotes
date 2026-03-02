@@ -31,7 +31,7 @@ from pathlib import Path
 if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from notes_generator.llm_client import GitHubModelsClient, ChatMessage
+from notes_generator.llm_client import GitHubModelsClient, ChatMessage, create_llm_client
 from notes_generator.prompt_loader import load_prompt
 
 
@@ -88,17 +88,19 @@ async def generate_contents(
     title: str,
     channel: str,
     duration: int,
-    model: str = "gpt-4.1-mini"
+    model: str = "gpt-4.1-mini",
+    llm_client: object = None
 ) -> dict:
     """
-    Generate table of contents from transcript.
+    Generate table of contents from a transcript using LLM.
 
     Args:
-        transcript_path: Path to SRT transcript file
+        transcript_path: Path to the SRT transcript file
         title: Video title
         channel: Channel name
         duration: Video duration in seconds
         model: LLM model to use
+        llm_client: Optional pre-configured LLM client instance
 
     Returns:
         Dictionary with generated sections
@@ -126,8 +128,8 @@ async def generate_contents(
         transcript=transcript_text
     )
 
-    # Call LLM
-    client = GitHubModelsClient()
+    # Call LLM (use provided client or fall back to GitHub Models)
+    client = llm_client or GitHubModelsClient()
 
     response = await client.chat(
         messages=[ChatMessage(role="user", content=prompt)],
@@ -259,6 +261,29 @@ def main():
         help="LLM model to use (default: gpt-4.1-mini)"
     )
 
+    # Provider arguments for Azure OpenAI support
+    parser.add_argument(
+        "--provider",
+        type=str,
+        choices=["github", "azure"],
+        default="github",
+        help="LLM provider to use (default: github)"
+    )
+
+    parser.add_argument(
+        "--azure-endpoint",
+        type=str,
+        default=None,
+        help="Azure OpenAI endpoint URL (required when provider is azure)"
+    )
+
+    parser.add_argument(
+        "--azure-deployment",
+        type=str,
+        default=None,
+        help="Azure OpenAI deployment name (required when provider is azure)"
+    )
+
     args = parser.parse_args()
 
     # Validate input
@@ -266,17 +291,26 @@ def main():
         print(f"Error: Transcript file not found: {args.transcript}", file=sys.stderr)
         sys.exit(1)
 
+    # Create the LLM client based on provider selection
+    llm_client = create_llm_client(
+        provider=args.provider,
+        azure_endpoint=args.azure_endpoint,
+        azure_deployment=args.azure_deployment
+    )
+
     # Generate contents
     print(f"Generating table of contents from transcript...")
     print(f"  Title: {args.title}")
     print(f"  Duration: {format_duration(args.duration)}")
+    print(f"  Provider: {args.provider}")
 
     generated = asyncio.run(generate_contents(
         transcript_path=args.transcript,
         title=args.title,
         channel=args.channel,
         duration=args.duration,
-        model=args.model
+        model=args.model,
+        llm_client=llm_client
     ))
 
     # Convert to contents format

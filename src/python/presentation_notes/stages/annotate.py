@@ -93,7 +93,8 @@ async def annotate_all_slides(
     slides: List[Slide],
     alignments: List[SlideTranscript],
     model: str = "gpt-4.1-mini",
-    concurrency: int = 1
+    concurrency: int = 1,
+    llm_client: Optional[object] = None
 ) -> List[SlideNotes]:
     """
     Generate notes for all slides sequentially.
@@ -107,12 +108,17 @@ async def annotate_all_slides(
         alignments: List of SlideTranscript objects (one per slide)
         model: LLM model identifier
         concurrency: Reserved for future use (currently serial)
+        llm_client: Optional pre-configured LLM client
 
     Returns:
         List of SlideNotes objects, sorted by slide number
     """
 
-    client = GitHubModelsClient(timeout=180.0)
+    # Initialize LLM client if not provided
+    if llm_client is None:
+        client = GitHubModelsClient(timeout=180.0)
+    else:
+        client = llm_client
 
     # Build a map of alignments by slide number
     alignment_map = {a.slide_number: a for a in alignments}
@@ -168,7 +174,8 @@ def annotate_all_slides_sync(
     slides: List[Slide],
     alignments: List[SlideTranscript],
     model: str = "gpt-4.1-mini",
-    concurrency: int = 1
+    concurrency: int = 1,
+    llm_client: Optional[object] = None
 ) -> List[SlideNotes]:
     """
     Synchronous wrapper for annotate_all_slides.
@@ -178,13 +185,14 @@ def annotate_all_slides_sync(
         alignments: List of SlideTranscript objects
         model: LLM model identifier
         concurrency: Reserved for future use
+        llm_client: Optional pre-configured LLM client
 
     Returns:
         List of SlideNotes objects
     """
 
     return asyncio.run(
-        annotate_all_slides(slides, alignments, model, concurrency)
+        annotate_all_slides(slides, alignments, model, concurrency, llm_client)
     )
 
 

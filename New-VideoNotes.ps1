@@ -69,39 +69,49 @@
 [CmdletBinding(DefaultParameterSetName = 'YouTube')]
 param(
 	[Parameter(ParameterSetName = 'YouTube', Mandatory = $true, Position = 0,
-		HelpMessage = "YouTube video URL to transcribe")]
+		HelpMessage = 'YouTube video URL to transcribe')]
 	[string]$YouTubeUrl,
 
 	[Parameter(ParameterSetName = 'Files', Mandatory = $true,
-		HelpMessage = "Path to the index/TOC file")]
+		HelpMessage = 'Path to the index/TOC file')]
 	[ValidateScript({ Test-Path $_ -PathType Leaf })]
 	[string]$Index,
 
 	[Parameter(ParameterSetName = 'Files', Mandatory = $true,
-		HelpMessage = "Path to the transcript file")]
+		HelpMessage = 'Path to the transcript file')]
 	[ValidateScript({ Test-Path $_ -PathType Leaf })]
 	[string]$Transcript,
 
-	[Parameter(HelpMessage = "Output path for generated notes")]
+	[Parameter(HelpMessage = 'Output path for generated notes')]
 	[string]$Output,
 
-	[Parameter(HelpMessage = "Model for extraction stage")]
-	[string]$ExtractModel = "gpt-4.1-mini",
+	[Parameter(HelpMessage = 'Model for extraction stage')]
+	[string]$ExtractModel = 'gpt-4.1-mini',
 
-	[Parameter(HelpMessage = "Model for merge stage")]
-	[string]$MergeModel = "gpt-4.1-mini",
-
-	[Parameter(ParameterSetName = 'YouTube',
-		HelpMessage = "Language code for transcription")]
-	[string]$Language = "en-US",
+	[Parameter(HelpMessage = 'Model for merge stage')]
+	[string]$MergeModel = 'gpt-4.1-mini',
 
 	[Parameter(ParameterSetName = 'YouTube',
-		HelpMessage = "Keep intermediate audio files")]
-	[switch]$KeepIntermediateFiles
+		HelpMessage = 'Language code for transcription')]
+	[string]$Language = 'en-US',
+
+	[Parameter(ParameterSetName = 'YouTube',
+		HelpMessage = 'Keep intermediate audio files')]
+	[switch]$KeepIntermediateFiles,
+
+	[Parameter(HelpMessage = 'LLM provider: GitHub (default) or Azure')]
+	[ValidateSet('GitHub', 'Azure')]
+	[string]$Provider = 'GitHub',
+
+	[Parameter(HelpMessage = 'Azure OpenAI endpoint URL (required for Azure provider)')]
+	[string]$AzureEndpoint,
+
+	[Parameter(HelpMessage = 'Azure OpenAI deployment name (required for Azure provider)')]
+	[string]$AzureDeployment
 )
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 
 # -------------------------------------------------------------------------
 # Main
@@ -130,11 +140,11 @@ $Main = {
 
 		# Check if contents need to be generated from transcript
 		# This happens when YouTube description has no chapters
-		if ($contentsJson.chaptersSource -eq "none" -or
+		if ($contentsJson.chaptersSource -eq 'none' -or
 			-not $contentsJson.chapters -or
 			@($contentsJson.chapters).Count -eq 0) {
 
-			Show-Phase "PHASE 2.5: Contents Generation" "Generate table of contents from transcript"
+			Show-Phase 'PHASE 2.5: Contents Generation' 'Generate table of contents from transcript'
 
 			# Need Python environment to generate contents
 			$pythonExe = Confirm-PythonEnvironment
@@ -169,7 +179,7 @@ $Main = {
 	}
 
 	# Phase 3: Notes Generation Pipeline
-	Show-Phase "PHASE 3: Notes Generation" "Normalize, extract, merge, and assemble notes"
+	Show-Phase 'PHASE 3: Notes Generation' 'Normalize, extract, merge, and assemble notes'
 
 	# Display current configuration
 	Show-Configuration
@@ -199,15 +209,15 @@ $Helpers = {
         #>
 		param([string]$Url)
 
-		Show-Phase "PHASE 1: YouTube Processing" "Download metadata, chapters, and audio"
+		Show-Phase 'PHASE 1: YouTube Processing' 'Download metadata, chapters, and audio'
 
 		# Step 1: Extract contents/index from YouTube (to get video title first)
-		Show-Stage "Contents" "Extracting video chapters and contents..."
+		Show-Stage 'Contents' 'Extracting video chapters and contents...'
 
-		$contentsScript = Join-Path $PSScriptRoot "src\powershell\Get-YouTubeContents.ps1"
+		$contentsScript = Join-Path $PSScriptRoot 'src\powershell\Get-YouTubeContents.ps1'
 
 		# Create a temporary location for initial contents extraction
-		$tempInitFolder = Join-Path $PSScriptRoot "staging\.temp_init"
+		$tempInitFolder = Join-Path $PSScriptRoot 'staging\.temp_init'
 		if (Test-Path $tempInitFolder) {
 			Remove-Item $tempInitFolder -Recurse -Force
 		}
@@ -219,7 +229,7 @@ $Helpers = {
 
 		if ($LASTEXITCODE -ne 0) {
 			Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
-			throw "Failed to extract video contents"
+			throw 'Failed to extract video contents'
 		}
 
 		# Get the created output folder (dated subfolder)
@@ -246,7 +256,7 @@ $Helpers = {
 		$dataFolderName = "$formattedDate-$rawTitle"
 		$dataFolder = Join-Path $PSScriptRoot "staging\$dataFolderName"
 		if (Test-Path $dataFolder) {
-			Write-Host "  Removing existing data folder..." -ForegroundColor DarkGray
+			Write-Host '  Removing existing data folder...' -ForegroundColor DarkGray
 			Remove-Item $dataFolder -Recurse -Force
 		}
 
@@ -254,15 +264,15 @@ $Helpers = {
 		Move-Item $contentsOutputFolder $dataFolder -Force
 		Remove-Item $tempInitFolder -Recurse -Force -ErrorAction SilentlyContinue
 
-		$indexPath = Join-Path $dataFolder "contents.md"
-		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		$indexPath = Join-Path $dataFolder 'contents.md'
+		Write-Host '✓ ' -ForegroundColor Green -NoNewline
 		Write-Host "Contents extracted: $indexPath"
 
 		# Step 2: Transcribe the video (directly to final data folder)
-		Show-Phase "PHASE 2: Audio Transcription" "Download, optimize, and transcribe audio"
-		Show-Stage "Transcribe" "Starting audio transcription..."
+		Show-Phase 'PHASE 2: Audio Transcription' 'Download, optimize, and transcribe audio'
+		Show-Stage 'Transcribe' 'Starting audio transcription...'
 
-		$transcribeScript = Join-Path $PSScriptRoot "src\powershell\Invoke-YouTubeTranscription.ps1"
+		$transcribeScript = Join-Path $PSScriptRoot 'src\powershell\Invoke-YouTubeTranscription.ps1'
 
 		$transcribeParams = @{
 			YouTubeUrl = $Url
@@ -279,16 +289,16 @@ $Helpers = {
 		& $transcribeScript @transcribeParams | Out-Null
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "Failed to transcribe video"
+			throw 'Failed to transcribe video'
 		}
 
 		# Transcript file should be directly in the data folder now
-		$transcriptFile = Join-Path $dataFolder "transcript.srt"
+		$transcriptFile = Join-Path $dataFolder 'transcript.srt'
 		if (-not (Test-Path $transcriptFile)) {
 			throw "Transcript file not found at: $transcriptFile"
 		}
 
-		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host '✓ ' -ForegroundColor Green -NoNewline
 		Write-Host "Transcription complete: $transcriptFile"
 
 		return @{
@@ -315,32 +325,32 @@ $Helpers = {
 			[string]$PythonExe
 		)
 
-		Show-Stage "Generate" "Creating table of contents from transcript..."
+		Show-Stage 'Generate' 'Creating table of contents from transcript...'
 
 		# Build paths
-		$contentsJsonPath = Join-Path $DataFolder "contents.json"
-		$contentsMdPath = Join-Path $DataFolder "contents.md"
+		$contentsJsonPath = Join-Path $DataFolder 'contents.json'
+		$contentsMdPath = Join-Path $DataFolder 'contents.md'
 
 		# Call Python script to generate contents
-		$generateScript = "notes_generator.generate_contents"
+		$generateScript = 'notes_generator.generate_contents'
 
 		$generateArgs = @(
-			"-m", $generateScript,
-			"--transcript", $TranscriptPath,
-			"--title", $ContentsJson.title,
-			"--channel", $ContentsJson.channel,
-			"--duration", $ContentsJson.duration,
-			"--url", $ContentsJson.url,
-			"--output", $contentsJsonPath
+			'-m', $generateScript,
+			'--transcript', $TranscriptPath,
+			'--title', $ContentsJson.title,
+			'--channel', $ContentsJson.channel,
+			'--duration', $ContentsJson.duration,
+			'--url', $ContentsJson.url,
+			'--output', $contentsJsonPath
 		)
 
 		# Set PYTHONPATH to include the src/python directory
-		$env:PYTHONPATH = Join-Path $PSScriptRoot "src\python"
+		$env:PYTHONPATH = Join-Path $PSScriptRoot 'src\python'
 
 		& $PythonExe @generateArgs
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "Failed to generate table of contents from transcript"
+			throw 'Failed to generate table of contents from transcript'
 		}
 
 		# Re-read the generated contents.json
@@ -350,7 +360,7 @@ $Helpers = {
 		$contentsMarkdown = Convert-ContentsJsonToMarkdown -Contents $newContentsJson
 		Set-Content -Path $contentsMdPath -Value $contentsMarkdown -Encoding UTF8
 
-		Write-Host "✓ " -ForegroundColor Green -NoNewline
+		Write-Host '✓ ' -ForegroundColor Green -NoNewline
 		Write-Host "Generated $($newContentsJson.chapters.Count) sections from transcript"
 
 		return $newContentsJson
@@ -375,7 +385,7 @@ $Helpers = {
 
 		# Table of Contents
 		if ($Contents.chapters -and @($Contents.chapters).Count -gt 0) {
-			[void]$sb.AppendLine("## Table of Contents")
+			[void]$sb.AppendLine('## Table of Contents')
 			[void]$sb.AppendLine()
 			[void]$sb.AppendLine("*Source: $($Contents.chaptersSource)*")
 			[void]$sb.AppendLine()
@@ -389,7 +399,7 @@ $Helpers = {
 			}
 		}
 		else {
-			[void]$sb.AppendLine("*No chapters or timestamps found*")
+			[void]$sb.AppendLine('*No chapters or timestamps found*')
 		}
 
 		return $sb.ToString()
@@ -404,9 +414,9 @@ $Helpers = {
 
 		$ts = [TimeSpan]::FromSeconds($Seconds)
 		if ($ts.Hours -gt 0) {
-			return "{0}:{1:D2}:{2:D2}" -f $ts.Hours, $ts.Minutes, $ts.Seconds
+			return '{0}:{1:D2}:{2:D2}' -f $ts.Hours, $ts.Minutes, $ts.Seconds
 		}
-		return "{0}:{1:D2}" -f $ts.Minutes, $ts.Seconds
+		return '{0}:{1:D2}' -f $ts.Minutes, $ts.Seconds
 	}
 
 	function Confirm-GitHubAuth {
@@ -417,34 +427,34 @@ $Helpers = {
             Checks that the user has run 'gh auth login' and has a valid token.
             Displays the authenticated account before proceeding.
         #>
-		Show-Stage "Auth" "Checking GitHub CLI status..."
+		Show-Stage 'Auth' 'Checking GitHub CLI status...'
 
 		# Check if gh CLI is installed
 		$ghPath = Get-Command gh -ErrorAction SilentlyContinue
 		if (-not $ghPath) {
-			throw "GitHub CLI (gh) not found. Install from https://cli.github.com/"
+			throw 'GitHub CLI (gh) not found. Install from https://cli.github.com/'
 		}
 
 		# Get authentication status with account info
 		$statusOutput = gh auth status 2>&1
 		if ($LASTEXITCODE -ne 0) {
-			Write-Host ""
+			Write-Host ''
 			Write-Host $statusOutput -ForegroundColor DarkGray
-			Write-Host ""
+			Write-Host ''
 			throw "GitHub CLI not authenticated. Run 'gh auth login' first."
 		}
 
 		# Extract the logged-in account from status output
-		$accountLine = $statusOutput | Select-String -Pattern "Logged in to .+ account (.+)" | Select-Object -First 1
+		$accountLine = $statusOutput | Select-String -Pattern 'Logged in to .+ account (.+)' | Select-Object -First 1
 		if ($accountLine) {
 			$account = $accountLine.Matches.Groups[1].Value.Trim()
-			Write-Host "✓ " -ForegroundColor Green -NoNewline
+			Write-Host '✓ ' -ForegroundColor Green -NoNewline
 			Write-Host "Authenticated as: $account"
 		}
 		else {
 			# Fallback: just show authenticated
-			Write-Host "✓ " -ForegroundColor Green -NoNewline
-			Write-Host "GitHub CLI authenticated"
+			Write-Host '✓ ' -ForegroundColor Green -NoNewline
+			Write-Host 'GitHub CLI authenticated'
 		}
 	}
 
@@ -472,13 +482,13 @@ $Helpers = {
 			[string]$Description
 		)
 
-		Write-Host ""
-		Write-Host "───────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
+		Write-Host ''
+		Write-Host '───────────────────────────────────────────────────────────────' -ForegroundColor DarkGray
 		Write-Host "  $Phase" -ForegroundColor Yellow
 		if ($Description) {
 			Write-Host "  $Description" -ForegroundColor DarkGray
 		}
-		Write-Host "───────────────────────────────────────────────────────────────" -ForegroundColor DarkGray
+		Write-Host '───────────────────────────────────────────────────────────────' -ForegroundColor DarkGray
 	}
 
 	function Show-Success {
@@ -486,13 +496,13 @@ $Helpers = {
         .SYNOPSIS
             Displays success completion banner.
         #>
-		Write-Host ""
-		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
-		Write-Host "✓ " -ForegroundColor Green -NoNewline
-		Write-Host "Notes generated successfully!"
+		Write-Host ''
+		Write-Host '═══════════════════════════════════════════════════════════════' -ForegroundColor Green
+		Write-Host '✓ ' -ForegroundColor Green -NoNewline
+		Write-Host 'Notes generated successfully!'
 		Write-Host "  Output: $script:Output" -ForegroundColor Green
-		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Green
-		Write-Host ""
+		Write-Host '═══════════════════════════════════════════════════════════════' -ForegroundColor Green
+		Write-Host ''
 	}
 
 	function Show-Error {
@@ -502,7 +512,7 @@ $Helpers = {
         #>
 		param([string]$Message)
 
-		Write-Host "✗ " -ForegroundColor Red -NoNewline
+		Write-Host '✗ ' -ForegroundColor Red -NoNewline
 		Write-Host $Message
 	}
 
@@ -511,11 +521,11 @@ $Helpers = {
         .SYNOPSIS
             Displays the application banner.
         #>
-		Write-Host ""
-		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
-		Write-Host "  VideoToNotes" -ForegroundColor Magenta
-		Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor Magenta
-		Write-Host ""
+		Write-Host ''
+		Write-Host '═══════════════════════════════════════════════════════════════' -ForegroundColor Magenta
+		Write-Host '  VideoToNotes' -ForegroundColor Magenta
+		Write-Host '═══════════════════════════════════════════════════════════════' -ForegroundColor Magenta
+		Write-Host ''
 	}
 
 	function Show-Configuration {
@@ -523,13 +533,18 @@ $Helpers = {
         .SYNOPSIS
             Displays the current configuration settings.
         #>
-		Write-Host "Configuration:" -ForegroundColor Yellow
+		Write-Host 'Configuration:' -ForegroundColor Yellow
 		Write-Host "  Index:         $script:IndexPath"
 		Write-Host "  Transcript:    $script:TranscriptPath"
 		Write-Host "  Output:        $script:Output"
 		Write-Host "  Extract Model: $ExtractModel"
 		Write-Host "  Merge Model:   $MergeModel"
-		Write-Host ""
+		Write-Host "  Provider:      $Provider"
+		if ($Provider -eq 'Azure') {
+			Write-Host "  Azure Endpoint:   $AzureEndpoint"
+			Write-Host "  Azure Deployment: $AzureDeployment"
+		}
+		Write-Host ''
 	}
 
 	function Confirm-PythonEnvironment {
@@ -539,34 +554,34 @@ $Helpers = {
         .OUTPUTS
             Path to the Python executable in the virtual environment.
         #>
-		$venvPath = Join-Path $PSScriptRoot ".venv"
-		$venvPython = Join-Path $venvPath "Scripts\python.exe"
-		$requirementsPath = Join-Path $PSScriptRoot "requirements.txt"
+		$venvPath = Join-Path $PSScriptRoot '.venv'
+		$venvPython = Join-Path $venvPath 'Scripts\python.exe'
+		$requirementsPath = Join-Path $PSScriptRoot 'requirements.txt'
 
 		# Create virtual environment if it doesn't exist
 		if (-not (Test-Path $venvPython)) {
-			Show-Stage "Setup" "Creating Python virtual environment..."
+			Show-Stage 'Setup' 'Creating Python virtual environment...'
 			python -m venv $venvPath
 			if ($LASTEXITCODE -ne 0) {
-				throw "Failed to create virtual environment"
+				throw 'Failed to create virtual environment'
 			}
-			Write-Host "✓ " -ForegroundColor Green -NoNewline
-			Write-Host "Virtual environment created"
+			Write-Host '✓ ' -ForegroundColor Green -NoNewline
+			Write-Host 'Virtual environment created'
 		}
 
 		# Install or update Python dependencies
-		$pipPath = Join-Path $venvPath "Scripts\pip.exe"
-		Show-Stage "Setup" "Checking Python dependencies..."
+		$pipPath = Join-Path $venvPath 'Scripts\pip.exe'
+		Show-Stage 'Setup' 'Checking Python dependencies...'
 
 		# Suppress all pip output including cache cleanup messages
 		# Use --no-cache-dir to prevent async cache operations that print to console
 		$null = & $pipPath install -q --disable-pip-version-check --no-cache-dir -r $requirementsPath 2>&1
 
 		if ($LASTEXITCODE -ne 0) {
-			throw "Failed to install Python dependencies"
+			throw 'Failed to install Python dependencies'
 		}
-		Write-Host "✓ " -ForegroundColor Green -NoNewline
-		Write-Host "Dependencies verified"
+		Write-Host '✓ ' -ForegroundColor Green -NoNewline
+		Write-Host 'Dependencies verified'
 
 		return $venvPython
 	}
@@ -588,11 +603,11 @@ $Helpers = {
 		# Check if parent folder follows the dated naming pattern (YYYY-MM-DD-Title)
 		if ($folderName -match '^\d{4}-\d{2}-\d{2}-(.+)$') {
 			# Return the full folder name including date
-			return $folderName -replace "[^\w\s-]", "" -replace "\s+", "_"
+			return $folderName -replace '[^\w\s-]', '' -replace '\s+', '_'
 		}
 
 		# Try to read title from contents.json if it exists
-		$contentsJsonPath = Join-Path $parentFolder "contents.json"
+		$contentsJsonPath = Join-Path $parentFolder 'contents.json'
 		if (Test-Path $contentsJsonPath) {
 			try {
 				$contents = Get-Content $contentsJsonPath | ConvertFrom-Json
@@ -617,17 +632,17 @@ $Helpers = {
 		}
 
 		# Fallback: use folder name or file name
-		if ($folderName -and $folderName -ne "." -and $folderName -ne "staging") {
-			return $folderName -replace "[^\w\s-]", "" -replace "\s+", "_"
+		if ($folderName -and $folderName -ne '.' -and $folderName -ne 'staging') {
+			return $folderName -replace '[^\w\s-]', '' -replace '\s+', '_'
 		}
 
 		$fileName = [System.IO.Path]::GetFileNameWithoutExtension($IndexPath)
 
 		# Remove common prefixes like "Index - " or "TOC - "
-		$title = $fileName -replace "^(Index|TOC|Contents)\s*[-_]\s*", ""
+		$title = $fileName -replace '^(Index|TOC|Contents)\s*[-_]\s*', ''
 
 		# Clean up for use as filename
-		$title = $title -replace "[^\w\s-]", "" -replace "\s+", "_"
+		$title = $title -replace '[^\w\s-]', '' -replace '\s+', '_'
 
 		return $title
 	}
@@ -641,28 +656,35 @@ $Helpers = {
         #>
 		param([string]$PythonExe)
 
-		Show-Stage "Pipeline" "Starting notes generation..."
-		Write-Host ""
+		Show-Stage 'Pipeline' 'Starting notes generation...'
+		Write-Host ''
 
 		# Build Python command arguments
 		$pythonArgs = @(
-			"-m", "notes_generator.main",
-			"--index", $script:IndexPath,
-			"--transcript", $script:TranscriptPath,
-			"--output", $script:Output,
-			"--extract-model", $ExtractModel,
-			"--merge-model", $MergeModel,
-			"--debug"
+			'-m', 'notes_generator.main',
+			'--index', $script:IndexPath,
+			'--transcript', $script:TranscriptPath,
+			'--output', $script:Output,
+			'--extract-model', $ExtractModel,
+			'--merge-model', $MergeModel,
+			'--debug'
 		)
+
+		# Add Azure provider arguments if specified
+		if ($Provider -eq 'Azure') {
+			$pythonArgs += '--provider', 'azure'
+			if ($AzureEndpoint) { $pythonArgs += '--azure-endpoint', $AzureEndpoint }
+			if ($AzureDeployment) { $pythonArgs += '--azure-deployment', $AzureDeployment }
+		}
 
 		# Add debug-dir if we have a data folder from YouTube workflow
 		if ($script:DataFolder) {
-			$debugDir = Join-Path $script:DataFolder "debug"
-			$pythonArgs += "--debug-dir", $debugDir
+			$debugDir = Join-Path $script:DataFolder 'debug'
+			$pythonArgs += '--debug-dir', $debugDir
 		}
 
 		# Set PYTHONPATH to include src/python
-		$env:PYTHONPATH = Join-Path $PSScriptRoot "src\python"
+		$env:PYTHONPATH = Join-Path $PSScriptRoot 'src\python'
 
 		# Execute Python pipeline
 		& $PythonExe @pythonArgs
@@ -682,10 +704,10 @@ try {
 	& $Main
 }
 catch {
-	Write-Host ""
-	Write-Host "✗ " -ForegroundColor Red -NoNewline
+	Write-Host ''
+	Write-Host '✗ ' -ForegroundColor Red -NoNewline
 	Write-Host "Error: $_"
-	Write-Host ""
+	Write-Host ''
 	Write-Host $_.ScriptStackTrace -ForegroundColor DarkGray
 	exit 1
 }

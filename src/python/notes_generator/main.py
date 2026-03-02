@@ -99,6 +99,28 @@ def parse_args() -> argparse.Namespace:
         help="Directory for debug output (default: output/debug)"
     )
 
+    parser.add_argument(
+        "--provider",
+        type=str,
+        choices=["github", "azure"],
+        default="github",
+        help="LLM provider: github (default) or azure"
+    )
+
+    parser.add_argument(
+        "--azure-endpoint",
+        type=str,
+        default=None,
+        help="Azure OpenAI endpoint URL (required when provider is azure)"
+    )
+
+    parser.add_argument(
+        "--azure-deployment",
+        type=str,
+        default=None,
+        help="Azure OpenAI deployment name (required when provider is azure)"
+    )
+
     return parser.parse_args()
 
 
@@ -138,8 +160,17 @@ def run_pipeline(
     import json
     from dataclasses import asdict
 
+    from notes_generator.llm_client import create_llm_client
+
     # Initialize pipeline state
     state = PipelineState(config=config)
+
+    # Create the LLM client based on the selected provider
+    llm_client = create_llm_client(
+        provider=config.provider,
+        azure_endpoint=config.azure_endpoint,
+        azure_deployment=config.azure_deployment
+    )
 
     # Debug output directory (use custom or default to output/debug)
     if debug_dir:
@@ -159,7 +190,8 @@ def run_pipeline(
 
         state.normalized_index = normalize_index_sync(
             Path(config.index_path),
-            model=config.extract_model
+            model=config.extract_model,
+            llm_client=llm_client
         )
         print_success(f"Index normalized: {len(state.normalized_index.sections)} sections")
 
@@ -203,7 +235,8 @@ def run_pipeline(
             index=state.normalized_index,
             chunks=state.chunks,
             model=config.extract_model,
-            sections_output_dir=sections_dir
+            sections_output_dir=sections_dir,
+            llm_client=llm_client
         )
         print_success(f"Extracted: {len(state.merged_sections)} sections")
 
@@ -284,7 +317,10 @@ def main() -> int:
         output_path=str(output_path),
         extract_model=args.extract_model,
         merge_model=args.merge_model,
-        prompts_dir=str(args.prompts_dir) if args.prompts_dir else None
+        prompts_dir=str(args.prompts_dir) if args.prompts_dir else None,
+        provider=args.provider,
+        azure_endpoint=args.azure_endpoint,
+        azure_deployment=args.azure_deployment
     )
 
     # Display configuration
@@ -296,6 +332,10 @@ def main() -> int:
     print(f"Output:        {config.output_path}")
     print(f"Extract Model: {config.extract_model}")
     print(f"Merge Model:   {config.merge_model}")
+    print(f"Provider:      {config.provider}")
+    if config.provider == "azure":
+        print(f"Azure Endpoint:    {config.azure_endpoint}")
+        print(f"Azure Deployment:  {config.azure_deployment}")
     print("=" * 60)
     print()
 
