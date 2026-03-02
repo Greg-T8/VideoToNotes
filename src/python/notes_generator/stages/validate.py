@@ -231,7 +231,8 @@ async def validate_and_fill(
     merged_sections: List[MergedSection],
     chunks: List[TranscriptChunk],
     model: str = "gpt-4.1-mini",
-    max_retries: int = 2
+    max_retries: int = 2,
+    llm_client: Optional[object] = None
 ) -> List[MergedSection]:
     """
     Validate merged sections and fill in empty ones.
@@ -242,11 +243,15 @@ async def validate_and_fill(
         chunks: Original transcript chunks for re-extraction
         model: Model to use for re-extraction
         max_retries: Maximum number of sections to re-extract
+        llm_client: Optional pre-configured LLM client instance
 
     Returns:
         Updated list of merged sections
     """
-    from notes_generator.llm_client import GitHubModelsClient
+    # Use provided client or fall back to GitHub Models
+    if llm_client is None:
+        from notes_generator.llm_client import GitHubModelsClient
+        llm_client = GitHubModelsClient()
 
     # Find empty sections
     empty_sections, _ = find_empty_sections(index, merged_sections)
@@ -258,9 +263,6 @@ async def validate_and_fill(
 
     # Limit re-extraction to avoid excessive API calls
     sections_to_fill = empty_sections[:max_retries * 5]  # Process up to 10 sections
-
-    # Initialize LLM client
-    llm_client = GitHubModelsClient()
 
     # Extract content for empty sections
     new_sections = []
@@ -297,12 +299,15 @@ def validate_and_fill_sync(
     index: NormalizedIndex,
     merged_sections: List[MergedSection],
     chunks: List[TranscriptChunk],
-    model: str = "gpt-4.1-mini"
+    model: str = "gpt-4.1-mini",
+    llm_client: Optional[object] = None
 ) -> List[MergedSection]:
     """
     Synchronous wrapper for validate_and_fill.
     """
-    return asyncio.run(validate_and_fill(index, merged_sections, chunks, model))
+    return asyncio.run(validate_and_fill(
+        index, merged_sections, chunks, model, llm_client=llm_client
+    ))
 
 
 def get_coverage_stats(

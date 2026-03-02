@@ -341,8 +341,15 @@ $Helpers = {
 			'--channel', $ContentsJson.channel,
 			'--duration', $ContentsJson.duration,
 			'--url', $ContentsJson.url,
-			'--output', $contentsJsonPath
+			'--output', $contentsJsonPath,
+			'--provider', $Provider
 		)
+
+		# Append Azure-specific arguments when using the Azure provider
+		if ($Provider -eq 'Azure') {
+			$generateArgs += @('--azure-endpoint', $AzureEndpoint)
+			$generateArgs += @('--azure-deployment', $AzureDeployment)
+		}
 
 		# Set PYTHONPATH to include the src/python directory
 		$env:PYTHONPATH = Join-Path $PSScriptRoot 'src\python'

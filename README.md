@@ -1,86 +1,141 @@
 # VideoToNotes
 
-Generate structured study notes from video transcripts using AI.
+Generate structured study notes from video transcripts and slide presentations using AI.
 
 ## Overview
 
-This tool transforms video transcripts into comprehensive markdown notes by:
+Two pipelines are available depending on your source material:
 
-1. **Transcribe** - Download YouTube video and transcribe audio (optional)
+### Video Notes (`New-VideoNotes.ps1`)
+
+Transforms YouTube videos or local transcripts into comprehensive markdown notes:
+
+1. **Transcribe** - Download YouTube video and transcribe audio via Azure Speech (optional)
 2. **Normalize** - Convert varied index formats to consistent JSON (LLM)
 3. **Chunk** - Split transcript into ~20KB pieces (Python)
 4. **Extract** - Generate notes per section from relevant chunks (LLM)
 5. **Assemble** - Build final markdown document (deterministic)
 
+### Presentation Notes (`New-PresentationNotes.ps1`)
+
+Transforms a PDF slide deck and video recording into annotated notes:
+
+1. **Extract** - Render PDF pages as images and extract text per slide (Python)
+2. **Transcribe** - Extract audio from the video and transcribe via Azure Speech
+3. **Align** - Map transcript segments to slides using LLM
+4. **Annotate** - Generate detailed notes per slide using LLM
+5. **Assemble** - Build final markdown with embedded slide images
+
 ## Quick Start
 
-### From YouTube URL (Recommended)
+### Video Notes from YouTube
 
 ```powershell
-# Generate notes directly from a YouTube video
+# Using GitHub Models (default)
 .\New-VideoNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Using Azure OpenAI
+.\New-VideoNotes.ps1 -YouTubeUrl "https://www.youtube.com/watch?v=VIDEO_ID" `
+                     -Provider Azure `
+                     -AzureEndpoint "https://<name>.cognitiveservices.azure.com/" `
+                     -AzureDeployment "gpt-4.1-mini"
 ```
 
-### From Existing Files
+### Video Notes from Existing Files
 
 ```powershell
-# Generate notes from pre-existing index and transcript files
 .\New-VideoNotes.ps1 -Index "staging\video_title\contents.md" `
                      -Transcript "staging\video_title\transcript.srt"
+```
+
+### Presentation Notes
+
+```powershell
+# From a local video file
+.\New-PresentationNotes.ps1 -PdfFile "slides.pdf" -VideoFile "recording.mp4"
+
+# From a stream URL
+.\New-PresentationNotes.ps1 -PdfFile "slides.pdf" `
+                             -StreamUrl "https://example.com/manifest.mpd"
+
+# From a pre-existing transcript
+.\New-PresentationNotes.ps1 -PdfFile "slides.pdf" -Transcript "transcript.srt"
+
+# Using Azure OpenAI
+.\New-PresentationNotes.ps1 -PdfFile "slides.pdf" -VideoFile "recording.mp4" `
+                             -Provider Azure `
+                             -AzureEndpoint "https://<name>.cognitiveservices.azure.com/" `
+                             -AzureDeployment "gpt-4.1-mini"
 ```
 
 ## Project Structure
 
 ```
 VideoToNotes/
-├── New-VideoNotes.ps1           # Main entry point (PowerShell wrapper)
-├── requirements.txt             # Python dependencies
+├── New-VideoNotes.ps1              # Entry point for video notes pipeline
+├── New-PresentationNotes.ps1       # Entry point for presentation notes pipeline
+├── requirements.txt                # Python dependencies
+├── terraform/                      # Azure infrastructure (Terraform)
+│   ├── main.tf                     # Resource definitions
+│   ├── variables.tf                # Input variables
+│   ├── outputs.tf                  # Output values (endpoints, CLI commands)
+│   ├── providers.tf                # Provider configuration (azurerm, random)
+│   └── terraform.tfvars            # Variable values (non-sensitive)
 ├── staging/
-│   └── <video_title>/           # Video-specific working folders
-│       ├── contents.json        # Extracted video chapters (JSON)
-│       ├── contents.md          # Extracted video chapters (Markdown)
-│       ├── transcript.srt       # Transcribed audio (SRT format)
-│       └── debug/               # Debug output (intermediate files)
-├── input/                       # Manual input files
-├── output/                      # Generated notes
-│   └── debug/                   # Debug output for file-based runs
-├── src/
-│   ├── prompts/                 # LLM prompt templates
-│   │   ├── normalize.md         # Index → JSON conversion
-│   │   ├── extract.md           # Section → notes extraction
-│   │   ├── merge.md             # Partials → merged section
-│   │   ├── section_extract.md   # Per-section extraction
-│   │   └── targeted_extract.md  # Targeted re-extraction
-│   ├── powershell/
-│   │   ├── Split-Transcript.ps1         # Transcript splitting utility
-│   │   ├── Get-YouTubeContents.ps1      # Extract video chapters/TOC
-│   │   └── Invoke-YouTubeTranscription.ps1  # Download & transcribe audio
-│   └── python/
-│       └── notes_generator/
-│           ├── __init__.py
-│           ├── main.py              # Python CLI (called by wrapper)
-│           ├── llm_client.py        # LLM API client (GitHub Models)
-│           ├── models.py            # Data classes
-│           ├── prompt_loader.py     # Load prompts from .md files
-│           └── stages/
-│               ├── __init__.py
-│               ├── normalize.py         # Stage 0: Index normalization
-│               ├── chunk.py             # Stage 1: Transcript chunking
-│               ├── extract_by_section.py  # Stage 2: Per-section extraction
-│               ├── extract.py           # Legacy chunk-based extraction
-│               ├── merge.py             # Legacy merge stage
-│               ├── validate.py          # Input validation
-│               └── assemble.py          # Stage 3: Document assembly
-└── tests/                       # Test suite
+│   └── <video_title>/              # Video-specific working folders
+│       ├── contents.json           # Extracted chapters (JSON)
+│       ├── contents.md             # Extracted chapters (Markdown)
+│       ├── transcript.srt          # Transcribed audio (SRT format)
+│       └── debug/                  # Intermediate files
+├── input/                          # Manual input files
+├── output/                         # Generated notes
+└── src/
+    ├── prompts/                    # LLM prompt templates
+    │   ├── normalize.md
+    │   ├── extract.md
+    │   ├── merge.md
+    │   ├── section_extract.md
+    │   ├── targeted_extract.md
+    │   ├── slide_align.md
+    │   └── slide_annotate.md
+    ├── powershell/
+    │   ├── Split-Transcript.ps1
+    │   ├── Get-YouTubeContents.ps1
+    │   ├── Invoke-VideoTranscription.ps1
+    │   └── Invoke-YouTubeTranscription.ps1
+    └── python/
+        ├── notes_generator/            # Video notes pipeline
+        │   ├── main.py
+        │   ├── llm_client.py           # GitHub Models + Azure OpenAI clients
+        │   ├── generate_contents.py    # Fallback TOC generator
+        │   ├── models.py
+        │   ├── prompt_loader.py
+        │   └── stages/
+        │       ├── normalize.py
+        │       ├── chunk.py
+        │       ├── extract_by_section.py
+        │       ├── merge.py
+        │       ├── validate.py
+        │       └── assemble.py
+        └── presentation_notes/         # Presentation notes pipeline
+            ├── main.py
+            ├── pdf_processor.py
+            ├── models.py
+            ├── prompt_loader.py
+            └── stages/
+                ├── align.py
+                ├── annotate.py
+                └── assemble.py
+└── tests/
 ```
 
 ## Prerequisites
 
 - Python 3.10+
-- PowerShell 7+ (pwsh)
+- PowerShell 7+ (`pwsh`)
 - VS Code with recommended extensions
 
-### For YouTube Transcription (Optional)
+### For YouTube Transcription
 
 | Tool | Purpose | Installation |
 |------|---------|--------------|
@@ -88,7 +143,10 @@ VideoToNotes/
 | [ffmpeg](https://ffmpeg.org/) | Audio conversion | `winget install ffmpeg` |
 | [Azure Speech CLI](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/spx-overview) | Transcription | `dotnet tool install -g Microsoft.CognitiveServices.Speech.CLI` |
 
-You'll also need an Azure Speech Services resource configured with the `spx` CLI.
+### For Azure OpenAI Provider
+
+- Azure CLI (`az`) installed and logged in (`az login`)
+- An Azure AI Services resource (see [Terraform Deployment](#terraform-deployment) below)
 
 ## Installation
 
@@ -97,76 +155,107 @@ The PowerShell wrapper handles environment setup automatically on first run.
 Manual setup:
 
 ```powershell
-# Create virtual environment
 python -m venv .venv
-
-# Activate virtual environment
 .venv\Scripts\Activate.ps1
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
 Or use VS Code tasks: `Ctrl+Shift+P` → "Tasks: Run Task" → "Setup: Install Dependencies"
 
+## Terraform Deployment
+
+The `terraform/` directory provisions all required Azure resources:
+
+| Resource | Purpose |
+|----------|---------|
+| Resource Group | `project-videonotes-tf` |
+| Azure AI Services | Speech transcription + OpenAI chat completions |
+| GPT-4.1-mini deployment | LLM for notes extraction pipeline |
+| Storage Account | Audio uploads for batch transcription |
+
+### Deploy
+
+```powershell
+cd terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+### Configure `spx` After Deployment
+
+After `terraform apply`, run the commands shown in the `spx_config_commands` output:
+
+```powershell
+terraform output spx_config_commands
+# Run the two spx config commands it prints
+```
+
+### Get Azure Provider Arguments
+
+```powershell
+$endpoint   = terraform output -raw azure_openai_endpoint
+$deployment = terraform output -raw model_deployment_name
+```
+
+Then pass them to either script with `-Provider Azure -AzureEndpoint $endpoint -AzureDeployment $deployment`.
+
 ## Usage
 
-### Basic Usage
-
-```powershell
-.\New-VideoNotes.ps1 -Index "path\to\index.txt" -Transcript "path\to\transcript.txt"
-```
-
-### With Custom Output
-
-```powershell
-.\New-VideoNotes.ps1 -Index "path\to\index.txt" `
-                     -Transcript "path\to\transcript.txt" `
-                     -Output "output\MyNotes.md"
-```
-
-### With Custom Models
-
-```powershell
-.\New-VideoNotes.ps1 -Index "path\to\index.txt" `
-                     -Transcript "path\to\transcript.txt" `
-                     -ExtractModel "gpt-4o" `
-                     -MergeModel "gpt-4o"
-```
-
-### Parameters
+### `New-VideoNotes.ps1` Parameters
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `-YouTubeUrl` | Yes* | - | YouTube video URL to process |
-| `-Index` | Yes* | - | Path to index/TOC file with timestamps |
-| `-Transcript` | Yes* | - | Path to transcript file |
+| `-YouTubeUrl` | Yes* | — | YouTube video URL |
+| `-Index` | Yes* | — | Path to index/TOC file with timestamps |
+| `-Transcript` | Yes* | — | Path to SRT transcript file |
 | `-Output` | No | Auto-generated | Output path for notes |
-| `-ExtractModel` | No | gpt-4.1-mini | Model for extraction stage |
-| `-MergeModel` | No | gpt-4.1-mini | Model for merge stage |
-| `-Language` | No | en-US | Language code for transcription |
-| `-KeepIntermediateFiles` | No | false | Keep audio files after transcription |
+| `-ExtractModel` | No | `gpt-4.1-mini` | Model for extraction stage |
+| `-MergeModel` | No | `gpt-4.1-mini` | Model for merge stage |
+| `-Language` | No | `en-US` | Language code for transcription |
+| `-KeepIntermediateFiles` | No | `false` | Keep audio files after transcription |
+| `-Provider` | No | `GitHub` | LLM provider: `GitHub` or `Azure` |
+| `-AzureEndpoint` | No† | — | Azure OpenAI endpoint URL |
+| `-AzureDeployment` | No† | — | Azure OpenAI deployment name |
 
-*Either `-YouTubeUrl` OR both `-Index` and `-Transcript` are required.
+\*Either `-YouTubeUrl` OR both `-Index` and `-Transcript` are required.
+†Required when `-Provider Azure` is specified.
+
+### `New-PresentationNotes.ps1` Parameters
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `-PdfFile` | Yes | — | Path to PDF slide deck |
+| `-VideoFile` | Yes* | — | Path to local video file |
+| `-StreamUrl` | Yes* | — | URL to a stream manifest (.mpd, .m3u8) |
+| `-Transcript` | Yes* | — | Path to pre-existing SRT transcript |
+| `-Output` | No | Auto-generated | Output path for notes |
+| `-Model` | No | `gpt-4.1-mini` | Model for alignment and annotation |
+| `-Language` | No | `en-US` | Language code for transcription |
+| `-Dpi` | No | `200` | DPI for PDF rendering |
+| `-KeepIntermediateFiles` | No | `false` | Keep audio files after transcription |
+| `-Provider` | No | `GitHub` | LLM provider: `GitHub` or `Azure` |
+| `-AzureEndpoint` | No† | — | Azure OpenAI endpoint URL |
+| `-AzureDeployment` | No† | — | Azure OpenAI deployment name |
+
+\*One of `-VideoFile`, `-StreamUrl`, or `-Transcript` is required.
+†Required when `-Provider Azure` is specified.
 
 ## Input File Formats
 
-### Index File
+### Index File (Video Notes)
 
-The index file contains the table of contents with timestamps. Various formats are supported:
+Various formats are supported — the normalize stage uses an LLM to convert any format to structured JSON.
 
-**Format 1 (FreeCodeCamp style):**
+**FreeCodeCamp style:**
 
 ```
 ☁️ Introduction
 🎤 (00:00:00) Introduction to AI-900
 🎤 (00:08:18) Exam Guide Breakdown
-
-☁️ ML Introduction
-🎤 (00:12:51) Layers of Machine Learning
 ```
 
-**Format 2 (Simple style):**
+**Simple style:**
 
 ```
 00:00 - Introduction
@@ -174,50 +263,58 @@ The index file contains the table of contents with timestamps. Various formats a
 01:31 - RAG to the rescue
 ```
 
-The normalize stage uses an LLM to convert any format to a consistent structure.
-
 ### Transcript File
 
-Timestamped transcript content:
+SRT format (produced by Azure Speech CLI or provided externally):
 
-```
-00:00:00
-hey this is Andrew Brown and I'm bringing you another certification course...
+```srt
+1
+00:00:00,000 --> 00:00:04,500
+Hey, this is the introduction to the course.
 
-00:00:28
-additional uh paid materials where you can get access...
+2
+00:00:04,500 --> 00:00:09,000
+We'll cover the fundamentals today.
 ```
+
+## AI Models and Providers
+
+Both scripts support two LLM providers:
+
+| Provider | Auth | When to Use |
+|----------|------|------------|
+| `GitHub` (default) | `gh` CLI token | Local development, no Azure subscription needed |
+| `Azure` | `az` CLI token (managed identity-compatible) | Production, cost control, private deployments |
+
+| Stage | Default Model | Purpose |
+|-------|---------------|---------|
+| Normalize | gpt-4.1-mini | Index → structured JSON |
+| Extract | gpt-4.1-mini | Per-section notes generation |
+| Align | gpt-4.1-mini | Slide-to-transcript mapping |
+| Annotate | gpt-4.1-mini | Per-slide notes generation |
 
 ## Pipeline Stages
 
-### Stage 0: Normalize
+### Video Notes
 
-- **Input**: Raw index file (varied formats)
-- **Output**: Structured JSON with hierarchy
-- **Model**: gpt-4.1-mini
+| Stage | Input | Output | Technology |
+|-------|-------|--------|-----------|
+| Normalize | Raw index file | Structured JSON | LLM |
+| Chunk | SRT transcript | ZIP of ~20KB chunks | Python |
+| Extract | Index + chunks | Notes per section | LLM |
+| Assemble | Extracted sections | Final markdown | Python |
 
-### Stage 1: Chunk
+### Presentation Notes
 
-- **Input**: Transcript file (SRT format)
-- **Output**: ZIP file with ~20KB text chunks
-- **Technology**: Python (chunk.py)
-
-### Stage 2: Extract (Per-Section)
-
-- **Input**: Normalized index + All chunks
-- **Output**: Notes for each section
-- **Model**: gpt-4.1-mini
-- **Description**: For each leaf section, identifies relevant chunks by timestamp range and extracts focused notes
-
-### Stage 3: Assemble
-
-- **Input**: Extracted sections + Normalized index
-- **Output**: Final markdown document
-- **Technology**: Python (deterministic)
+| Stage | Input | Output | Technology |
+|-------|-------|--------|-----------|
+| Extract | PDF file | Slide images + text | Python (pdf2image) |
+| Transcribe | Video/stream | SRT transcript | Azure Speech CLI |
+| Align | Slides + transcript | Slide-transcript mapping | LLM |
+| Annotate | Slide mapping | Notes per slide | LLM |
+| Assemble | Annotated slides | Final markdown | Python |
 
 ## Output Format
-
-Each section in the generated notes follows this structure:
 
 ```markdown
 ### Section Title
@@ -225,14 +322,12 @@ Each section in the generated notes follows this structure:
 
 **Key Concepts**
 - Concept 1
-- Concept 2
 
 **Definitions**
 - **Term 1**: Definition text
 
 **Key Facts**
 - Fact 1
-- Fact 2
 
 **Examples**
 - Example 1
@@ -243,26 +338,17 @@ Each section in the generated notes follows this structure:
 
 ## Debugging
 
-The project includes VS Code debug configurations:
+VS Code debug configurations are provided:
 
 | Configuration | Description |
 |--------------|-------------|
 | PowerShell: Transcript Chunker | Debug the chunker with a sample file |
 | PowerShell: Interactive Session | REPL for testing |
 | Python: Current File | Debug any open Python file |
-| Python: Notes Generator (Full Pipeline) | Debug the complete pipeline |
+| Python: Notes Generator (Full Pipeline) | Debug the complete video notes pipeline |
 | Python: Extract/Merge/Assemble Stage Only | Debug individual stages |
 
-Press `F5` to start debugging with the selected configuration.
-
-## AI Models
-
-| Stage | Default Model | Purpose |
-|-------|---------------|---------|
-| Normalize | gpt-4.1-mini | Fast, structured output |
-| Extract | gpt-4.1-mini | Per-section notes extraction |
-
-Models are accessed via [GitHub Models](https://github.com/marketplace/models) using the GitHub CLI for authentication.
+Press `F5` to launch the selected configuration.
 
 ## Author
 
