@@ -5,16 +5,27 @@
     }
   ],
   "settings": {
-    "workbench.colorCustomizations": {
-      "titleBar.activeBackground": "#8b4789",
-      "titleBar.inactiveBackground": "#6b3569",
-      "titleBar.activeForeground": "#f3e5f3",
-      "titleBar.inactiveForeground": "#c5a3c4"
-    },
     "chat.tools.terminal.autoApprove": {
       ".venv\\Scripts\\pip": true,
       ".venv\\Scripts\\python": true
     },
-    "powershell.cwd": "VideoToNotes"
+    "powershell.cwd": "VideoToNotes",
+    "terminal.integrated.defaultProfile.windows": "PowerShell Lab",
+    "terminal.integrated.profiles.windows": {
+      "PowerShell Lab": {
+        "args": [
+          "-NoExit",
+          "-Command",
+          "if ($env:TERM_PROGRAM -eq 'vscode') { . \"$(code --locate-shell-integration-path pwsh)\" }; Use-AzProfile gregt8"
+        ],
+        "source": "PowerShell"
+      }
+    },
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#8b4789",
+      "titleBar.activeForeground": "#f3e5f3",
+      "titleBar.inactiveBackground": "#6b3569",
+      "titleBar.inactiveForeground": "#c5a3c4"
+    }
   }
 }
